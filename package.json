@@ -3,6 +3,9 @@
   "dependencies": {
     "express": "^4.21.2",
     "html-bundler-webpack-plugin": "^4.19.1",
+    "markdown-it": "^14.1.0",
+    "parse5": "^7.2.1",
+    "prismjs": "^1.30.0",
     "sass-embedded": "^1.86.0",
     "style-loader": "^4.0.0",
     "webpack": "^5.98.0"
@@ -10,6 +13,7 @@
   "devDependencies": {
     "@types/node": "^22.13.14",
     "@types/webpack": "^5.28.5",
+    "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",
     "sass": "^1.86.0",
     "sass-loader": "^16.0.5",
