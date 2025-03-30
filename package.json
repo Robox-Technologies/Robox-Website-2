@@ -9,6 +9,7 @@
     "deploy": "nodemon --ignore ./dist/ -e html,css,js,ts,ejs,md,scss --exec npm run prod"
   },
   "dependencies": {
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "html-bundler-webpack-plugin": "^4.19.1",
     "markdown-it": "^14.1.0",
