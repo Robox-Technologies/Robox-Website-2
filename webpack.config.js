@@ -1,9 +1,15 @@
 import path from 'path';
+import fs from 'fs'
 import webpack from 'webpack';
 import HtmlBundlerPlugin from "html-bundler-webpack-plugin"
-// in case you run into any typescript error when configuring `devServer`
 
 const __dirname = path.resolve();
+
+
+const pagesDir = path.resolve(__dirname, "src/pages");
+const pagesHtmlFiles = getHtmlFiles("./src/pages", pagesDir);
+
+
 
 const config = {
     mode: 'development',
@@ -18,7 +24,7 @@ const config = {
     },
     plugins: [
         new HtmlBundlerPlugin({
-            entry: "src/pages/",
+            entry: pagesHtmlFiles,
         })
     ],
     module: {
@@ -38,5 +44,22 @@ const config = {
         clean: true
     }
 };
+function getHtmlFiles(directory, rootDir) {
+    let files = [];
+
+    fs.readdirSync(directory, { withFileTypes: true }).forEach((dirent) => {
+        const fullPath = path.join(directory, dirent.name);
+        if (dirent.isDirectory()) {
+            files = [...files, ...getHtmlFiles(fullPath, rootDir)];
+        } 
+        else if (dirent.name.endsWith(".html")) {
+            const relativePath = path.relative(rootDir, fullPath); // Preserve structure after rootDir
+            files.push({ import: fullPath, filename: relativePath });
+        }
+    });
+
+    return files;
+};
+
 
 export default config;
