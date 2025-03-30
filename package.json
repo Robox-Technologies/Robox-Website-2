@@ -1,5 +1,13 @@
 {
   "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx webpack --mode=development --config webpack.config.js && node server.js",
+    "prod": "npx webpack --mode=production --config webpack.config.js && node server.js",
+    "dist-build": "npx webpack --mode=production --config webpack.prod.js",
+    "start": "nodemon --ignore ./dist/ -e html,css,ts,js,ejs,md,scss --exec npm run dev",
+    "deploy": "nodemon --ignore ./dist/ -e html,css,js,ts,ejs,md,scss --exec npm run prod"
+  },
   "dependencies": {
     "express": "^4.21.2",
     "html-bundler-webpack-plugin": "^4.19.1",
@@ -11,6 +19,7 @@
     "webpack": "^5.98.0"
   },
   "devDependencies": {
+    "@types/express": "^5.0.1",
     "@types/node": "^22.13.14",
     "@types/webpack": "^5.28.5",
     "copy-webpack-plugin": "^13.0.0",

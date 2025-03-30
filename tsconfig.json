@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "outDir": "./dist/",
+        "outDir": "./build/",
         "noImplicitAny": true,
         "sourceMap": true,
         "target": "es5",
@@ -8,6 +8,13 @@
         "esModuleInterop": true,    
         "jsx": "react",
         "allowJs": true,
-        "moduleResolution": "node"
-    }
+        "moduleResolution": "node",
+    },
+    "exclude": [
+        "node_modules",
+        "dist",
+        "webpack.config.js",
+        "src",
+        "build",
+    ]
 }
