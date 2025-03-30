@@ -2,13 +2,14 @@
     "compilerOptions": {
         "outDir": "./build/",
         "noImplicitAny": true,
+        "module": "es2022",
         "sourceMap": true,
-        "target": "es5",
+        "target": "ES2022",  // Change this from "es5" to "ES2022"
         "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,    
+        "esModuleInterop": true,
         "jsx": "react",
         "allowJs": true,
-        "moduleResolution": "node",
+        "moduleResolution": "node"
     },
     "exclude": [
         "node_modules",
