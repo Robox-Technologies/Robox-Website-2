@@ -1,15 +1,14 @@
 {
     "compilerOptions": {
-        "outDir": "./build/",
-        "noImplicitAny": true,
-        "module": "es2022",
-        "sourceMap": true,
-        "target": "ES2022",  // Change this from "es5" to "ES2022"
-        "allowSyntheticDefaultImports": true,
+        "module": "ESNext",        // ✅ must be ESNext, ES2022, or ES6 — NOT "CommonJS"
+        "target": "ES2022",        // ✅ or ESNext
+        "moduleResolution": "bundler", // optional but preferred for ESM in bundlers
+        "outDir": "build",
         "esModuleInterop": true,
-        "jsx": "react",
-        "allowJs": true,
-        "moduleResolution": "node"
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true
     },
     "exclude": [
         "node_modules",
