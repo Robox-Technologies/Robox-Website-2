@@ -10,6 +10,7 @@ $iconHeight: 20px;
 
 $archWidth: 48px;
 
+$extensionAmount: 20px;
 /* Makes our label white. */
 .blocklyTreeLabel {
     color: white;
@@ -29,6 +30,7 @@ $archWidth: 48px;
     position: absolute;
     left: calc(($archWidth/3) - ($iconHeight/2));
 }
+
 .categoryIcon::before { 
     font-size: $iconHeight;
 }
@@ -74,6 +76,34 @@ $archWidth: 48px;
 .side-arch {
     height: $componentHeight;
     width: $componentHeight;
+}
+.extender.extended {
+    height: $componentHeight;
+    border-right: 1px solid rgba(0, 0, 0, 0);
+    margin-right: -1px;
+    z-index: 0;
+    border-left: 1px solid $navEdges;
+    border-top: 1px solid $navEdges;
+    border-bottom: 1px solid $navEdges;
+    box-sizing: border-box;
+    width: $extensionAmount;
+
+}
+.extender{
+    height: $componentHeight;
+    border-right: 1px solid rgba(0, 0, 0, 0);
+    margin-right: -1px;
+    z-index: 0;
+    border-left: 1px solid $navEdges;
+    border-top: 1px solid $navEdges;
+    border-bottom: 1px solid $navEdges;
+    box-sizing: border-box;
+    width: 0;
+
+}
+.extended.categoryIcon { 
+    left: calc(($archWidth/3) - ($iconHeight/2))+$extensionAmount;
+
 }
 .blocklyTreeRow { 
     margin-bottom: 0;
