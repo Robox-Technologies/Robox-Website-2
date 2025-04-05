@@ -1,6 +1,7 @@
 import * as Blockly from 'blockly';
 
 import archSVG from "./Arch.svg"
+type HexColor = `#${string}`;
 class RoboxToolboxCategories extends Blockly.ToolboxCategory {
     /**
      * Constructor for a custom category.
@@ -8,6 +9,10 @@ class RoboxToolboxCategories extends Blockly.ToolboxCategory {
      */
     constructor(categoryDef: Blockly.utils.toolbox.CategoryInfo, toolbox: Blockly.Toolbox, opt_parent: Blockly.ICollapsibleToolboxItem) {
         super(categoryDef, toolbox, opt_parent);
+    }
+    /** @override */
+    addColourBorder_(colour: HexColor){
+
     }
     /** @override */
     createRowContentsContainer_() {
@@ -28,6 +33,9 @@ class RoboxToolboxCategories extends Blockly.ToolboxCategory {
         if (!label || !(label instanceof HTMLElement)) return label
         label.style.color = this.colour_
         return label
+    }
+    /** @override */
+    setSelected(isSelected: boolean){
     }
 }
 class RoboxToolboxSeperator extends Blockly.ToolboxSeparator {
