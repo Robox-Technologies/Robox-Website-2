@@ -2,11 +2,11 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx webpack --mode=development --config webpack.config.js && node server.js",
-    "prod": "npx webpack --mode=production --config webpack.config.js && node server.js",
+    "dev": "npx webpack --mode=development --config webpack.config.js && node ./build/server.js",
+    "prod": "npx webpack --mode=production --config webpack.config.js && node ./build/server.js",
     "dist-build": "npx webpack --mode=production --config webpack.prod.js",
-    "start": "nodemon --ignore ./dist/ -e html,css,ts,js,ejs,md,scss --exec npm run dev",
-    "deploy": "nodemon --ignore ./dist/ -e html,css,js,ts,ejs,md,scss --exec npm run prod"
+    "start": "npx tsc && nodemon --ignore ./dist/ -e html,css,ts,js,ejs,md,scss --exec npm run dev",
+    "deploy": "npx tsc && nodemon --ignore ./dist/ -e html,css,js,ts,ejs,md,scss --exec npm run prod"
   },
   "dependencies": {
     "blockly": "^11.2.2",
