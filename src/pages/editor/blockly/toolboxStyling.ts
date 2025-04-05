@@ -1,5 +1,6 @@
 import * as Blockly from 'blockly';
-type HexColor = `#${string}`;
+
+import archSVG from "./Arch.svg"
 class RoboxToolboxCategories extends Blockly.ToolboxCategory {
     /**
      * Constructor for a custom category.
@@ -9,39 +10,46 @@ class RoboxToolboxCategories extends Blockly.ToolboxCategory {
         super(categoryDef, toolbox, opt_parent);
     }
     /** @override */
-    addColourBorder_(colour: HexColor){
-        if (this.rowDiv_ !== null) {
-            this.rowDiv_.style.backgroundColor = "colour";
-        }
+    createRowContentsContainer_() {
+        const dom = super.createRowContentsContainer_();
+        const container = document.createElement("div")
+        container.className = "side-arch"
+        container.innerHTML = archSVG
+        const arch = container.querySelector("svg > path")
+        if (!arch || !(arch instanceof SVGElement)) return dom
+        arch.style.fill = this.colour_;
+        
+        dom.appendChild(container)
+        return dom
     }
     /** @override */
-    setSelected(isSelected: boolean){
-        
-        if (this.rowDiv_ !== null && this.htmlDiv_ !== null) {
-            // We do not store the label span on the category, so use getElementsByClassName.
-            var labelDom = this.rowDiv_.getElementsByClassName('blocklyTreeLabel')[0];
-            if (!(labelDom instanceof HTMLElement)) return
-            console.log(this.iconDom_)
-            if (isSelected) {
-                // Change the background color of the div to white.
-                this.rowDiv_.style.backgroundColor = 'white';
-                // Set the colour of the text to the colour of the category.
-                labelDom.style.color = this.colour_;
-            } 
-            else {
-                // Set the background back to the original colour.
-                this.rowDiv_.style.backgroundColor = this.colour_;
-                // Set the text back to white.
-                labelDom.style.color = 'white';
-            }
-            // This is used for accessibility purposes.
-            Blockly.utils.aria.setState(/** @type {!Element} */ (this.htmlDiv_),
-                Blockly.utils.aria.State.SELECTED, isSelected);
-        }
+    createLabelDom_(name: string) {
+        const label = super.createLabelDom_(name);
+        if (!label || !(label instanceof HTMLElement)) return label
+        label.style.color = this.colour_
+        return label
     }
 }
+class RoboxToolboxSeperator extends Blockly.ToolboxSeparator {
+    constructor(seperatorDef: Blockly.utils.toolbox.SeparatorInfo, toolbox: Blockly.Toolbox) {
+        super(seperatorDef, toolbox);
+    }
+    createDom_(): HTMLDivElement {
+        const dom = super.createDom_();
+        const seperator = document.createElement("div")
+        seperator.className = "seperator"
+        dom.appendChild(seperator)
+        return dom
+    }
+}
+
 Blockly.registry.register(
     Blockly.registry.Type.TOOLBOX_ITEM,
     Blockly.ToolboxCategory.registrationName,
     RoboxToolboxCategories, true
+);
+Blockly.registry.register(
+    Blockly.registry.Type.TOOLBOX_ITEM,
+    Blockly.ToolboxSeparator.registrationName,
+    RoboxToolboxSeperator, true
 );
