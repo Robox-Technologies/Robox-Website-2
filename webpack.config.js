@@ -58,13 +58,23 @@ const config = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            configFile: 'tsconfig.webpack.json',
+                        },
+                    },
+                ],
             },
             {
                 test: /\.s?css$/,
                 use: ['css-loader', 'sass-loader'],
             },
+            {
+                test: /\.svg$/,
+                loader: 'svg-inline-loader'
+            }
         ],
     },
     output: {
