@@ -8,6 +8,7 @@
         "allowSyntheticDefaultImports": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
+
         "skipLibCheck": true
     },
     "exclude": [
@@ -16,5 +17,7 @@
         "webpack.config.js",
         "src",
         "build",
+        "store.ts",
+        "stripe.ts"
     ]
 }
