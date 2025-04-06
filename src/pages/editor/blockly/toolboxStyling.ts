@@ -94,6 +94,15 @@ class RoboxToolboxSeperator extends Blockly.ToolboxSeparator {
         return dom
     }
 }
+export class RoundedFlyout extends Blockly.VerticalFlyout {
+    override readonly CORNER_RADIUS = 0;
+    constructor(workspaceOptions: Blockly.Options) {
+        super(workspaceOptions);
+        
+    }
+}
+
+//TODO: add names for the variable and procedure category
 
 Blockly.registry.register(
     Blockly.registry.Type.TOOLBOX_ITEM,
