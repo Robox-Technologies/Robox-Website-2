@@ -1,23 +1,40 @@
 $navEdges: #717171;
 $componentHeight: 48px;
 
+//How big the seperators are in the category
 $seperatorHeight: 40px;
+//The colour of the middle seperator line
 $seperatorColour: black;
-$seperatorStroke: 3px;
+//The size of the middle seperator line
+$seperatorStrokeSize: 3px;
+//How long the stroke line
 $seperatorLength: 80%;
 
+//How tall the icon is in the category
 $iconHeight: 20px;
 
+//How wide the arch/tab thing is in the category sidebar
 $archWidth: 48px;
 
+//How big the sidebar is
+$toolboxWidth: 170px;
+
+//How much the tabs extend
 $extensionAmount: 20px;
-/* Makes our label white. */
+//This is the height for the top and bottom divs
+$barHeight: 75px;
+
+$backgroundColour: #E6F0FF;
+
+$reducedWorkspaceWidth: 20px;
+
+// Makes our label white.
 .blocklyTreeLabel {
     color: white;
+    font-size: large;
 }
-.blocklyToolboxContents {
-    border-right: 3px solid $navEdges;
-    border-bottom: 3px solid $navEdges;
+.blocklyToolboxDiv {
+    border-right: $seperatorStrokeSize solid $navEdges;
 }
 .side-arch > svg > path{
     stroke: $navEdges!important;
@@ -36,7 +53,7 @@ $extensionAmount: 20px;
 }
 .blocklyTreeSeparator {
     display: flex;
-    border-top: 3px solid #F5F5F5;
+    border-top: $seperatorStrokeSize solid #F5F5F5;
     background-color: white;
     justify-content: center;
     align-items: center;
@@ -45,7 +62,7 @@ $extensionAmount: 20px;
     margin: 0;
 }
 .blocklyTreeSeparator > .seperator {
-    height: $seperatorStroke;
+    height: $seperatorStrokeSize;
     background-color: $seperatorColour;
     width: $seperatorLength;
 }
@@ -53,7 +70,7 @@ $extensionAmount: 20px;
 
 /* Adds space between the categories, rounds the corners and adds space around the label. */
 .blocklyTreeRow {
-    border-top: 3px solid #F5F5F5;
+    border-top: $seperatorStrokeSize solid #F5F5F5;
 }
 .blocklyTreeLabel { 
     color: black;
@@ -63,6 +80,15 @@ $extensionAmount: 20px;
 }
 .blocklyToolboxDiv {
     background-color: white;
+    border-right: $seperatorStrokeSize 3px $navEdges;
+    padding: 0;
+    width: $toolboxWidth;
+}
+
+.blocklyFlyout { 
+    transform: translate(calc($toolboxWidth - $seperatorStrokeSize * 2), -$seperatorStrokeSize) !important;
+    border: $seperatorStrokeSize solid $navEdges;
+    width: 430px;
 }
 /* Stacks the icon on top of the label. */
 .blocklyTreeRowContentContainer {
@@ -105,6 +131,44 @@ $extensionAmount: 20px;
     left: calc(($archWidth/3) - ($iconHeight/2))+$extensionAmount;
 
 }
+
 .blocklyTreeRow { 
     margin-bottom: 0;
+}
+#blocklyDiv {
+    flex: auto;
+    width: calc(100% - $reducedWorkspaceWidth);
+}
+.injectionDiv {
+    border-radius: 0 1em 1em 0;
+    border-top: $seperatorStrokeSize solid $navEdges;
+    border-right: $seperatorStrokeSize solid $navEdges;
+    border-bottom: $seperatorStrokeSize solid $navEdges;
+    box-sizing: border-box;
+
+}
+.blocklyMainBackground {
+    stroke: none;
+}
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+    flex-direction: column;
+    display: flex;
+    background-color: $backgroundColour;
+}
+
+#workspaceTabs, #actionBar {
+    height: $barHeight;
+    width: 100%;
+}
+#actionBar {
+    background-color: white;
+    border-top: $seperatorStrokeSize solid $navEdges;
+    margin-top: -$seperatorStrokeSize;
+}
+.categoryLabel > .blocklyFlyoutLabelText {
+    font: 400 24px sans-serif !important;
 }

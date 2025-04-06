@@ -15,9 +15,9 @@ export default Blockly.Theme.defineTheme('Robox', {
     name: "robox",
     'base': Blockly.Themes.Classic,
     componentStyles: {
-        'workspaceBackgroundColour': '#A1EEBD',
+        'workspaceBackgroundColour': '#F5F5F5',
         'toolboxBackgroundColour': "#F",
-        'flyoutBackgroundColour': '#F6F4C3',
+        'flyoutBackgroundColour': '#F5F5F5',
         'flyoutOpacity': 1,
     },
     categoryStyles: {
