@@ -71,16 +71,14 @@ const config = {
                 test: /\.s?css$/,
                 use: ['css-loader', 'sass-loader'],
             },
-            // {
-            //     test: /\.svg$/,
-            //     loader: 'svg-inline-loader'
-            // },
             {
-                test: /\.(woff|woff2|eot|ttf|otf)$/i,
-                type: 'asset/resource',
+                test: /editor\/.*\.svg/,
+                include: /\/editor\//,
+                loader: 'svg-inline-loader'
             },
             {
-                test: /\.(jpe?g|png|svg|gif)$/i,
+                test: /(?!editor\/).*\.(jpe?g|png|svg|gif)$/i,
+                exclude: /\/editor\//,
                 type: "asset",
             },
         ],
