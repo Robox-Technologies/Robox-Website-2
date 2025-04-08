@@ -72,12 +72,12 @@ const config = {
                 use: ['css-loader', 'sass-loader'],
             },
             {
-                test: /editor\/.*\.svg/,
+                test: /\.svg/,
                 include: /\/editor\//,
                 loader: 'svg-inline-loader'
             },
             {
-                test: /(?!editor\/).*\.(jpe?g|png|svg|gif)$/i,
+                test: /\.(jpe?g|png|svg|gif)$/i,
                 exclude: /\/editor\//,
                 type: "asset",
             },
