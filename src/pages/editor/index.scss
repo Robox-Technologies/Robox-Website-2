@@ -1,26 +1,80 @@
+$navEdges: #717171;
+$componentHeight: 48px;
+
+$seperatorHeight: 40px;
+$seperatorColour: black;
+$seperatorStroke: 3px;
+$seperatorLength: 80%;
+
+$iconHeight: 20px;
+
+$archWidth: 48px;
+
 /* Makes our label white. */
 .blocklyTreeLabel {
     color: white;
 }
-/* Adds padding around the group of categories and separators. */
 .blocklyToolboxContents {
-
+    border-right: 3px solid $navEdges;
+    border-bottom: 3px solid $navEdges;
 }
+.side-arch > svg > path{
+    stroke: $navEdges!important;
+    fill: rgba(0,0,0,0)
+}
+.categoryIcon { 
+    height: $iconHeight;
+    width: $iconHeight;
+    color: white;
+    position: absolute;
+    left: calc(($archWidth/3) - ($iconHeight/2));
+}
+.categoryIcon::before { 
+    font-size: $iconHeight;
+}
+.blocklyTreeSeparator {
+    display: flex;
+    border-top: 3px solid #F5F5F5;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    height: $seperatorHeight;
+    border-bottom: 0;
+    margin: 0;
+}
+.blocklyTreeSeparator > .seperator {
+    height: $seperatorStroke;
+    background-color: $seperatorColour;
+    width: $seperatorLength;
+}
+/* Adds padding around the group of categories and separators. */
+
 /* Adds space between the categories, rounds the corners and adds space around the label. */
 .blocklyTreeRow {
-    padding: 3px;
-    margin-bottom: 0.5em;
-    border-radius: 4px;
+    border-top: 3px solid #F5F5F5;
+}
+.blocklyTreeLabel { 
+    color: black;
 }
 .customIcon {
     color: white;
 }
+.blocklyToolboxDiv {
+    background-color: white;
+}
 /* Stacks the icon on top of the label. */
 .blocklyTreeRowContentContainer {
     display: flex;
-    flex-direction: column;
+    position: relative;
     align-items: center;
 }
 .blocklyTreeRow {
     height: initial;
+}
+.side-arch {
+    height: $componentHeight;
+    width: $componentHeight;
+}
+.blocklyTreeRow { 
+    margin-bottom: 0;
 }

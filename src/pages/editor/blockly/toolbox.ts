@@ -17,6 +17,9 @@ export const toolbox = {
     {
         'kind': 'category',
         'name': 'Events',
+        "cssConfig": {
+            "icon": "categoryIcon fa fa-flag"
+        },
         'categorystyle': 'events_category',
         'contents': [
             {
@@ -30,7 +33,7 @@ export const toolbox = {
     },
     {
         'kind': 'category',
-        'name': 'Logi',
+        'name': 'Logic',
         "cssConfig": {
             "icon": "categoryIcon fa fa-cog"
         },
@@ -70,6 +73,9 @@ export const toolbox = {
         'kind': 'category',
         'name': 'Loops',
         'categorystyle': 'loop_category',
+        "cssConfig": {
+            "icon": "categoryIcon fa fa-repeat"
+        },
         'contents': [
           {
             'kind': 'block',
@@ -133,6 +139,9 @@ export const toolbox = {
         'kind': 'category',
         'name': 'Math',
         'categorystyle': 'math_category',
+        "cssConfig": {
+            "icon": "categoryIcon fa fa-plus"
+        },
         'contents': [
           {
             'kind': 'block',
@@ -339,6 +348,9 @@ export const toolbox = {
         'kind': 'category',
         'name': 'Lists',
         'categorystyle': 'list_category',
+        "cssConfig": {
+            "icon": "categoryIcon fa fa-table-list"
+        },
         'contents': [
           {
             'kind': 'block',
@@ -445,6 +457,9 @@ export const toolbox = {
         'kind': 'category',
         'name': 'Sensors',
         'categorystyle': 'sensor_category',
+        "cssConfig": {
+            "icon": "categoryIcon fa fa-eye"
+        },
         'contents': [
           {
             'kind': 'block',
@@ -464,6 +479,9 @@ export const toolbox = {
         'kind': 'category',
         'name': 'System',
         'categorystyle': 'system_category',
+        "cssConfig": {
+            "icon": "categoryIcon fa fa-robot"
+        },
         'contents': [
           {
             'kind': 'block',
@@ -520,6 +538,9 @@ export const toolbox = {
         'kind': 'category',
         'name': 'Motors',
         'categorystyle': 'motor_category',
+        "cssConfig": {
+            "icon": "categoryIcon fa fa-truck-monster"
+        },
         'contents': [
           {
             'kind': 'block',
@@ -580,12 +601,18 @@ export const toolbox = {
       {
         'kind': 'category',
         'name': 'Variables',
+        "cssConfig": {
+            "icon": "categoryIcon fa fa-x"
+        },
         'categorystyle': 'variable_category',
         'custom': 'VARIABLE',
       },
       {
         'kind': 'category',
         'name': 'Functions',
+        "cssConfig": {
+            "icon": "categoryIcon fa fa-gears"
+        },
         'categorystyle': 'procedure_category',
         'custom': 'PROCEDURE',
       },
