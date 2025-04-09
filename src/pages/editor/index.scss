@@ -26,7 +26,11 @@ $barHeight: 75px;
 
 $backgroundColour: #E6F0FF;
 
-$reducedWorkspaceWidth: 20px;
+$roboxRed: #FF6166;
+$roboxBlue: #2588C7;
+
+$topBarPadding: 2.5%;
+$topBarButtonGap: 10px;
 
 // Makes our label white.
 .blocklyTreeLabel {
@@ -137,12 +141,10 @@ $reducedWorkspaceWidth: 20px;
 }
 #blocklyDiv {
     flex: auto;
-    width: calc(100% - $reducedWorkspaceWidth);
+
 }
 .injectionDiv {
-    border-radius: 0 1em 1em 0;
     border-top: $seperatorStrokeSize solid $navEdges;
-    border-right: $seperatorStrokeSize solid $navEdges;
     border-bottom: $seperatorStrokeSize solid $navEdges;
     box-sizing: border-box;
 
@@ -163,6 +165,69 @@ body {
 #workspaceTabs, #actionBar {
     height: $barHeight;
     width: 100%;
+}
+#workspaceTabs {
+    background-color: $roboxRed;
+}
+#button-holder {
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 2*$topBarPadding);
+    padding: 0 $topBarPadding 0 $topBarPadding;
+    height: 100%;
+    flex-direction: row;
+    align-content: center;
+}
+#buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $topBarButtonGap;
+}
+#project-name-input {
+    font-size: 20px;
+    background-color: unset;
+    border-radius: unset;
+    width: 170px;
+    padding: 10px;
+    border: 0;
+}
+#download-button {
+    background-color: unset;
+    border: 0;
+}
+#project-name-form {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    filter: drop-shadow(calc(2px*2) calc(2px*2) rgb(47, 47, 47));
+    border-radius: 7px;
+}
+#bluetooth, #learn {
+    font-size: 20px;
+}
+#project-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#back-button {
+    background-color: unset;
+    border: 0;
+    font-size: 20px;
+    color: white;
+}
+.topButton {
+    width: 30px;
+    height: 30px;
+    background-color: $roboxBlue;
+    border-radius: 50%;
+    border: none;
+    filter: drop-shadow(2px 2px rgb(47, 47, 47));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
 }
 #actionBar {
     background-color: white;
