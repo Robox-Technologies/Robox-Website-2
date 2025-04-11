@@ -30,5 +30,14 @@ function start() {
 
     workspace.undoControls = new CustomUndoControls(workspace)
     workspace.undoControls.init()
+    Blockly.browserEvents.conditionalBind(
+        window,
+        'resize',
+        null,
+        () => {
+            if (workspace.customZoomControls) workspace.customZoomControls.position()
+            if (workspace.undoControls) workspace.undoControls.position()
+        }
+    );
 }
 document.addEventListener("DOMContentLoaded", start)
