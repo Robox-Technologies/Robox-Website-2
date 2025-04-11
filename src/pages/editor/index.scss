@@ -248,11 +248,25 @@ $nameInputDropShadowMult: 2;
 #download-robox-button {
     color: white;
     height: 100%;
+    font-weight: bold;
+    font-size: larger;
+    padding: 0 40px 0 40px;
+    border-right: $seperatorStrokeSize solid white;
+
 }
 #download-robox {
     background-color: $roboxRed;
-    padding: 15px calc($downloadButtonSize*2) 15px $downloadButtonSize;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    height: 50px;
     border-radius: 2em;
+    
+}
+#options {
+    font-size: 20px;
+    padding: 0 15px 0 15px;
+    color: white;
     
 }
 .categoryLabel > .blocklyFlyoutLabelText {
