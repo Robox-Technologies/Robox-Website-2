@@ -23,6 +23,7 @@ function start() {
         zoom: {
             controls: false,
         },
+        trashcan: false,
     }) as MyWorkspace;
     workspace.customZoomControls = new CustomZoomControls(workspace);
     workspace.customZoomControls.init();
