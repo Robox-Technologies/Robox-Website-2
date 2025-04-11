@@ -10,9 +10,22 @@ import { RoundedFlyout } from './blockly/toolboxStyling';
 import { CustomUndoControls, CustomZoomControls } from './blockly/customUI';
 import { MyWorkspace } from '../types/blockly';
 
+import {registerFieldColour} from '@blockly/field-colour';
+registerFieldColour();
 
-function start() {
-    // Create main workspace.
+const blocks = require.context("./blockly/blocks", false, /\.ts$/);
+const generators = require.context("./blockly/generators", false, /\.ts$/);
+
+blocks.keys().forEach(modulePath => {
+    const block = blocks(modulePath);
+});
+
+generators.keys().forEach(modulePath => {
+    const generator = generators(modulePath);
+    // use generator
+});
+
+document.addEventListener("DOMContentLoaded", (event) => {
     if (!toolbox) return;
     const workspace = Blockly.inject('blocklyDiv', {
         toolbox: toolbox,
@@ -30,14 +43,10 @@ function start() {
 
     workspace.undoControls = new CustomUndoControls(workspace)
     workspace.undoControls.init()
-    Blockly.browserEvents.conditionalBind(
-        window,
-        'resize',
-        null,
-        () => {
+
+    Blockly.browserEvents.conditionalBind(window, 'resize', null, () => { //On workspace resize, resize our custom UI
             if (workspace.customZoomControls) workspace.customZoomControls.position()
             if (workspace.undoControls) workspace.undoControls.position()
         }
     );
-}
-document.addEventListener("DOMContentLoaded", start)
+})
