@@ -9,6 +9,7 @@
     "deploy": "npx tsc && nodemon --ignore ./dist/ -e html,css,js,ts,ejs,md,scss --exec npm run prod"
   },
   "dependencies": {
+    "@blockly/field-colour": "^5.0.12",
     "blockly": "^11.2.2",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
@@ -27,6 +28,7 @@
     "@types/memory-cache": "^0.2.6",
     "@types/node": "^22.13.14",
     "@types/webpack": "^5.28.5",
+    "@types/webpack-env": "^1.18.8",
     "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",
     "sass": "^1.86.0",
