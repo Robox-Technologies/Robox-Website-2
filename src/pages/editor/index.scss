@@ -24,6 +24,10 @@ $extensionAmount: 20px;
 //This is the height for the top and bottom divs
 $barHeight: 75px;
 
+$dropshadowBase: 2px;
+$topButtonsDropShadowMult: 1;
+$dropShadowColour: rgb(47, 47, 47);
+
 $backgroundColour: #E6F0FF;
 
 $roboxRed: #FF6166;
@@ -193,11 +197,12 @@ body {
     background-color: unset;
     border: 0;
 }
+$nameInputDropShadowMult: 2;
 #project-name-form {
     background-color: white;
     display: flex;
     justify-content: space-between;
-    filter: drop-shadow(calc(2px*2) calc(2px*2) rgb(47, 47, 47));
+    filter: drop-shadow(calc($dropshadowBase*$nameInputDropShadowMult) calc($dropshadowBase*$nameInputDropShadowMult) $dropShadowColour);
     border-radius: 7px;
 }
 #bluetooth, #learn {
@@ -214,13 +219,14 @@ body {
     font-size: 20px;
     color: white;
 }
+
 .topButton {
     width: 30px;
     height: 30px;
     background-color: $roboxBlue;
     border-radius: 50%;
     border: none;
-    filter: drop-shadow(2px 2px rgb(47, 47, 47));
+    filter: drop-shadow(calc($dropshadowBase*$topButtonsDropShadowMult) calc($dropshadowBase*$topButtonsDropShadowMult) $dropShadowColour);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -251,4 +257,25 @@ body {
 }
 .categoryLabel > .blocklyFlyoutLabelText {
     font: 400 24px sans-serif !important;
+}
+$zoomIconSize: 40px;
+$zoomButtonsGap: 10px;
+#blocklyCustomZoom {
+    display: flex;
+    gap: $zoomButtonsGap;
+    flex-direction: column;
+}
+$zoomButtonsDropShadowMult: 2;
+#blocklyCustomZoom > .button {
+    border-radius: 50%;
+    background-color: white;
+    color: $roboxBlue;
+    border: 3px solid $roboxBlue;
+    font-size: calc((30px/$zoomIconSize)*$zoomIconSize);
+    width: $zoomIconSize;
+    height: $zoomIconSize;
+    display: flex;
+    justify-content: center;
+    filter: drop-shadow(calc($dropshadowBase*$zoomButtonsDropShadowMult) calc($dropshadowBase*$zoomButtonsDropShadowMult) $dropShadowColour);
+    align-items: center;
 }

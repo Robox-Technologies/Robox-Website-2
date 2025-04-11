@@ -7,23 +7,24 @@ import theme from "./blockly/theme"
 import {toolbox} from "./blockly/toolbox"
 import "./blockly/toolboxStyling"
 import { RoundedFlyout } from './blockly/toolboxStyling';
+import { CustomZoomControls } from './blockly/customUI';
+import { MyWorkspace } from '../types/blockly';
 
-let workspace: Blockly.WorkspaceSvg | null = null;
 
 function start() {
     // Create main workspace.
     if (!toolbox) return;
-    workspace = Blockly.inject('blocklyDiv', {
+    const workspace = Blockly.inject('blocklyDiv', {
         toolbox: toolbox,
         theme: theme,
         plugins: {
             flyoutsVerticalToolbox: RoundedFlyout
         },
-        zoom: 
-        {
-            controls: true,
+        zoom: {
+            controls: false,
         },
-
-    });
+    }) as MyWorkspace;
+    workspace.customZoomControls = new CustomZoomControls(workspace);
+    workspace.customZoomControls.init();
 }
 document.addEventListener("DOMContentLoaded", start)
