@@ -18,7 +18,12 @@ function start() {
         theme: theme,
         plugins: {
             flyoutsVerticalToolbox: RoundedFlyout
-        }
+        },
+        zoom: 
+        {
+            controls: true,
+        },
+
     });
 }
 document.addEventListener("DOMContentLoaded", start)

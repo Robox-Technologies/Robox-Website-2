@@ -29,8 +29,10 @@ $backgroundColour: #E6F0FF;
 $roboxRed: #FF6166;
 $roboxBlue: #2588C7;
 
-$topBarPadding: 2.5%;
+$barPadding: 2.5%;
 $topBarButtonGap: 10px;
+
+$downloadButtonSize: 60px;
 
 // Makes our label white.
 .blocklyTreeLabel {
@@ -161,20 +163,15 @@ body {
     display: flex;
     background-color: $backgroundColour;
 }
-
-#workspaceTabs, #actionBar {
-    height: $barHeight;
-    width: 100%;
-}
 #workspaceTabs {
     background-color: $roboxRed;
 }
-#button-holder {
+#workspaceTabs, #actionBar {
+    height: $barHeight;
     display: flex;
     justify-content: space-between;
-    width: calc(100% - 2*$topBarPadding);
-    padding: 0 $topBarPadding 0 $topBarPadding;
-    height: 100%;
+    width: calc(100% - 2*$barPadding);
+    padding: 0 $barPadding 0 $barPadding;
     flex-direction: row;
     align-content: center;
 }
@@ -233,6 +230,24 @@ body {
     background-color: white;
     border-top: $seperatorStrokeSize solid $navEdges;
     margin-top: -$seperatorStrokeSize;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#actionBar > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#download-robox-button {
+    color: white;
+    height: 100%;
+}
+#download-robox {
+    background-color: $roboxRed;
+    padding: 15px calc($downloadButtonSize*2) 15px $downloadButtonSize;
+    border-radius: 2em;
+    
 }
 .categoryLabel > .blocklyFlyoutLabelText {
     font: 400 24px sans-serif !important;
