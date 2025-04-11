@@ -33,6 +33,7 @@ class RoboxToolboxCategories extends Blockly.ToolboxCategory {
         const arch = container.querySelector("svg > path")
         if (!arch || !(arch instanceof SVGElement)) return dom
         arch.style.fill = this.colour_;
+        arch.style.stroke = this.colour_;
         dom.appendChild(rectangle)
         dom.appendChild(container)
         return dom

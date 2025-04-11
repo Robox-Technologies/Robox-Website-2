@@ -47,7 +47,6 @@ $downloadButtonSize: 60px;
     border-right: $seperatorStrokeSize solid $navEdges;
 }
 .side-arch > svg > path{
-    stroke: $navEdges!important;
     fill: rgba(0,0,0,0)
 }
 .categoryIcon { 
@@ -118,9 +117,6 @@ $downloadButtonSize: 60px;
     border-right: 1px solid rgba(0, 0, 0, 0);
     margin-right: -1px;
     z-index: 0;
-    border-left: 1px solid $navEdges;
-    border-top: 1px solid $navEdges;
-    border-bottom: 1px solid $navEdges;
     box-sizing: border-box;
     width: $extensionAmount;
 
@@ -130,9 +126,6 @@ $downloadButtonSize: 60px;
     border-right: 1px solid rgba(0, 0, 0, 0);
     margin-right: -1px;
     z-index: 0;
-    border-left: 1px solid $navEdges;
-    border-top: 1px solid $navEdges;
-    border-bottom: 1px solid $navEdges;
     box-sizing: border-box;
     width: 0;
 
