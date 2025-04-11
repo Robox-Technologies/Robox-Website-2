@@ -258,24 +258,42 @@ $nameInputDropShadowMult: 2;
 .categoryLabel > .blocklyFlyoutLabelText {
     font: 400 24px sans-serif !important;
 }
-$zoomIconSize: 40px;
+$blocklyUIIconSize: 40px;
 $zoomButtonsGap: 10px;
-#blocklyCustomZoom {
+.uiHolder {
     display: flex;
     gap: $zoomButtonsGap;
+}
+#blocklyCustomZoom {
     flex-direction: column;
 }
-$zoomButtonsDropShadowMult: 2;
-#blocklyCustomZoom > .button {
+#blocklyCustomTimeControls {
+    flex-direction: row;
+    gap: 0;
+}
+$blocklyUIButtonsDropShadowMult: 2;
+#blocklyCustomZoom > .uiButtons{
     border-radius: 50%;
+}
+
+#blocklyCustomTimeControls > .uiButtons:first-child {
+    border-radius: 7px 0 0 7px;
+    margin-right: -$seperatorStrokeSize;
+}
+#blocklyCustomTimeControls > .uiButtons:last-child {
+    border-radius: 0 7px 7px 0;
+}
+.uiButtons {
     background-color: white;
     color: $roboxBlue;
-    border: 3px solid $roboxBlue;
-    font-size: calc((30px/$zoomIconSize)*$zoomIconSize);
-    width: $zoomIconSize;
-    height: $zoomIconSize;
+    border: $seperatorStrokeSize solid $roboxBlue;
+    font-size: calc((30px/$blocklyUIIconSize)*$blocklyUIIconSize);
+    width: $blocklyUIIconSize;
+    height: $blocklyUIIconSize;
     display: flex;
     justify-content: center;
-    filter: drop-shadow(calc($dropshadowBase*$zoomButtonsDropShadowMult) calc($dropshadowBase*$zoomButtonsDropShadowMult) $dropShadowColour);
+    filter: drop-shadow(calc($dropshadowBase*$blocklyUIButtonsDropShadowMult) calc($dropshadowBase*$blocklyUIButtonsDropShadowMult) $dropShadowColour);
     align-items: center;
+    padding: 20px;
+    cursor: pointer;
 }
