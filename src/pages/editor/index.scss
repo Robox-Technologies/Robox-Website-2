@@ -1,0 +1,110 @@
+$navEdges: #717171;
+$componentHeight: 48px;
+
+$seperatorHeight: 40px;
+$seperatorColour: black;
+$seperatorStroke: 3px;
+$seperatorLength: 80%;
+
+$iconHeight: 20px;
+
+$archWidth: 48px;
+
+$extensionAmount: 20px;
+/* Makes our label white. */
+.blocklyTreeLabel {
+    color: white;
+}
+.blocklyToolboxContents {
+    border-right: 3px solid $navEdges;
+    border-bottom: 3px solid $navEdges;
+}
+.side-arch > svg > path{
+    stroke: $navEdges!important;
+    fill: rgba(0,0,0,0)
+}
+.categoryIcon { 
+    height: $iconHeight;
+    width: $iconHeight;
+    color: white;
+    position: absolute;
+    left: calc(($archWidth/3) - ($iconHeight/2));
+}
+
+.categoryIcon::before { 
+    font-size: $iconHeight;
+}
+.blocklyTreeSeparator {
+    display: flex;
+    border-top: 3px solid #F5F5F5;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    height: $seperatorHeight;
+    border-bottom: 0;
+    margin: 0;
+}
+.blocklyTreeSeparator > .seperator {
+    height: $seperatorStroke;
+    background-color: $seperatorColour;
+    width: $seperatorLength;
+}
+/* Adds padding around the group of categories and separators. */
+
+/* Adds space between the categories, rounds the corners and adds space around the label. */
+.blocklyTreeRow {
+    border-top: 3px solid #F5F5F5;
+}
+.blocklyTreeLabel { 
+    color: black;
+}
+.customIcon {
+    color: white;
+}
+.blocklyToolboxDiv {
+    background-color: white;
+}
+/* Stacks the icon on top of the label. */
+.blocklyTreeRowContentContainer {
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+.blocklyTreeRow {
+    height: initial;
+}
+.side-arch {
+    height: $componentHeight;
+    width: $componentHeight;
+}
+.extender.extended {
+    height: $componentHeight;
+    border-right: 1px solid rgba(0, 0, 0, 0);
+    margin-right: -1px;
+    z-index: 0;
+    border-left: 1px solid $navEdges;
+    border-top: 1px solid $navEdges;
+    border-bottom: 1px solid $navEdges;
+    box-sizing: border-box;
+    width: $extensionAmount;
+
+}
+.extender{
+    height: $componentHeight;
+    border-right: 1px solid rgba(0, 0, 0, 0);
+    margin-right: -1px;
+    z-index: 0;
+    border-left: 1px solid $navEdges;
+    border-top: 1px solid $navEdges;
+    border-bottom: 1px solid $navEdges;
+    box-sizing: border-box;
+    width: 0;
+
+}
+.extended.categoryIcon { 
+    left: calc(($archWidth/3) - ($iconHeight/2))+$extensionAmount;
+
+}
+.blocklyTreeRow { 
+    margin-bottom: 0;
+}

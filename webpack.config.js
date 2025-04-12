@@ -31,9 +31,9 @@ const config = {
     devtool: 'inline-source-map',
     resolve: {
         alias: {
-            "@images": path.join(__dirname, 'src/_images/'),
-            "@partials": path.join(__dirname, 'src/_partials/'),
-            "@root": path.join(__dirname, 'src/_root/')
+            "@images": path.join(__dirname, 'src/images/'),
+            "@partials": path.join(__dirname, 'src/partials/'),
+            "@root": path.join(__dirname, 'src/root/')
         },
         extensions: ['.tsx', '.ts', '.js'],
     },
@@ -58,12 +58,28 @@ const config = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            configFile: 'tsconfig.webpack.json',
+                        },
+                    },
+                ],
             },
             {
                 test: /\.s?css$/,
                 use: ['css-loader', 'sass-loader'],
+            },
+            {
+                test: /\.svg/,
+                include: /\/editor\//,
+                loader: 'svg-inline-loader'
+            },
+            {
+                test: /\.(jpe?g|png|svg|gif)$/i,
+                exclude: /\/editor\//,
+                type: "asset",
             },
         ],
     },
