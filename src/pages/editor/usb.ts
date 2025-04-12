@@ -9,9 +9,21 @@ const COMMANDS = {
 }
 
 type picoMessage = {
-    type: "console" | "confirmation" | "error"
+    type: "console" | "confirmation" | "error",
     message: string,
 }
+
+type disconnectOptions = {
+    error: boolean, 
+    restarting: boolean,
+}
+type connectOptions = {
+    
+}
+type picoOptions = {
+    message: string
+}
+type EventPayload = { event: 'console'; options: picoOptions } | { event: 'confirmation'; options: picoOptions } | { event: 'error'; options: picoOptions } | { event: 'connect'; options: connectOptions } | { event: 'disconnect'; options: disconnectOptions }
 
 class Pico extends EventTarget {
     baudRate: number
@@ -46,8 +58,8 @@ class Pico extends EventTarget {
     //Connect: no info needed
     //Disconnect: {error: bool, message: """}
     //Message: {type: type, message: ""}
-    #emitChangeEvent(event, options) {
-        this.dispatchEvent(new CustomEvent(event, {detail: options}));
+    #emitChangeEvent(payload: EventPayload) {
+        this.dispatchEvent(new CustomEvent(payload.event, {detail: payload.options}));
     }
     #startupConnect() { //Check if the Pico is already connected to the website on startup
         navigator.serial.getPorts().then(ports => {
@@ -67,7 +79,8 @@ class Pico extends EventTarget {
         })
         .catch((error) => { //User did not select a port (or error connecting) show toolbar?
             if (error.name === "NotFoundError") return
-            throw new Error("Connection Error!")
+            this.#emitChangeEvent({event: "error", options: {message: "Could not connect to the pico! Try resetting it?"}})
+            console.warn("Could not connect to the port")
         })
     }
     async disconnect() {
@@ -86,12 +99,12 @@ class Pico extends EventTarget {
                 await this.currentWriterStreamClosed;
             }
             if (this.port) await this.port.close()
-            this.#emitChangeEvent("disconnect", {error: false, restarting: this.restarting})
+            this.#emitChangeEvent({event: "disconnect", options: {error: false, restarting: this.restarting}})
             this.textEncoder = new TextEncoderStream();
             this.currentWriter = this.textEncoder.writable.getWriter();
             this.textDecoder = new TextDecoderStream()
             this.currentReader = this.textDecoder.readable.getReader();
-            resolve("disconnected")
+            resolve("")
         });
     }
     async connect(port: SerialPort) {
@@ -102,16 +115,26 @@ class Pico extends EventTarget {
             await this.port.open({ baudRate: 9600 });
         }
         catch(err) {
-            throw new Error("We are unable to open the port on the pico! Try resetting it?")
+            this.#emitChangeEvent({event: "error", options: {message: "We are unable to open the port on the pico! Try resetting it?"}})
+            console.warn("Unable to connect to pico port")
         }
-        if (!this.port) throw new Error("Port provided was not defined")
-        if (!this.port.writable) throw new Error("Could not write to port")
-        if (!this.port.readable) throw new Error("Could not read the port")
+        if (!this.port) {
+            this.#emitChangeEvent({event: "error", options: {message: "The port was not provided! Please reopen the window, click the pico device then press connect!"}})
+            return console.warn("Pico port was not provided")
+        }
+        if (!this.port.writable) {
+            this.#emitChangeEvent({event: "error", options: {message: "We could not write to the pico! Try resetting it and make sure no other editors are open!"}})
+            return console.warn("Could not open writer")
+        }
+        if (!this.port.readable) {
+            this.#emitChangeEvent({event: "error", options: {message: "We could not read the pico! Try resetting it and make sure no other editors are open!"}})
+            return console.warn("Could not open reader")
+        }
         //Piping our reader and streaming into the right port
         this.currentWriterStreamClosed = this.textEncoder.readable.pipeTo(this.port.writable);
         this.currentReadableStreamClosed = this.port.readable.pipeTo(this.textDecoder.writable);
         this.restarting = false
-        this.#emitChangeEvent("connect", {})
+        this.#emitChangeEvent({event: "connect", options: {}})
         this.read()
         return this.firmwareCheck()
     }
@@ -195,7 +218,7 @@ class Pico extends EventTarget {
                     if (type === "confirmation") {
                         this.firmware = true //The firmware check was successful!
                     }
-                    this.#emitChangeEvent(type, {message: message["message"]})
+                    this.#emitChangeEvent({event: type, options: {message: message["message"]}})
                 }
             }
         } catch(err) {
