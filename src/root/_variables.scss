@@ -1,0 +1,23 @@
+// Theme
+$themeBlue: #2588C7;
+$themeGreen: #91CC31;
+$themeYellow: #FFCD44;
+$themeRed: #FF6166;
+$themeBlack: #405C64; // 05/Key color. To be used as subtitute for pure black.
+
+$dropShadow: #26363B55;
+
+// Whites
+$primary: #F5F5F5;
+$secondary: #C6C6C6;
+
+// Margins/Padding
+$articleMargin: 64px;
+
+@mixin dropShadowSmall {
+    box-shadow: 3px 3px 0px $dropShadow;
+}
+
+@mixin dropShadowLarge {
+    box-shadow: 6px 6px 0px $dropShadow;
+}
