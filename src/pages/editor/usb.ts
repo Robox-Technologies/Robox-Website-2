@@ -27,13 +27,13 @@ type EventPayload = { event: 'console'; options: picoOptions } | { event: 'confi
 
 class Pico extends EventTarget {
     baudRate: number
-    port: SerialPort
+    port: SerialPort | null
     textEncoder: TextEncoderStream
     currentWriter: WritableStreamDefaultWriter
     textDecoder: TextDecoderStream
     currentReader: ReadableStreamDefaultReader
-    currentWriterStreamClosed: Promise<void>
-    currentReadableStreamClosed: Promise<void>
+    currentWriterStreamClosed: Promise<void> | null
+    currentReadableStreamClosed: Promise<void> | null
     firmwareVersion: number
     restarting: boolean
     firmware: boolean
@@ -41,13 +41,13 @@ class Pico extends EventTarget {
         super();
         //Initing all the things we need!
         this.baudRate = baudRate;
-        this.port;
+        this.port = null;
         this.textEncoder = new TextEncoderStream();
         this.currentWriter = this.textEncoder.writable.getWriter();
         this.textDecoder = new TextDecoderStream()
         this.currentReader = this.textDecoder.readable.getReader();
-        this.currentWriterStreamClosed;
-        this.currentReadableStreamClosed;
+        this.currentWriterStreamClosed = null;
+        this.currentReadableStreamClosed = null;
         this.firmwareVersion = firmwareVersion
         this.restarting = false //So that we know when a disconnect is from us or unexpected
         this.firmware = false //CHecking if the pico is the right firmware version
