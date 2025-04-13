@@ -225,7 +225,6 @@ class Pico extends EventTarget {
             console.warn(err)
         }
     }
-    
 }
 export let pico = new Pico()
 const piVendorId = 0x2e8a

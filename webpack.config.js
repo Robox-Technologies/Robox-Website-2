@@ -28,7 +28,7 @@ for (const markdownGuide of markdownGuides) {
 const htmlPages = [...guideHtmlPages, ...pagesHtmlFiles]
 const config = {
     mode: 'development',
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
     resolve: {
         alias: {
             "@images": path.join(__dirname, 'src/_images/'),
@@ -78,7 +78,8 @@ const config = {
         ],
     },
     output: {
-        clean: true
+        clean: true,
+        devtoolModuleFilenameTemplate: '[absolute-resource-path]'
     }
 };
 function getHtmlFiles(directory, rootDir) {
