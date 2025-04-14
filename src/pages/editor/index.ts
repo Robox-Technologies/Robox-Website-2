@@ -2,7 +2,7 @@
 import * as Blockly from 'blockly';
 import "../root/root.scss"
 
-import { pico } from './communication/communicate';
+import "./usb"
 
 import theme from "./blockly/theme"
 

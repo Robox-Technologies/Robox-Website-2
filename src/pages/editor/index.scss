@@ -238,7 +238,7 @@ $nameInputDropShadowMult: 2;
     justify-content: center;
     align-items: center;
 }
-#download-robox-button {
+.mainButton {
     color: white;
     height: 100%;
     font-weight: bold;
@@ -247,7 +247,7 @@ $nameInputDropShadowMult: 2;
     border-right: $seperatorStrokeSize solid white;
 
 }
-#download-robox {
+#connection-managment {
     background-color: $roboxRed;
     display: flex;
     justify-content: space-between;
@@ -256,7 +256,7 @@ $nameInputDropShadowMult: 2;
     border-radius: 2em;
     
 }
-#options {
+.sideButtons {
     font-size: 20px;
     padding: 0 15px 0 15px;
     color: white;
@@ -303,4 +303,101 @@ $blocklyUIButtonsDropShadowMult: 2;
     align-items: center;
     padding: 20px;
     cursor: pointer;
+}
+#connection-managment[status="disconnected"] {
+    #download-robox-button {
+        display: none;
+    }
+    #connect-robox-button {
+        display: block;
+    }
+    #stop-robox-button {
+        display: none;
+    }
+    #run-robox-button {
+        display: none;
+    }
+
+    #options {
+        display: block;
+    }
+    #disconnect {
+        display: none;
+    }
+    #console {
+        display: none;
+    }
+}
+#connection-managment[status="connected"] {
+    #download-robox-button {
+        display: block;
+    }
+    #connect-robox-button {
+        display: none;
+    }
+    #stop-robox-button {
+        display: none;
+    }
+    #run-robox-button {
+        display: none;
+    }
+    
+    #options {
+        display: none;
+    }
+    #disconnect {
+        display: block;
+    }
+    #console {
+        display: none;
+    }
+}
+#connection-managment[status="downloaded"] {
+    #download-robox-button {
+        display: none;
+    }
+    #connect-robox-button {
+        display: none;
+    }
+    #stop-robox-button {
+        display: none;
+    }
+    #run-robox-button {
+        display: block;
+    }
+    
+    #options {
+        display: none;
+    }
+    #disconnect {
+        display: block;
+    }
+    #console {
+        display: none;
+    }
+}
+
+#connection-managment[status="running"] {
+    #download-robox-button {
+        display: none;
+    }
+    #connect-robox-button {
+        display: none;
+    }
+    #stop-robox-button {
+        display: block;
+    }
+    #run-robox-button {
+        display: none;
+    }
+    
+    #options {
+        display: none;
+    }
+    #disconnect {
+        display: none;
+    }
+    #console {
+        display: block;
+    }
 }
