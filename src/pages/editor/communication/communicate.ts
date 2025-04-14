@@ -27,7 +27,7 @@ type firmwareOptions = {
 type picoOptions = {
     message: string
 }
-type EventPayload = { event: 'console'; options: picoOptions } | { event: 'firmware'; options: firmwareOptions } | { event: 'confirmation'; options: picoOptions } | { event: 'error'; options: picoOptions } | { event: 'connect'; options: connectOptions } | { event: 'disconnect'; options: disconnectOptions }
+type EventPayload = { event: 'console'; options: picoOptions } | { event: 'downloaded'; options: {} } | { event: 'firmware'; options: firmwareOptions } | { event: 'confirmation'; options: picoOptions } | { event: 'error'; options: picoOptions } | { event: 'connect'; options: connectOptions } | { event: 'disconnect'; options: disconnectOptions }
 
 class Pico extends EventTarget {
     communication: USBCommunication
@@ -103,7 +103,11 @@ class Pico extends EventTarget {
     }
     sendCode(code: string) {
         this.communication.write([
-            `${COMMANDS.STARTUPLOAD}${code}\r${COMMANDS.ENDUPLOAD}`, 
+            `${COMMANDS.STARTUPLOAD}${code}\r${COMMANDS.ENDUPLOAD}`
+        ])
+    }
+    runCode() {
+        this.communication.write([
             `${COMMANDS.STARTPROGRAM}`
         ])
     }
@@ -137,7 +141,11 @@ class USBCommunication {
     currentWriterStreamClosed: Promise<void> 
     currentReadableStreamClosed: Promise<void>
     constructor(private parent: Pico, baudRate = 9600) {
-        
+        this.baudRate = baudRate;
+        this.textEncoder = new TextEncoderStream();
+        this.currentWriter = this.textEncoder.writable.getWriter();
+        this.textDecoder = new TextDecoderStream()
+        this.currentReader = this.textDecoder.readable.getReader();
     }
     
     async read() {
@@ -156,7 +164,12 @@ class USBCommunication {
                 while (lineBreak !== -1) {
                     let terminatedMessage = message.slice(0, lineBreak)
                     message = message.slice(lineBreak + terminationLength)
-                    consoleMessages.push(JSON.parse(terminatedMessage))
+                    try {
+                        consoleMessages.push(JSON.parse(terminatedMessage))
+                    }
+                    catch(err) {
+                        console.warn("Not valid JSON")
+                    }
                     lineBreak = message.indexOf("\n")
                 }
                 for (const message of consoleMessages) {
@@ -249,3 +262,5 @@ class USBCommunication {
     }
 }
 export let pico = new Pico("USB")
+pico.init()
+pico.startupConnect()

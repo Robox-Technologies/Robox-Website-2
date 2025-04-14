@@ -318,8 +318,40 @@ $blocklyUIButtonsDropShadowMult: 2;
         display: none;
     }
 
+    #loading {
+        display: none;
+    }
+
     #options {
         display: block;
+    }
+    #disconnect {
+        display: none;
+    }
+    #console {
+        display: none;
+    }
+}
+#connection-managment[status="loading"] {
+    #download-robox-button {
+        display: none;
+    }
+    #connect-robox-button {
+        display: none;
+    }
+    #stop-robox-button {
+        display: none;
+    }
+    #run-robox-button {
+        display: none;
+    }
+
+    #loading {
+        display: block;
+    }
+
+    #options {
+        display: none;
     }
     #disconnect {
         display: none;
@@ -339,6 +371,10 @@ $blocklyUIButtonsDropShadowMult: 2;
         display: none;
     }
     #run-robox-button {
+        display: none;
+    }
+    
+    #loading {
         display: none;
     }
     
@@ -365,6 +401,10 @@ $blocklyUIButtonsDropShadowMult: 2;
     #run-robox-button {
         display: block;
     }
+
+    #loading {
+        display: none;
+    }
     
     #options {
         display: none;
@@ -388,6 +428,10 @@ $blocklyUIButtonsDropShadowMult: 2;
         display: block;
     }
     #run-robox-button {
+        display: none;
+    }
+
+    #loading {
         display: none;
     }
     
