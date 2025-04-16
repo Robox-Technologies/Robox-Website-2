@@ -96,6 +96,7 @@ $downloadButtonSize: 60px;
     transform: translate(calc($toolboxWidth - $seperatorStrokeSize * 2), -$seperatorStrokeSize) !important;
     border: $seperatorStrokeSize solid $navEdges;
     width: 430px;
+    background-color: rgb(245, 245, 245);;
 }
 /* Stacks the icon on top of the label. */
 .blocklyTreeRowContentContainer {

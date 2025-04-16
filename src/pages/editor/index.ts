@@ -1,7 +1,7 @@
 
 import * as Blockly from 'blockly';
 
-import "./usb"
+
 
 import theme from "./blockly/theme"
 
@@ -12,6 +12,7 @@ import { CustomUndoControls, CustomZoomControls } from './blockly/customUI';
 import { MyWorkspace } from '../types/blockly';
 
 import {registerFieldColour} from '@blockly/field-colour';
+import { postBlocklyWSInjection } from './usb';
 registerFieldColour();
 
 const blocks = require.context("./blockly/blocks", false, /\.ts$/);
@@ -26,8 +27,7 @@ generators.keys().forEach(modulePath => {
     // use generator
 });
 
-document.addEventListener("DOMContentLoaded", (event) => {
-    if (!toolbox) return;
+document.addEventListener("DOMContentLoaded", () => {
     const workspace = Blockly.inject('blocklyDiv', {
         toolbox: toolbox,
         theme: theme,
@@ -39,16 +39,19 @@ document.addEventListener("DOMContentLoaded", (event) => {
         },
         trashcan: false,
     }) as MyWorkspace;
+    postBlocklyWSInjection()
     workspace.customZoomControls = new CustomZoomControls(workspace);
     workspace.customZoomControls.init();
-
+    
     workspace.undoControls = new CustomUndoControls(workspace)
     workspace.undoControls.init()
-
+    
     Blockly.browserEvents.conditionalBind(window, 'resize', null, () => { //On workspace resize, resize our custom UI
             if (workspace.customZoomControls) workspace.customZoomControls.position()
             if (workspace.undoControls) workspace.undoControls.position()
         }
     );
 })
+
+
 
