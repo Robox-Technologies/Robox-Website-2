@@ -1,6 +1,5 @@
 
 import * as Blockly from 'blockly';
-import "../root/root.scss"
 
 import "./usb"
 
