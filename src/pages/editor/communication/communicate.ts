@@ -6,6 +6,7 @@ const COMMANDS = {
     STARTUPLOAD: "x032BEGINUPLD\r",
     ENDUPLOAD: "x04\r",
     STARTPROGRAM: "x021STARTPROG\r",
+    RESTARTPROGRAM: "x069\r",
     KEYBOARDINTERRUPT: "\x03\n"
 }
 
@@ -92,11 +93,8 @@ class Pico extends EventTarget {
         }, 1000);
     }
     restart() {
-        this.communication.write([
-            COMMANDS.KEYBOARDINTERRUPT, 
-            "import machine\r",
-            "machine.reset()\r"
-        ])
+        this.communication.restart()
+        this.restarting = true
     }
     request() {
         this.communication.request()
@@ -147,7 +145,13 @@ class USBCommunication {
         this.textDecoder = new TextDecoderStream()
         this.currentReader = this.textDecoder.readable.getReader();
     }
-    
+    restart() {
+        this.write([
+            COMMANDS.KEYBOARDINTERRUPT, 
+            "import machine\r",
+            "machine.reset()\r"
+        ])
+    }
     async read() {
         const terminationLength = "\n".length
         try {
@@ -259,6 +263,89 @@ class USBCommunication {
             console.warn("Could not connect to the port")
             return
         })
+    }
+}
+class BLECommunication {
+    rxCharacteristic: BluetoothRemoteGATTCharacteristic
+    txCharacteristic: BluetoothRemoteGATTCharacteristic
+    device: BluetoothDevice
+    server: BluetoothRemoteGATTServer
+    uartService: BluetoothRemoteGATTService
+    constructor(private parent: Pico, baudRate = 9600) {
+
+    }
+    restart() {
+        this.write([
+            COMMANDS.RESTARTPROGRAM
+        ])
+    }
+    async read() {
+        try {
+            this.rxCharacteristic.addEventListener("characteristicvaluechanged", (event) => {
+                const target = event.target as BluetoothRemoteGATTCharacteristic;
+                if (!target || !target.value) return;
+                let data = new TextDecoder().decode(target.value);
+                this.parent.read(JSON.parse(data));
+            });
+        } catch(err) {
+            console.warn(err)
+        }
+    }
+    async write(messages: string | string[]) {
+        try {
+            if (typeof messages === "object") { //Check if its an array object
+                for (const message of messages) {
+                    let commandBuffer = new TextEncoder().encode(message);
+                    await this.txCharacteristic.writeValue(commandBuffer);
+                }                
+            }
+            else {
+                let commandBuffer = new TextEncoder().encode(messages);
+                await this.txCharacteristic.writeValue(commandBuffer);
+            }
+        }
+        catch(err) {
+            this.parent.emit({"event": "error", options: { "message": "Could not write to pico!"}})
+        }
+    }
+    async connect() {
+        if (this.device && this.device.gatt) {
+
+            this.server = await this.device.gatt.connect();
+        }
+        else {
+            this.parent.emit({event: "error", options: {message: "Could not connect to the server!"}})
+            return
+        }
+        this.uartService = await this.server.getPrimaryService('6e400001-b5a3-f393-e0a9-e50e24dcca9e');
+
+        this.txCharacteristic = await this.uartService.getCharacteristic('6e400002-b5a3-f393-e0a9-e50e24dcca9e'); // TX from Web to Pico
+        this.rxCharacteristic = await this.uartService.getCharacteristic('6e400003-b5a3-f393-e0a9-e50e24dcca9e'); // RX from Pico to Web
+        await this.rxCharacteristic.startNotifications();
+        this.read()
+        return true
+    }
+    async disconnect() {
+        if (this.device && this.device.gatt) {
+            this.device.gatt.disconnect();
+        }
+        return true
+    }
+    async request() {
+        const device = await navigator.bluetooth.requestDevice({
+            acceptAllDevices: true,
+            optionalServices: ['6e400001-b5a3-f393-e0a9-e50e24dcca9e'] // Nordic UART Service UUID
+        });
+        if (device) {
+            this.device = device
+            this.connect()
+        }
+        else {
+            this.parent.emit({event: "error", options: {message: "Could not connect to the pico! Try resetting it?"}})
+            console.warn("Could not connect to the port")
+            return
+        }
+       
     }
 }
 export let pico = new Pico("USB")

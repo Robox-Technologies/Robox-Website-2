@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@blockly/field-colour": "^5.0.12",
+    "@types/web-bluetooth": "^0.0.21",
     "blockly": "^11.2.2",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
