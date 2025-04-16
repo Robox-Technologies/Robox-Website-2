@@ -73,7 +73,6 @@ const config = {
             },
             {
                 test: /\.svg/,
-                include: /\/editor\//,
                 loader: 'svg-inline-loader'
             },
             {

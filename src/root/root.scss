@@ -10,7 +10,10 @@ body {
     margin: 0;
     background-color: variables.$primary;
 }
-
+.button {
+    background-color: unset;
+    border: 0;
+}
 a {
     text-decoration: none;
     -webkit-text-decoration: none;
