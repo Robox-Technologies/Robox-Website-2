@@ -1,6 +1,7 @@
 import * as Blockly from 'blockly';
 
-import archSVG from "./Arch.svg"
+import archSVG from "./Arch.svg?raw"
+
 type HexColor = `#${string}`;
 
 const animationTime = 300
