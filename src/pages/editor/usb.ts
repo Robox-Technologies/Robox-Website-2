@@ -35,30 +35,39 @@ document.addEventListener("DOMContentLoaded", (event) => {
         const picoEvent = event as CustomEvent
         if (!picoEvent.detail.restarting) { //Disconnected
             connectionManagment.setAttribute("status",  "disconnected")
+            connectionManagment.setAttribute("loading",  "false")
         }
     })
     pico.addEventListener("connect", (event) => {
         connectionManagment.setAttribute("status",  "connected")
+        connectionManagment.setAttribute("loading",  "false")
     })
     pico.addEventListener("download", (event) => {
         connectionManagment.setAttribute("status",  "downloaded")
+        connectionManagment.setAttribute("loading",  "false")
+
     })
 
-    connectButton?.addEventListener("click", () => pico.request());
+    connectButton?.addEventListener("click", () => {
+        pico.request()
+        connectionManagment.setAttribute("loading",  "true")
+    });
     downloadButton?.addEventListener("click", () => {
         let code = pythonGenerator.workspaceToCode(ws);
         let finalCode = `${scriptDependency}\n${code}\nevent_begin()`
         pico.sendCode(finalCode)
-        connectionManagment.setAttribute("status",  "loading")
+        connectionManagment.setAttribute("loading",  "true")
 
     })
     stopButton?.addEventListener("click", () => {
         pico.restart()
-        connectionManagment.setAttribute("status",  "loading")
+        connectionManagment.setAttribute("loading",  "true")
     })
     runButton?.addEventListener("click", () => {
         pico.runCode()
         connectionManagment.setAttribute("status",  "running")
+        connectionManagment.setAttribute("loading",  "false")
+
     })
 })
 

@@ -92,6 +92,7 @@ class Pico extends EventTarget {
         }, 1000);
     }
     restart() {
+        this.restarting = true
         this.communication.write([
             COMMANDS.KEYBOARDINTERRUPT, 
             "import machine\r",
@@ -115,6 +116,7 @@ class Pico extends EventTarget {
         let connected = await this.communication.connect(port)
         if (connected) {
             this.emit({event: "connect", options: {}})
+            if (this.restarting) this.restarting = false
             this.firmwareCheck()
         }
     }

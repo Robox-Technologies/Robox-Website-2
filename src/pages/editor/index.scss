@@ -241,6 +241,7 @@ $nameInputDropShadowMult: 2;
     height: 100%;
     font-weight: bold;
     font-size: larger;
+    width: 270px;
     padding: 0 40px 0 40px;
     border-right: $seperatorStrokeSize solid white;
 
@@ -250,6 +251,7 @@ $nameInputDropShadowMult: 2;
     display: flex;
     justify-content: space-between;
     padding: 0;
+    width: 310px;
     height: 50px;
     border-radius: 2em;
     
@@ -303,6 +305,7 @@ $blocklyUIButtonsDropShadowMult: 2;
     cursor: pointer;
 }
 #connection-managment[status="disconnected"] {
+    background-color: variables.$themeBlue;
     #download-robox-button {
         display: none;
     }
@@ -330,35 +333,9 @@ $blocklyUIButtonsDropShadowMult: 2;
         display: none;
     }
 }
-#connection-managment[status="loading"] {
-    #download-robox-button {
-        display: none;
-    }
-    #connect-robox-button {
-        display: none;
-    }
-    #stop-robox-button {
-        display: none;
-    }
-    #run-robox-button {
-        display: none;
-    }
 
-    #loading {
-        display: block;
-    }
-
-    #options {
-        display: none;
-    }
-    #disconnect {
-        display: none;
-    }
-    #console {
-        display: none;
-    }
-}
 #connection-managment[status="connected"] {
+    background-color: variables.$themeYellow;
     #download-robox-button {
         display: block;
     }
@@ -387,6 +364,7 @@ $blocklyUIButtonsDropShadowMult: 2;
     }
 }
 #connection-managment[status="downloaded"] {
+    background-color: variables.$themeGreen;
     #download-robox-button {
         display: none;
     }
@@ -416,6 +394,7 @@ $blocklyUIButtonsDropShadowMult: 2;
 }
 
 #connection-managment[status="running"] {
+    background-color: variables.$themeRed;
     #download-robox-button {
         display: none;
     }
@@ -442,4 +421,24 @@ $blocklyUIButtonsDropShadowMult: 2;
     #console {
         display: block;
     }
+}
+#connection-managment[loading="true"] {
+    
+    #download-robox-button {
+        display: none;
+    }
+    #connect-robox-button {
+        display: none;
+    }
+    #stop-robox-button {
+        display: none;
+    }
+    #run-robox-button {
+        display: none;
+    }
+
+    #loading {
+        display: block;
+    }
+
 }
