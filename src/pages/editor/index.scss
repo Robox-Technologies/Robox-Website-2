@@ -1,3 +1,4 @@
+@use '../../root/variables';
 $navEdges: #717171;
 $componentHeight: 48px;
 
@@ -29,9 +30,6 @@ $topButtonsDropShadowMult: 1;
 $dropShadowColour: rgb(47, 47, 47);
 
 $backgroundColour: #E6F0FF;
-
-$roboxRed: #FF6166;
-$roboxBlue: #2588C7;
 
 $barPadding: 2.5%;
 $topBarButtonGap: 10px;
@@ -161,13 +159,13 @@ body {
     background-color: $backgroundColour;
 }
 #workspaceTabs {
-    background-color: $roboxRed;
+    background-color: variables.$themeRed;
 }
 #workspaceTabs, #actionBar {
     height: $barHeight;
     display: flex;
     justify-content: space-between;
-    width: calc(100% - 2*$barPadding);
+    width: 100%;
     padding: 0 $barPadding 0 $barPadding;
     flex-direction: row;
     align-content: center;
@@ -216,7 +214,7 @@ $nameInputDropShadowMult: 2;
 .topButton {
     width: 30px;
     height: 30px;
-    background-color: $roboxBlue;
+    background-color: variables.$themeBlue;
     border-radius: 50%;
     border: none;
     filter: drop-shadow(calc($dropshadowBase*$topButtonsDropShadowMult) calc($dropshadowBase*$topButtonsDropShadowMult) $dropShadowColour);
@@ -248,7 +246,7 @@ $nameInputDropShadowMult: 2;
 
 }
 #connection-managment {
-    background-color: $roboxRed;
+    background-color: variables.$themeRed;
     display: flex;
     justify-content: space-between;
     padding: 0;
@@ -292,8 +290,8 @@ $blocklyUIButtonsDropShadowMult: 2;
 }
 .uiButtons {
     background-color: white;
-    color: $roboxBlue;
-    border: $seperatorStrokeSize solid $roboxBlue;
+    color: variables.$themeBlue;
+    border: $seperatorStrokeSize solid variables.$themeBlue;
     font-size: calc((30px/$blocklyUIIconSize)*$blocklyUIIconSize);
     width: $blocklyUIIconSize;
     height: $blocklyUIIconSize;
