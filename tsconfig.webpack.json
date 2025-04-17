@@ -4,6 +4,9 @@
       "module": "esnext",
       "moduleResolution": "node",
       "jsx": "react-jsx",
+      "sourceMap": true,
+      "strictPropertyInitialization": false,
+      "inlineSources": true,
       "strict": true,
       "esModuleInterop": true,
       "skipLibCheck": true

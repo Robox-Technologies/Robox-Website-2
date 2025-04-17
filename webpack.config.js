@@ -28,7 +28,7 @@ for (const markdownGuide of markdownGuides) {
 const htmlPages = [...guideHtmlPages, ...pagesHtmlFiles]
 const config = {
     mode: 'development',
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
     resolve: {
         alias: {
             "@images": path.join(__dirname, 'src/images/'),
@@ -72,19 +72,19 @@ const config = {
                 use: ['css-loader', 'sass-loader'],
             },
             {
-                test: /\.svg/,
-                include: /\/editor\//,
-                loader: 'svg-inline-loader'
+                test: /\.(jpe?g|png|svg|gif)$/i,
+                type: "asset",
             },
             {
-                test: /\.(jpe?g|png|svg|gif)$/i,
-                exclude: /\/editor\//,
-                type: "asset",
+                test: /\.svg$/i,
+                resourceQuery: /raw/, // *.svg?raw
+                type: 'asset/source',
             },
         ],
     },
     output: {
-        clean: true
+        clean: true,
+        devtoolModuleFilenameTemplate: '[absolute-resource-path]'
     }
 };
 function getHtmlFiles(directory, rootDir) {

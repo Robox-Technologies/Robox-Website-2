@@ -1,6 +1,7 @@
 import * as Blockly from 'blockly';
 
-import archSVG from "./Arch.svg"
+import archSVG from "./Arch.svg?raw"
+
 type HexColor = `#${string}`;
 
 const animationTime = 300
@@ -33,6 +34,7 @@ class RoboxToolboxCategories extends Blockly.ToolboxCategory {
         const arch = container.querySelector("svg > path")
         if (!arch || !(arch instanceof SVGElement)) return dom
         arch.style.fill = this.colour_;
+        arch.style.stroke = this.colour_;
         dom.appendChild(rectangle)
         dom.appendChild(container)
         return dom
@@ -49,7 +51,7 @@ class RoboxToolboxCategories extends Blockly.ToolboxCategory {
         const dom = this.htmlDiv_
         const icon = dom?.querySelector(".categoryIcon")
         const extender = dom?.querySelector(".extender")
-        if (!icon || !(icon instanceof HTMLElement)) return
+        if (!icon || !(icon instanceof SVGElement)) return
         if (!extender || !(extender instanceof HTMLElement)) return
         if (isSelected) {
             const extenderAnimation = [
@@ -57,13 +59,14 @@ class RoboxToolboxCategories extends Blockly.ToolboxCategory {
                 { width: `${extensionAmount}px` },
             ];
             const iconAnimation = [
-                { left: `${icon.offsetLeft}px` },
+                { left: `${icon.getBoundingClientRect()["left"]}px` },
                 { left: `${((archWidth/3)-(iconHeight/2))+extensionAmount}px` },
             ];
-            icon.animate(iconAnimation, { duration: animationTime, iterations: 1})
+            icon.animate(iconAnimation, { duration: animationTime, iterations: 1}).onfinish = () => {
+                icon.classList.add("extended")
+            };
             extender.animate(extenderAnimation, { duration: animationTime, iterations: 1})
             extender.classList.add("extended")
-            icon.classList.add("extended")
         }
         else {
             const extenderAnimation = [
@@ -71,14 +74,15 @@ class RoboxToolboxCategories extends Blockly.ToolboxCategory {
                 { width: `0px` },
             ];
             const iconAnimation = [
-                { left: `${icon.offsetLeft}px` },
+                { left: `${icon.getBoundingClientRect()["left"]}px` },
                 { left: `${((archWidth/3)-(iconHeight/2))}px` },
             ];
 
-            icon.animate(iconAnimation, { duration: animationTime, iterations: 1})
+            icon.animate(iconAnimation, { duration: animationTime, iterations: 1}).onfinish = () => {
+                icon.classList.remove("extended")
+            };
             extender.animate(extenderAnimation, { duration: animationTime, iterations: 1})
             extender.classList.remove("extended")
-            icon.classList.remove("extended")
         }
     }
 }
@@ -94,6 +98,15 @@ class RoboxToolboxSeperator extends Blockly.ToolboxSeparator {
         return dom
     }
 }
+export class RoundedFlyout extends Blockly.VerticalFlyout {
+    override readonly CORNER_RADIUS = 0;
+    constructor(workspaceOptions: Blockly.Options) {
+        super(workspaceOptions);
+        
+    }
+}
+
+//TODO: add names for the variable and procedure category
 
 Blockly.registry.register(
     Blockly.registry.Type.TOOLBOX_ITEM,
