@@ -1,0 +1,60 @@
+<!-- THE STRUCTURE OF THE INCLUDE
+{
+    title?: string,
+    imageSource: URL,
+    descriptions?: [
+        string,
+        string,
+    ]
+    buttons?: [ optional 
+        {
+            id?: string, 
+            content: string | html
+            link?: URL (emits a tag instead of button)
+        }
+    ]
+    topRowButton: false
+} -->
+
+<article class="card <%= it.class %>">
+    <img class="card-image" src="<%= it.imageSource %>">
+    <div class="card-info">
+        <div class="card-top-row">
+            <h1 class="card-title">
+                <%~ it.title ? it.title : ""%>
+            </h1>
+            <% if (it.topRowButton) { %>
+                <button class="button options">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+            <% } %>
+            
+        </div>
+        
+        <% if (it.descriptions) { %>
+            <div class="card-descriptions">
+                <% it.descriptions.forEach(function(description){ %>
+                    <p class="card-description">
+                        <%~ description %>
+                    </p>
+                <% }) %>
+            </div>
+        <% } %>
+        <% if (it.buttons) { %>
+            <div class="card-buttons">
+                <% it.buttons.forEach(function(button){ %>
+                    <% if (button.link) { %>
+                        <a id="<%= button.id || '' %>" href="<%= button.link%>" class="card-link">
+                            <%~ button.content %>
+                        </a>
+                    <% } else { %>
+                        <button id="<%= button.id || '' %>" class="button card-button">
+                            <%~ button.content %>
+                        </button>
+                    <% } %>
+                <% }) %>
+            </div>
+        <% } %>
+        
+    </div>
+</article>
