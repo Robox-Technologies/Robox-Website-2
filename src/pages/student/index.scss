@@ -1,0 +1,70 @@
+@use '../../root/variables';
+
+$projectIconSize: 1.2em;
+$projectIconGap: 5px;
+
+$projectCardGap: 30px;
+$projectCardWidth: 250px;
+$cardBorderRadius: 5%;
+
+#main {
+    padding: 30px;
+}
+.fa-square-binary {
+    height: $projectIconSize;
+    width: $projectIconSize;
+    background-color: white;
+    margin-right: $projectIconGap;
+}
+.fa-square-binary > path {
+    color: variables.$themeBlue;
+}
+.fa-chevron-right {
+    font-size: 12px;
+}
+
+.guide-icon-arrow {
+    height: 12px;
+    width: 12px;
+    margin-top: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: $projectIconGap;
+}
+
+.assembly-cards > .card-info > .card-buttons {
+    flex-direction: column;
+}
+.card-holder {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    align-content: center;
+    gap: $projectCardGap; 
+    flex-wrap: wrap;
+}
+.project-cards {
+    width: $projectCardWidth;
+}
+#create-project {
+    width: $projectCardWidth;
+    border-radius: $cardBorderRadius;
+    background-color: variables.$themeBlue;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+#create-project > * {
+    color: white;
+    text-align: center;
+    font-size: 30px;
+}
+#create-project > p{
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+#create-project > svg > path {
+    color: white;
+}

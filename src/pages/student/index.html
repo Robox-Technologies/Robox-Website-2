@@ -1,0 +1,108 @@
+
+<head>
+    <script src="./index.ts"></script>
+    <link href="./index.scss" rel="stylesheet" />
+    <%~ include('src/partials/metadata.html') %>
+</head>
+
+<body>
+    <%~ include('src/partials/header.html') %>
+
+    <div id="main" class="item-sections">
+        <section id="assembly-guides">
+            <h1>
+                Assembly Guides
+            </h1> 
+            <div class="card-holder" id="assembly-guides">
+                <%~ include('src/partials/card.html', {
+                    class: "assembly-cards",
+                    title: '<span>Assembly Guide</span>', 
+                    imageSource: "", 
+                    buttons: [
+                        {
+                            content: "<span>PDF Build Instructions</span> <div class='guide-icon-arrow'><i class='fa-solid fa-chevron-right'></i></div>",
+                        },
+                        {
+                            content: "<span>3D Build Instructions</span> <div class='guide-icon-arrow'><i class='fa-solid fa-chevron-right'></i></div>",
+                        },
+                    ],
+                    topRowButton: false,
+                }) %>
+            </div>
+        </section>
+        <section id="projects">
+            <div>
+
+            </div>
+            <h1>
+                My Projects
+            </h1>
+            <div class="card-holder" id="project-holder">
+                <div id="create-project">
+                    <i class="fa-solid fa-plus"></i>
+                    <p>
+                        New Project
+                    </p>
+                </div>
+                <%~ include('src/partials/card.html', {
+                    class: "project-cards",
+                    title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
+                    imageSource: "", 
+                    descriptions: [
+                        "2 hours ago", 
+                    ],
+                    topRowButton: true,
+                }) %>
+                <%~ include('src/partials/card.html', {
+                    class: "project-cards",
+                    title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
+                    imageSource: "", 
+                    descriptions: [
+                        "2 hours ago", 
+                    ],
+                    topRowButton: true,
+                }) %>
+                <%~ include('src/partials/card.html', {
+                    class: "project-cards",
+                    title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
+                    imageSource: "", 
+                    descriptions: [
+                        "2 hours ago", 
+                    ],
+                    topRowButton: true,
+                }) %>
+                <%~ include('src/partials/card.html', {
+                    class: "project-cards",
+                    title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
+                    imageSource: "", 
+                    descriptions: [
+                        "2 hours ago", 
+                    ],
+                    topRowButton: true,
+                }) %>
+                <%~ include('src/partials/card.html', {
+                    class: "project-cards",
+                    title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
+                    imageSource: "", 
+                    descriptions: [
+                        "2 hours ago", 
+                    ],
+                    topRowButton: true,
+                }) %>
+                <%~ include('src/partials/card.html', {
+                    class: "project-cards",
+                    title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
+                    imageSource: "", 
+                    descriptions: [
+                        "2 hours ago", 
+                    ],
+                    topRowButton: true,
+                }) %>
+            </div>
+            
+        </section>
+        
+    </div>
+    
+    <%~ include('src/partials/footer.html') %>
+</body>
