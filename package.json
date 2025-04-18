@@ -11,6 +11,7 @@
   "dependencies": {
     "@blockly/field-colour": "^5.0.12",
     "blockly": "^11.2.2",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "html-bundler-webpack-plugin": "^4.19.1",
