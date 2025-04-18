@@ -5,7 +5,7 @@ import { Projects, Project } from '../types/projects';
 
 const ratio = 16/9;
 const padding = 30;
-const finalWidth = 230;
+const finalWidth = 244*2;
 
 export function getProjects(): Projects {
     let projectsRaw = localStorage.getItem("roboxProjects")
@@ -41,7 +41,7 @@ export function loadBlockly(uuid: string, workspace: Workspace) {
     serialization.workspaces.load(workspaceData, workspace, undefined);
     Events.enable();
 }
-export function saveBlockly(uuid: string, workspace: WorkspaceSvg, callback: (project: string) => void) {
+export function saveBlockly(uuid: string, workspace: WorkspaceSvg, callback: ((project: string) => void) | null = null) {
     workspaceToSvg_(workspace, (thumburi: string) => {
         const data = serialization.workspaces.save(workspace)
         let projects = getProjects()
@@ -175,7 +175,7 @@ function workspaceToSvg_(workspace: WorkspaceSvg, callback: (url: string) => voi
         (workspace.getTheme ? workspace.getTheme().name + '-theme' : ''));
     svg.setAttribute('width', width.toString());
     svg.setAttribute('height', height.toString());
-    svg.setAttribute("style", 'background-color: #F5F5F5;');
+    svg.setAttribute("style", 'background-color: #E6F0FF;');
 
     var css = [].slice.call(document.head.querySelectorAll('style'))
         .filter(function (el: HTMLStyleElement) {
