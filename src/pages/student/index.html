@@ -2,6 +2,7 @@
 <head>
     <script src="./index.ts"></script>
     <link href="./index.scss" rel="stylesheet" />
+    <link href="@root/root.scss" rel="stylesheet" />
     <%~ include('src/partials/metadata.html') %>
 </head>
 
@@ -30,10 +31,10 @@
                     imageSource: "https://placehold.co/1920x1080", 
                     buttons: [
                         {
-                            content: "<span>PDF Build Instructions</span> <div class='guide-icon-arrow'><i class='fa-solid fa-chevron-right'></i></div>",
+                            content: "<span class='underline-grow'>PDF Build Instructions</span> <div class='guide-icon-arrow'><i class='fa-solid fa-chevron-right'></i></div>",
                         },
                         {
-                            content: "<span>3D Build Instructions</span> <div class='guide-icon-arrow'><i class='fa-solid fa-chevron-right'></i></div>",
+                            content: "<span class='underline-grow'>3D Build Instructions</span> <div class='guide-icon-arrow'><i class='fa-solid fa-chevron-right'></i></div>",
                         },
                     ],
                     topRowButton: false,

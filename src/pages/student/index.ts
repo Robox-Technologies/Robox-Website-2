@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", (event) => {
-    const projectCards = document.querySelectorAll(".project-card") as NodeListOf<HTMLElement>
+    const projectCards = document.querySelectorAll(".project-card, #create-project, .lesson-card") as NodeListOf<HTMLElement>
     for (const projectCard of projectCards) {
         projectCard.addEventListener('mousemove', (e: MouseEvent) => {
             const rect = projectCard.getBoundingClientRect();

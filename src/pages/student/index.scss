@@ -44,6 +44,9 @@ $cardBorderRadius: 5%;
     gap: $projectCardGap; 
     flex-wrap: wrap;
 }
+$hoverCardBorderSize: 3px;
+$hoverCardBorderColor: variables.$themeBlue;
+
 .project-card {
     width: $projectCardWidth;
     transition: transform 0.5s ease-in-out;
@@ -51,12 +54,14 @@ $cardBorderRadius: 5%;
     transition: transform 0.1s ease-out;
     transform-style: preserve-3d;
     will-change: transform;
-    box-sizing: border-box;
 }
-.project-card:hover {
-    border: 3px solid variables.$themeRed;
+.project-card:hover, .lesson-card:hover {
+    border: $hoverCardBorderSize solid variables.$themeBlue;
 }
+.project-card, .lesson-card {
+    border: $hoverCardBorderSize solid transparent;
 
+}
 
 #create-project {
     width: $projectCardWidth;
@@ -66,6 +71,11 @@ $cardBorderRadius: 5%;
     justify-content: center;
     align-content: center;
     flex-direction: column;
+    
+}
+#create-project:hover {
+    cursor: pointer;
+    
 }
 #create-project > * {
     color: white;
@@ -131,14 +141,7 @@ $titleFontsize: 49px;
     cursor: pointer;
 }
 //Credits too https://stackoverflow.com/questions/62867788/text-underline-animation-in-css-the-simplest-way
-.assembly-card > .card-info > .card-buttons > .card-button > span{
-    background: linear-gradient(variables.$themeBlue 0 0) bottom left/var(--underline-width, 0%) 0.1em no-repeat;
 
-    display: inline-block;
-    padding: 0 0 0.2em;
-    text-decoration: none;
-    transition: background-size 0.5s;
-}
 .assembly-card > .card-info > .card-buttons > .card-button:hover {
     --underline-width: 100%;
 }
