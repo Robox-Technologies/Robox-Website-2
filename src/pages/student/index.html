@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <%~ include('src/partials/header.html') %>
+    <%~ include('src/partials/header-workshop.html') %>
     <section id="hero">
         <div id="hero-title-container">
             <h1 id="hero-title">
@@ -25,9 +25,9 @@
             </h1> 
             <div class="card-holder" id="assembly-guides">
                 <%~ include('src/partials/card.html', {
-                    class: "assembly-cards",
+                    class: "assembly-card",
                     title: '<span>Assembly Guide</span>', 
-                    imageSource: "", 
+                    imageSource: "https://placehold.co/1920x1080", 
                     buttons: [
                         {
                             content: "<span>PDF Build Instructions</span> <div class='guide-icon-arrow'><i class='fa-solid fa-chevron-right'></i></div>",
@@ -55,54 +55,54 @@
                     </p>
                 </div>
                 <%~ include('src/partials/card.html', {
-                    class: "project-cards",
+                    class: "project-card",
                     title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
-                    imageSource: "", 
+                    imageSource: "https://placehold.co/1920x1080", 
                     descriptions: [
                         "2 hours ago", 
                     ],
                     topRowButton: true,
                 }) %>
                 <%~ include('src/partials/card.html', {
-                    class: "project-cards",
+                    class: "project-card",
                     title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
-                    imageSource: "", 
+                    imageSource: "https://placehold.co/1920x1080", 
                     descriptions: [
                         "2 hours ago", 
                     ],
                     topRowButton: true,
                 }) %>
                 <%~ include('src/partials/card.html', {
-                    class: "project-cards",
+                    class: "project-card",
                     title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
-                    imageSource: "", 
+                    imageSource: "https://placehold.co/1920x1080", 
                     descriptions: [
                         "2 hours ago", 
                     ],
                     topRowButton: true,
                 }) %>
                 <%~ include('src/partials/card.html', {
-                    class: "project-cards",
+                    class: "project-card",
                     title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
-                    imageSource: "", 
+                    imageSource: "https://placehold.co/1920x1080", 
                     descriptions: [
                         "2 hours ago", 
                     ],
                     topRowButton: true,
                 }) %>
                 <%~ include('src/partials/card.html', {
-                    class: "project-cards",
+                    class: "project-card",
                     title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
-                    imageSource: "", 
+                    imageSource: "https://placehold.co/1920x1080", 
                     descriptions: [
                         "2 hours ago", 
                     ],
                     topRowButton: true,
                 }) %>
                 <%~ include('src/partials/card.html', {
-                    class: "project-cards",
+                    class: "project-card",
                     title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
-                    imageSource: "", 
+                    imageSource: "https://placehold.co/1920x1080", 
                     descriptions: [
                         "2 hours ago", 
                     ],
@@ -110,6 +110,23 @@
                 }) %>
             </div>
             
+        </section>
+        <section id="lessons">
+            <h1>
+                Explore Our Lessons
+            </h1> 
+            <div class="card-holder" id="assembly-guides">
+                <%~ include('src/partials/card.html', {
+                    class: "lesson-card",
+                    title: '<span>Assembly Guide</span>', 
+                    imageSource: "https://placehold.co/1920x1080", 
+                    descriptions: [
+                        "30-45 min",
+                        "Beginner"
+                    ],
+                    topRowButton: false,
+                }) %>
+            </div>
         </section>
         
     </div>
