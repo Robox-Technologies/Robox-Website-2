@@ -23,17 +23,38 @@ function applyProjects() {
     for (const uuid of sortedByTime) {
         let project = projects[uuid] as Project
         if (!project) continue
-        const clone = projectTemplate.content.cloneNode(true) as HTMLElement;
+        const fragment = projectTemplate.content.cloneNode(true) as DocumentFragment;
+        const clone = fragment.querySelector(".card") as HTMLElement
 
         const title = clone.querySelector(".card-title-text")
         const time = clone.querySelector(".card-description")
+        const image = clone.querySelector(".card-image") as HTMLImageElement
+        clone.id = uuid
         let projectTime = dayjs(project["time"])
 
-        if (!title || !time) return
-        
+        if (!title || !time || !image) return
+        image.src = project["thumbnail"]
         title.textContent = project["name"];
         time.textContent = projectTime.fromNow()
+        clone.addEventListener("click", (event: MouseEvent) => {
+            // if (toolbarModal.hasAttribute("open") || e.target.closest("#toolbar")) return
+            let item = event.target as HTMLElement | null
+            if (!item) return
+            let dots = item.closest(".dots") //checking if there is the dots object near or above the item
+            if (dots === null) { //If the dialog is clicked it will not have dots (as dots is its child)
+                window.location.href = `/editor?id=${clone.id}`
+            }
+            else { //if it is the edit menu dots clicked
+                // let project = dots.closest(".project")
+                // project.appendChild(toolbarModal)
+                // toolbarModal = document.getElementById("toolbar")
+                // toolbarModal.setAttribute("target", item.closest(".project").id)
+                // toolbarModal.show()
+            }
+            event.stopPropagation()
+        })
         projectContainer.appendChild(clone)
+        
     }
 }
 function afterProjectsSetup() {

@@ -83,6 +83,9 @@ $maxTextWidth: 200px;
     left: auto;
     position: inherit;
 }
+.options:hover {
+    cursor: pointer;
+}
 .options > svg{
     height: 1.3em;
 }

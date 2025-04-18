@@ -1,21 +1,3 @@
-<!-- THE STRUCTURE OF THE INCLUDE
-{
-    title?: string,
-    imageSource: URL,
-    descriptions?: [
-        string,
-        string,
-    ]
-    buttons?: [ optional 
-        {
-            id?: string, 
-            content: string | html
-            link?: URL (emits a tag instead of button)
-        }
-    ]
-    topRowButton: false
-} -->
-
 <article class="card <%= it.class %>">
     <img class="card-image" src="<%= it.imageSource %>">
     <div class="card-info">
