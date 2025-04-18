@@ -1,0 +1,15 @@
+@use '@root/variables';
+
+.hero {
+    width: 100vw;
+
+    img {
+        width: 100%;
+        height: 50vh;
+        object-fit: cover;
+    }
+
+    .title {
+        background-color: variables.$themeGreen;
+    }
+}
