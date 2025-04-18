@@ -1,0 +1,53 @@
+@use 'variables';
+
+.articleSection {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+
+    img {
+        object-fit: contain;
+    }
+
+    &.LTR {
+        flex-direction: row;
+    }
+
+    &.RTL {
+        flex-direction: row-reverse;
+    }
+}
+
+article {
+    padding: variables.$articleMargin;
+
+    & > section {
+        margin-top: variables.$articleMargin;
+    }
+}
+
+.ctaButton {
+    @include variables.dropShadowSmall;
+    @include variables.subheadingFont;
+
+    border-radius: variables.$borderRadius;
+    border: 3px solid variables.$themeBlack;
+    background-color: variables.$themeRed;
+    
+    padding: 16px 25px;
+    cursor: pointer;
+    color: variables.$primary;
+    white-space: nowrap;
+
+    * {
+        margin-right: 8px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .articleSection {
+        &.LTR, &.RTL {
+            flex-direction: column;
+        }
+    }
+}

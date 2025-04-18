@@ -2,6 +2,7 @@
 @use 'variables';
 @use 'header';
 @use 'footer';
+@use 'common';
 
 // Custom Font
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
@@ -29,11 +30,9 @@ a {
 }
 
 h1 {
-    font-family: 'Nunito', sans-serif;
-    font-size: 49px;
+    @include variables.headingFont;
 }
 
 h2 {
-    font-family: 'Nunito', sans-serif;
-    font-size: 25px;
+    @include variables.subheadingFont;
 }
