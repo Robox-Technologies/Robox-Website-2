@@ -49,13 +49,14 @@ $hoverCardBorderColor: variables.$themeBlue;
 
 .project-card {
     width: $projectCardWidth;
-    transition: transform 0.5s ease-in-out;
-    transform-style: preserve-3d;
     transition: transform 0.1s ease-out;
     transform-style: preserve-3d;
     will-change: transform;
+    position: relative;
+    margin-bottom: 10px;
+
 }
-.project-card:hover, .lesson-card:hover {
+.card-wrapper:hover > .project-card, .card-wrapper:hover > .lesson-card:hover {
     border: $hoverCardBorderSize solid variables.$themeBlue;
 }
 .project-card, .lesson-card {
