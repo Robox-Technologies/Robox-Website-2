@@ -38,3 +38,11 @@ h2 {
     font-family: 'Nunito', sans-serif;
     font-size: 25px;
 }
+.underline-grow {
+    background: linear-gradient(variables.$themeBlue 0 0) bottom left/var(--underline-width, 0%) 0.1em no-repeat;
+
+    display: inline-block;
+    padding: 0 0 0.2em;
+    text-decoration: none;
+    transition: background-size 0.5s;
+}
