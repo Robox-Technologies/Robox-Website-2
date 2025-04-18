@@ -7,7 +7,47 @@
 </head>
 
 <body>
+    <template id="projectCardTemplate">
+        <%~ include('src/partials/card.html', {
+            class: "project-card",
+            title: '<i class="fa-solid fa-square-binary"></i><span class="card-title-text"></span>', 
+            imageSource: "https://placehold.co/1920x1080", 
+            descriptions: [
+                "2 hours ago", 
+            ],
+            topRowButton: true,
+        }) %>
+    </template>
+    <template id="lessonCardTemplate">
+        <%~ include('src/partials/card.html', {
+            class: "lesson-card",
+            title: '<span>Assembly Guide</span>', 
+            imageSource: "https://placehold.co/1920x1080", 
+            descriptions: [
+                "30-45 min",
+                "Beginner"
+            ],
+            topRowButton: false,
+        }) %>
+    </template>
+    <template id="assemblyGuideCardTemplate">
+        <%~ include('src/partials/card.html', {
+            class: "assembly-card",
+            title: '<span>Assembly Guide</span>', 
+            imageSource: "https://placehold.co/1920x1080", 
+            buttons: [
+                {
+                    content: "<span class='underline-grow'>PDF Build Instructions</span> <div class='guide-icon-arrow'><i class='fa-solid fa-chevron-right'></i></div>",
+                },
+                {
+                    content: "<span class='underline-grow'>3D Build Instructions</span> <div class='guide-icon-arrow'><i class='fa-solid fa-chevron-right'></i></div>",
+                },
+            ],
+            topRowButton: false,
+        }) %>
+    </template>
     <%~ include('src/partials/header-workshop.html') %>
+    
     <section id="hero">
         <div id="hero-title-container">
             <h1 id="hero-title">
@@ -25,20 +65,7 @@
                 Assembly Guides
             </h1> 
             <div class="card-holder" id="assembly-guides">
-                <%~ include('src/partials/card.html', {
-                    class: "assembly-card",
-                    title: '<span>Assembly Guide</span>', 
-                    imageSource: "https://placehold.co/1920x1080", 
-                    buttons: [
-                        {
-                            content: "<span class='underline-grow'>PDF Build Instructions</span> <div class='guide-icon-arrow'><i class='fa-solid fa-chevron-right'></i></div>",
-                        },
-                        {
-                            content: "<span class='underline-grow'>3D Build Instructions</span> <div class='guide-icon-arrow'><i class='fa-solid fa-chevron-right'></i></div>",
-                        },
-                    ],
-                    topRowButton: false,
-                }) %>
+                
             </div>
         </section>
         <section id="projects">
@@ -55,60 +82,7 @@
                         New Project
                     </p>
                 </div>
-                <%~ include('src/partials/card.html', {
-                    class: "project-card",
-                    title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
-                    imageSource: "https://placehold.co/1920x1080", 
-                    descriptions: [
-                        "2 hours ago", 
-                    ],
-                    topRowButton: true,
-                }) %>
-                <%~ include('src/partials/card.html', {
-                    class: "project-card",
-                    title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
-                    imageSource: "https://placehold.co/1920x1080", 
-                    descriptions: [
-                        "2 hours ago", 
-                    ],
-                    topRowButton: true,
-                }) %>
-                <%~ include('src/partials/card.html', {
-                    class: "project-card",
-                    title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
-                    imageSource: "https://placehold.co/1920x1080", 
-                    descriptions: [
-                        "2 hours ago", 
-                    ],
-                    topRowButton: true,
-                }) %>
-                <%~ include('src/partials/card.html', {
-                    class: "project-card",
-                    title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
-                    imageSource: "https://placehold.co/1920x1080", 
-                    descriptions: [
-                        "2 hours ago", 
-                    ],
-                    topRowButton: true,
-                }) %>
-                <%~ include('src/partials/card.html', {
-                    class: "project-card",
-                    title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
-                    imageSource: "https://placehold.co/1920x1080", 
-                    descriptions: [
-                        "2 hours ago", 
-                    ],
-                    topRowButton: true,
-                }) %>
-                <%~ include('src/partials/card.html', {
-                    class: "project-card",
-                    title: '<i class="fa-solid fa-square-binary"></i><span>Robox adasdsadskit</span>', 
-                    imageSource: "https://placehold.co/1920x1080", 
-                    descriptions: [
-                        "2 hours ago", 
-                    ],
-                    topRowButton: true,
-                }) %>
+                
             </div>
             
         </section>
@@ -117,16 +91,7 @@
                 Explore Our Lessons
             </h1> 
             <div class="card-holder" id="assembly-guides">
-                <%~ include('src/partials/card.html', {
-                    class: "lesson-card",
-                    title: '<span>Assembly Guide</span>', 
-                    imageSource: "https://placehold.co/1920x1080", 
-                    descriptions: [
-                        "30-45 min",
-                        "Beginner"
-                    ],
-                    topRowButton: false,
-                }) %>
+                
             </div>
         </section>
         
