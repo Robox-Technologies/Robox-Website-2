@@ -6,4 +6,4 @@ export type Project = {
     workspace: {[key: string]: any} | false
     thumbnail: string
 }
-export type Projects = {[uuid: string]: Project} | {}
+export type Projects = {[uuid: string]: Project} 

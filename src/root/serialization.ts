@@ -24,10 +24,11 @@ export function createProject(name: string) {
     localStorage.setItem("roboxProjects", JSON.stringify(projects))
     return uuid
 }
-export function getProject(uuid: string, projects = {}): Project | null {
+export function getProject(uuid: string, projects: Projects | null = null): Project | null {
     if (!projects) {
         projects = getProjects()
     }
+    if (Object.keys(projects).length === 0) return null
     if (projects[uuid] === undefined) return null
     return projects[uuid]
 }

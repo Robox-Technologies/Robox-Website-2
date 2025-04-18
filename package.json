@@ -19,6 +19,7 @@
     "memory-cache": "^0.2.0",
     "parse5": "^7.2.1",
     "prismjs": "^1.30.0",
+    "relative-time": "^1.0.0",
     "sass-embedded": "^1.86.0",
     "stripe": "^17.7.0",
     "style-loader": "^4.0.0",
