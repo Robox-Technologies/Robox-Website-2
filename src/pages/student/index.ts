@@ -64,6 +64,7 @@ function applyProjects() {
                 clone.appendChild(toolbaClone)
                 toolbar.remove()
                 toolbaClone.show()
+                hoverElement(clone, false)
             }
             event.stopPropagation()
         })
@@ -75,22 +76,23 @@ function afterProjectsSetup() {
     //Create the hover effect
     const projectCards = document.querySelectorAll(".card-wrapper") as NodeListOf<HTMLElement>
     for (const projectCard of projectCards) {
+        let element: HTMLElement | null = null
+
         projectCard.addEventListener('mousemove', (e: MouseEvent) => {
             const rect = projectCard.getBoundingClientRect();
             const x = e.clientX - rect.left; // x within container
             const y = e.clientY - rect.top;  // y within container
             const rotateX = ((y / rect.height) - 0.5) * 20; // max 5deg tilt
             const rotateY = ((x / rect.width) - 0.5) * -20;
-            let element = projectCard.firstElementChild
-            const target = e.target as HTMLElement
+            element = projectCard.firstElementChild as HTMLElement
             if (!element) return
-            if (target?.closest("#toolbar")) return
-            (element as HTMLElement).style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            if (projectCard.querySelector("#toolbar")) return //Checking if element has the toolbar in it
+            hoverElement(element, true, rotateX, rotateY);
         });
         projectCard.addEventListener('mouseleave', () => {
-            let element = projectCard.firstChild
+            element = projectCard.firstChild as HTMLElement
             if (!element) return
-            (element as HTMLElement).style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+            hoverElement(element, false)
         });
     }
     //Create the projects
@@ -98,6 +100,9 @@ function afterProjectsSetup() {
     createProjectButton?.addEventListener("click", (event) => {
         createProject("Hello!")
     })
+}
+function hoverElement(element: HTMLElement, up: boolean, rotateX: number = 0, rotateY: number = 0) {
+    element.style.transform = `translateY(${up ? -10 : 0}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 }
 document.addEventListener("DOMContentLoaded", (event) => {
     //Populate the projects
