@@ -62,7 +62,7 @@ $toolbarWidth: 130px;
 
 
 
-#toolbar {
+#toolbar[open] {
     z-index: 4;
     display: flex;
     position: absolute;
@@ -86,7 +86,7 @@ $toolbarWidth: 130px;
 .card-wrapper:hover > .project-card, .card-wrapper:hover > .lesson-card:hover {
     border: $hoverCardBorderSize solid variables.$themeBlue;
 }
-.project-card:has(> #toolbar), .lesson-card:has(> #toolbar) {
+.project-card:has(> #toolbar[open]) {
     border: $hoverCardBorderSize solid variables.$themeGreen;
     z-index: 1;
 }
@@ -177,4 +177,7 @@ $titleFontsize: 49px;
 
 .assembly-card > .card-info > .card-buttons > .card-button:hover {
     --underline-width: 100%;
+}
+.card {
+    background-color: white !important;
 }
