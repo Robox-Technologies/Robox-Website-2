@@ -63,7 +63,7 @@ $toolbarWidth: 130px;
 
 
 #toolbar {
-    z-index: 1;
+    z-index: 4;
     display: flex;
     position: absolute;
     flex-direction: column;
@@ -85,6 +85,10 @@ $toolbarWidth: 130px;
 }
 .card-wrapper:hover > .project-card, .card-wrapper:hover > .lesson-card:hover {
     border: $hoverCardBorderSize solid variables.$themeBlue;
+}
+.project-card:has(> #toolbar), .lesson-card:has(> #toolbar) {
+    border: $hoverCardBorderSize solid variables.$themeGreen;
+    z-index: 1;
 }
 .project-card, .lesson-card {
     border: $hoverCardBorderSize solid transparent;
