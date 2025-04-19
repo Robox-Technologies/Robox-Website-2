@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { Events, serialization, Workspace, WorkspaceSvg } from 'blockly/core';
+import type { Workspace, WorkspaceSvg } from 'blockly/core';
 import { Projects, Project } from '../types/projects';
 
 
@@ -32,18 +32,20 @@ export function getProject(uuid: string, projects: Projects | null = null): Proj
     if (projects[uuid] === undefined) return null
     return projects[uuid]
 }
-export function loadBlockly(uuid: string, workspace: Workspace) {
+export async function loadBlockly(uuid: string, workspace: Workspace) {
+    const blockly = await import('blockly/core');
     let project = getProject(uuid)
     if (!project) return;
     let workspaceData = project.workspace
     if (!workspaceData) return;
-    Events.disable();
-    serialization.workspaces.load(workspaceData, workspace, undefined);
-    Events.enable();
+    blockly.Events.disable();
+    blockly.serialization.workspaces.load(workspaceData, workspace, undefined);
+    blockly.Events.enable();
 }
-export function saveBlockly(uuid: string, workspace: WorkspaceSvg, callback: ((project: string) => void) | null = null) {
+export async function saveBlockly(uuid: string, workspace: WorkspaceSvg, callback: ((project: string) => void) | null = null) {
+    const blockly = await import('blockly/core');
     workspaceToSvg_(workspace, (thumburi: string) => {
-        const data = serialization.workspaces.save(workspace)
+        const data = blockly.serialization.workspaces.save(workspace)
         let projects = getProjects()
         projects[uuid]["time"] = dayjs()
         projects[uuid]["workspace"] = data
