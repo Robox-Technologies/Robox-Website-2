@@ -117,5 +117,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
     //Populate the projects
     applyProjects()
 
-    afterProjectsSetup()
+    afterProjectsSetup();
+    // (document.getElementById("delete-modal") as HTMLDialogElement)?.showModal()
 })
