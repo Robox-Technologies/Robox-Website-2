@@ -12,7 +12,7 @@ import { CustomUndoControls, CustomZoomControls } from './blockly/customUI';
 import { MyWorkspace } from '../types/blockly';
 
 import { Project } from '../../types/projects';
-import { getProject, loadBlockly, saveBlockly } from '../../root/serialization';
+import { getProject, loadBlockly, saveBlockly, renameProject } from '../../root/serialization';
 
 import {registerFieldColour} from '@blockly/field-colour';
 import { postBlocklyWSInjection } from './usb';
@@ -66,6 +66,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     else return
     if (!project) return
+    const nameInput = document.getElementById("project-name-input") as HTMLInputElement | null
+    if (!nameInput) return
+    nameInput.value = project["name"]
+    nameInput.addEventListener("blur", (event) => {
+        if (nameInput.value !== project["name"]) {
+            let newName = nameInput.value
+            renameProject(workspaceId, newName)
+        }
+    })
+
+
     loadBlockly(workspaceId, workspace)
 
     if (project["thumbnail"] === '') {
