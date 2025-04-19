@@ -53,8 +53,35 @@ $hoverCardBorderColor: variables.$themeBlue;
     transform-style: preserve-3d;
     will-change: transform;
     position: relative;
-    margin-bottom: 10px;
 
+}
+$toolbarBorderRadius: 0.5em;
+$toolbarBorderColor: variables.$primary;
+$toolbarBorderStroke: 3px;
+$toolbarWidth: 130px;
+
+
+
+#toolbar {
+    z-index: 1;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    padding: 5px 20px 5px 5px;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-radius: $toolbarBorderRadius;
+    margin: 0;
+    width: $toolbarWidth;
+}
+#toolbar > .card-button > svg {
+    margin-right: 5px;
+}
+#toolbar > .button:hover{
+    cursor: pointer;
+}
+#project-delete > svg > path{
+    color: variables.$themeRed;
 }
 .card-wrapper:hover > .project-card, .card-wrapper:hover > .lesson-card:hover {
     border: $hoverCardBorderSize solid variables.$themeBlue;

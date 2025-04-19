@@ -75,9 +75,7 @@ $maxTextWidth: 200px;
     justify-content: space-between;
     padding-bottom: 5px;
 }
-.card > *:not(:last-child):not(:first-child) {
-    margin-bottom: $padding;
-}
+
 
 .options {
     left: auto;

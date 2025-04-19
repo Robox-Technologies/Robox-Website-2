@@ -47,7 +47,14 @@
         }) %>
     </template>
     <%~ include('src/partials/header-workshop.html') %>
-    
+    <dialog id="toolbar">
+        <button class="button" id="project-edit">
+            <i class="fa-solid fa-pen-to-square"></i> Edit
+        </button>
+        <button class="button" id="project-delete">
+            <i class="fa-solid fa-trash"></i> Delete
+        </button>
+    </dialog>
     <section id="hero">
         <div id="hero-title-container">
             <h1 id="hero-title">
@@ -76,12 +83,15 @@
                 My Projects
             </h1>
             <div class="card-holder" id="project-holder">
-                <button id="create-project" class="button">
-                    <i class="fa-solid fa-plus"></i>
-                    <p>
-                        New Project
-                    </p>
-                </button>
+                <div class="card-wrapper">
+                    <button id="create-project" class="button">
+                        <i class="fa-solid fa-plus"></i>
+                        <p>
+                            New Project
+                        </p>
+                    </button>
+                </div>
+                
                 
             </div>
             

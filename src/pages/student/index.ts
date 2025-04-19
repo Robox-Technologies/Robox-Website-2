@@ -4,6 +4,8 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js"
 dayjs.extend(relativeTime)
 
+const offsetLeftToolbar = 10
+const offsetTopToolbar = 10
 
 
 let createButtonHTML: string | undefined = undefined
@@ -11,7 +13,7 @@ function applyProjects() {
     const projectContainer = document.getElementById("project-holder")
     if (!projectContainer) return
     if (!createButtonHTML) {
-        createButtonHTML = document.getElementById("create-project")?.outerHTML
+        createButtonHTML = `<div class="card-wrapper">${document.getElementById("create-project")?.outerHTML}</div>`
     }
     if (!createButtonHTML) return
     projectContainer.innerHTML = createButtonHTML
@@ -43,16 +45,25 @@ function applyProjects() {
             // if (toolbarModal.hasAttribute("open") || e.target.closest("#toolbar")) return
             let item = event.target as HTMLElement | null
             if (!item) return
-            let dots = item.closest(".dots") //checking if there is the dots object near or above the item
+            if (item.closest("#toolbar")) return
+            let dots = item.closest(".options") //checking if there is the dots object near or above the item
             if (dots === null) { //If the dialog is clicked it will not have dots (as dots is its child)
                 window.location.href = `/editor?id=${clone.id}`
             }
             else { //if it is the edit menu dots clicked
-                // let project = dots.closest(".project")
-                // project.appendChild(toolbarModal)
-                // toolbarModal = document.getElementById("toolbar")
-                // toolbarModal.setAttribute("target", item.closest(".project").id)
-                // toolbarModal.show()
+                let toolbar = document.getElementById("toolbar") as HTMLDialogElement
+                if (!toolbar) return
+                let toolbaClone = toolbar.cloneNode(true) as HTMLDialogElement
+                
+                let options = clone.querySelector(".options") as HTMLButtonElement
+                if (!options) return
+                toolbaClone.style.left = (options.offsetLeft+offsetLeftToolbar).toString()
+                toolbaClone.style.top = (options.offsetTop+offsetTopToolbar).toString()
+
+
+                clone.appendChild(toolbaClone)
+                toolbar.remove()
+                toolbaClone.show()
             }
             event.stopPropagation()
         })
@@ -68,11 +79,12 @@ function afterProjectsSetup() {
             const rect = projectCard.getBoundingClientRect();
             const x = e.clientX - rect.left; // x within container
             const y = e.clientY - rect.top;  // y within container
-          
             const rotateX = ((y / rect.height) - 0.5) * 20; // max 5deg tilt
             const rotateY = ((x / rect.width) - 0.5) * -20;
-            let element = projectCard.firstChild
+            let element = projectCard.firstElementChild
+            const target = e.target as HTMLElement
             if (!element) return
+            if (target?.closest("#toolbar")) return
             (element as HTMLElement).style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
         projectCard.addEventListener('mouseleave', () => {
