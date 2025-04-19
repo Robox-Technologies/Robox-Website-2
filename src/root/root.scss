@@ -11,22 +11,25 @@ body {
     margin: 0;
     background-color: variables.$primary;
 }
+
 .button {
     background-color: unset;
     border: 0;
 }
+
 a {
     text-decoration: none;
     -webkit-text-decoration: none;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 // MARK: - Heading (h1), Subheading (h2), + other text.
 // Sizing generated from Typescales. CHANGES MADE HERE MUST BE REFLECTED IN FIGMA
-* {
-    font-family: 'Nunito Sans', sans-serif;
-    font-size: 16px;
-    box-sizing: border-box;
-    color: variables.$themeBlack;
+p, a {
+    @include variables.bodyFont;
 }
 
 h1 {
