@@ -86,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (event.isUiEvent) return;
         saveBlockly(workspaceId, workspace);
     });
+
 })
 
 

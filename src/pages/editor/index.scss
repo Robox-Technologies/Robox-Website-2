@@ -104,6 +104,9 @@ $downloadButtonSize: 60px;
     position: relative;
     align-items: center;
 }
+.blocklyTreeRowContentContainer >svg >path {
+    fill: white;
+}
 .blocklyTreeRow {
     height: initial;
 }
@@ -210,6 +213,17 @@ $nameInputDropShadowMult: 2;
     border: 0;
     font-size: 20px;
     color: white;
+    display: flex;
+}
+#back-button:hover {
+    cursor: pointer;
+}
+#back-button > svg > path {
+    color: white;
+}
+#back-button > svg {
+    display: block;
+    margin: auto;
 }
 
 .topButton {
