@@ -184,7 +184,6 @@ class USBCommunication {
                     }
                     rawErrorMessages.splice(0, index)
                     error_string = rawErrorMessages.join("\n") 
-    
                 }
     
                 for (const message of consoleMessages) {

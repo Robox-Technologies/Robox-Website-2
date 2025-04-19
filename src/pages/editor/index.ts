@@ -11,6 +11,9 @@ import { RoundedFlyout } from './blockly/toolboxStyling';
 import { CustomUndoControls, CustomZoomControls } from './blockly/customUI';
 import { MyWorkspace } from '../types/blockly';
 
+import { Project } from '../../types/projects';
+import { getProject, loadBlockly, saveBlockly, renameProject } from '../../root/serialization';
+
 import {registerFieldColour} from '@blockly/field-colour';
 import { postBlocklyWSInjection } from './usb';
 registerFieldColour();
@@ -26,6 +29,7 @@ generators.keys().forEach(modulePath => {
     const generator = generators(modulePath);
     // use generator
 });
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const workspace = Blockly.inject('blocklyDiv', {
@@ -51,6 +55,38 @@ document.addEventListener("DOMContentLoaded", () => {
             if (workspace.undoControls) workspace.undoControls.position()
         }
     );
+
+
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const workspaceId = urlParams.get('id')
+    let project: null | Project = null
+    if (workspaceId) {
+        project = getProject(workspaceId)
+    }
+    else return
+    if (!project) return
+    const nameInput = document.getElementById("project-name-input") as HTMLInputElement | null
+    if (!nameInput) return
+    nameInput.value = project["name"]
+    nameInput.addEventListener("blur", (event) => {
+        if (nameInput.value !== project["name"]) {
+            let newName = nameInput.value
+            renameProject(workspaceId, newName)
+        }
+    })
+
+
+    loadBlockly(workspaceId, workspace)
+
+    if (project["thumbnail"] === '') {
+        saveBlockly(workspaceId, workspace);
+    }
+    workspace.addChangeListener((event) => { // Saving every time block is added
+        if (event.isUiEvent) return;
+        saveBlockly(workspaceId, workspace);
+    });
+
 })
 
 

@@ -3,6 +3,8 @@
 @use 'header';
 @use 'footer';
 @use 'common';
+@use 'card';
+@use 'modal';
 
 // Custom Font
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
@@ -38,4 +40,12 @@ h1 {
 
 h2 {
     @include variables.subheadingFont;
+}
+.underline-grow {
+    background: linear-gradient(variables.$themeBlue 0 0) bottom left/var(--underline-width, 0%) 0.1em no-repeat;
+
+    display: inline-block;
+    padding: 0 0 0.2em;
+    text-decoration: none;
+    transition: background-size 0.5s;
 }
