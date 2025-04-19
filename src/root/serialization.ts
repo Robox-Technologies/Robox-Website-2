@@ -5,7 +5,7 @@ import { Projects, Project } from '../types/projects';
 
 const ratio = 16/9;
 const padding = 30;
-const finalWidth = 244*2;
+const finalWidth = 250*2;
 
 export function getProjects(): Projects {
     let projectsRaw = localStorage.getItem("roboxProjects")
