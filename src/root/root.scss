@@ -2,6 +2,7 @@
 @use 'variables';
 @use 'header';
 @use 'footer';
+@use 'common';
 @use 'card';
 @use 'modal';
 
@@ -31,13 +32,11 @@ a {
 }
 
 h1 {
-    font-family: 'Nunito', sans-serif;
-    font-size: 49px;
+    @include variables.headingFont;
 }
 
 h2 {
-    font-family: 'Nunito', sans-serif;
-    font-size: 25px;
+    @include variables.subheadingFont;
 }
 .underline-grow {
     background: linear-gradient(variables.$themeBlue 0 0) bottom left/var(--underline-width, 0%) 0.1em no-repeat;
