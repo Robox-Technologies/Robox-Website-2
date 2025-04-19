@@ -88,17 +88,19 @@ function afterProjectsSetup() {
             if (!element) return
             if (projectCard.querySelector("#toolbar")?.hasAttribute("open")) return //Checking if element has the toolbar in it
             hoverElement(element, true, rotateX, rotateY);
-        });
+        }, {passive: true});
         projectCard.addEventListener('mouseleave', () => {
             element = projectCard.firstChild as HTMLElement
             if (!element) return
             hoverElement(element, false)
-        });
+        }, {passive: true});
     }
     //Create the projects
     const createProjectButton = document.getElementById("create-project")
     createProjectButton?.addEventListener("click", (event) => {
-        createProject("Hello!")
+        createProject("unamed project")
+        applyProjects()
+        afterProjectsSetup()
     })
 }
 function hoverElement(element: HTMLElement, up: boolean, rotateX: number = 0, rotateY: number = 0) {
