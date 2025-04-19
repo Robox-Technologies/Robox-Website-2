@@ -1,9 +1,9 @@
-@use '../../root/variables';
+@use '@root/variables';
 $navEdges: #717171;
 $componentHeight: 48px;
 
 //How big the seperators are in the category
-$seperatorHeight: 40px;
+$seperatorHeight: 20px;
 //The colour of the middle seperator line
 $seperatorColour: black;
 //The size of the middle seperator line
@@ -18,9 +18,10 @@ $iconHeight: 20px;
 $archWidth: 48px;
 
 //How big the sidebar is
-$toolboxWidth: 170px;
+$toolboxWidth: 200px;
 
 //How much the tabs extend
+$extensionRest: 16px;
 $extensionAmount: 20px;
 //This is the height for the top and bottom divs
 $barHeight: 75px;
@@ -36,23 +37,27 @@ $topBarButtonGap: 10px;
 
 $downloadButtonSize: 60px;
 
+@mixin extendTransition {
+    transition-property: width, margin-left;
+    transition-duration: .5s;
+}
+
 // Makes our label white.
 .blocklyTreeLabel {
     color: white;
     font-size: large;
 }
-.blocklyToolboxDiv {
-    border-right: $seperatorStrokeSize solid $navEdges;
-}
 .side-arch > svg > path{
     fill: rgba(0,0,0,0)
 }
 .categoryIcon { 
+    @include extendTransition;
     height: $iconHeight;
     width: $iconHeight;
     color: white;
     position: absolute;
-    left: calc(($archWidth/3) - ($iconHeight/2));
+    left: calc(($archWidth/3) - ($iconHeight/2) + $extensionRest);
+    margin-left: 0px;
 }
 
 .categoryIcon::before { 
@@ -68,16 +73,15 @@ $downloadButtonSize: 60px;
     border-bottom: 0;
     margin: 0;
 }
-.blocklyTreeSeparator > .seperator {
-    height: $seperatorStrokeSize;
-    background-color: $seperatorColour;
-    width: $seperatorLength;
-}
 /* Adds padding around the group of categories and separators. */
 
 /* Adds space between the categories, rounds the corners and adds space around the label. */
-.blocklyTreeRow {
+.blocklyToolboxCategory {
     border-top: $seperatorStrokeSize solid #F5F5F5;
+    
+    &:last-child {
+        border-bottom: $seperatorStrokeSize solid #F5F5F5;
+    }
 }
 .blocklyTreeLabel { 
     color: black;
@@ -87,9 +91,9 @@ $downloadButtonSize: 60px;
 }
 .blocklyToolboxDiv {
     background-color: white;
-    border-right: $seperatorStrokeSize 3px $navEdges;
     padding: 0;
     width: $toolboxWidth;
+    border-right: $seperatorStrokeSize solid $navEdges;
 }
 
 .blocklyFlyout { 
@@ -111,27 +115,19 @@ $downloadButtonSize: 60px;
     height: $componentHeight;
     width: $componentHeight;
 }
-.extender.extended {
+.extender {
+    @include extendTransition;
+
     height: $componentHeight;
     border-right: 1px solid rgba(0, 0, 0, 0);
     margin-right: -1px;
     z-index: 0;
     box-sizing: border-box;
-    width: $extensionAmount;
+    width: $extensionRest;
 
-}
-.extender{
-    height: $componentHeight;
-    border-right: 1px solid rgba(0, 0, 0, 0);
-    margin-right: -1px;
-    z-index: 0;
-    box-sizing: border-box;
-    width: 0;
-
-}
-.extended.categoryIcon { 
-    left: calc(($archWidth/3) - ($iconHeight/2))+$extensionAmount;
-
+    &.extended {
+        width: calc($extensionAmount + $extensionRest);
+    }
 }
 
 .blocklyTreeRow { 
