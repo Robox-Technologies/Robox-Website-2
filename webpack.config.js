@@ -72,7 +72,7 @@ const config = {
                 use: ['css-loader', 'sass-loader'],
             },
             {
-                test: /\.(jpe?g|png|svg|gif)$/i,
+                test: /\.(jpe?g|png|svg|gif|mp3)$/i,
                 type: "asset",
             },
             {
