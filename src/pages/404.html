@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <%~ include('src/partials/metadata.html') %>
+
+        <style>
+            .steve {
+                object-fit: cover;
+                width: 100vw;
+                height: calc(100vh - 64px);
+            }
+        </style>
+    </head>
+    <body>
+        <%~ include('src/partials/header.html') %>
+
+        <audio src="404/bg.mp3" id="bgAudioSource"></audio>
+
+        <script>
+            window.onload = setInterval(gameloop, 1000 / 10); // 10fps
+            let bgAudio = new Audio();
+
+            bgAudio.src = document.getElementById("bgAudioSource").src;
+            bgAudio.addEventListener('ended', () => {
+                bgAudio.play();
+            })
+
+            function gameloop() {
+                bgAudio.play();
+                if (bgAudio.paused == true) {
+                    bgAudio.play();
+                }
+            }
+        </script>
+
+        <img src="404/bg.jpg" class="steve">
+
+        <%~ include('src/partials/footer.html') %>
+    </body>
+</html>
