@@ -3,10 +3,12 @@
 .articleSection {
     display: flex;
     justify-content: space-between;
+    align-items: start;
     gap: 50px;
 
-    img {
+    .media {
         object-fit: contain;
+        width: 100%;
     }
 
     &.LTR {
@@ -15,6 +17,23 @@
 
     &.RTL {
         flex-direction: row-reverse;
+    }
+
+    &.equalWidth {
+        & > * {
+            flex: 1 1 0;
+        }
+
+        & > .media {
+            width: 100%;
+        }
+    }
+
+    .text {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: variables.$standardGap;
     }
 }
 
@@ -46,6 +65,8 @@ article {
 
 @media screen and (max-width: 1000px) {
     .articleSection {
+        align-items: center;
+
         &.LTR, &.RTL {
             flex-direction: column;
         }

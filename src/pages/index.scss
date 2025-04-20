@@ -1,0 +1,44 @@
+@use '@root/variables';
+
+.hero {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: variables.$themeYellow;
+    padding: variables.$articleMargin;
+
+    img {
+        object-fit: contain;
+    }
+
+    .heroImg {
+        max-width: 100%;
+    }
+
+    .logo {
+        height: 50px;
+    }
+
+    h1 {
+       font-size: 60px;
+       margin-top: 16px;
+    }
+}
+
+.section2 {
+    position: relative;
+
+    .goober {
+        position: absolute;
+        left: 15%;
+        top: -35%;
+        z-index: -9;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .section2 > .goober {
+        visibility: hidden;
+    }
+}

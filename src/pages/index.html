@@ -7,7 +7,55 @@
 <body>
     <%~ include('src/partials/header.html') %>
 
-    <div style="height: 80vh"></div>
+    <div class="hero">
+        <img src="images/hero.png" class="heroImg">
+        <img src="@images/logo-full.svg?raw" class="logo">
+        <h1>Unbox the Fun</h1>
+    </div>
+
+    <article>
+        <section>
+            <section class="articleSection LTR">
+                <div class="text">
+                    <h1>Meet Ro/Box</h1>
+        
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur.
+                        Feugiat dictum pulvinar nunc molestie diam mattis nunc leo accumsan.
+                        Quis enim eu pellentesque purus enim.
+                        Cum urna semper gravida congue vulputate ipsum neque ornare tellus.
+                        Feugiat vitae mollis rhoncus laoreet quam suspendisse convallis curabitur nulla.
+                    </p>
+
+                    <a class="ctaButton" href="/about">About Us</a>
+                </div>
+        
+                <img src="images/article1.png" class="media">
+            </section>
+        
+            <section class="articleSection RTL equalWidth section2">
+                <div class="text">
+                    <h1>Lorem ipsum</h1>
+        
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur.
+                        Feugiat dictum pulvinar nunc molestie diam mattis nunc leo accumsan.
+                        Quis enim eu pellentesque purus enim.
+                        Cum urna semper gravida congue vulputate ipsum neque ornare tellus.
+                        Feugiat vitae mollis rhoncus laoreet quam suspendisse convallis curabitur nulla.
+                        <br><br>
+                        Lorem ipsum
+                        <br><br>
+                        Lorem ipsum
+                    </p>
+                </div>
+        
+                <img src="images/goober-star.svg?raw" class="goober">
+
+                <img src="images/article2.png" class="media">
+            </section>
+        </section>
+    </article>
     
     <%~ include('src/partials/footer.html') %>
 </body>
