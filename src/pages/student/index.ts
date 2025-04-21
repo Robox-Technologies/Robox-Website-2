@@ -98,7 +98,7 @@ function afterProjectsSetup() {
     //Create the projects
     const createProjectButton = document.getElementById("create-project")
     createProjectButton?.addEventListener("click", (event) => {
-        createProject("unamed project")
+        createProject("unnamed project")
         applyProjects()
         afterProjectsSetup()
     })
