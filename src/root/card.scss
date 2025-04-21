@@ -3,7 +3,7 @@
 $cardWidth: 250px;
 
 $backgroundColor: white;
-$borderRadius: 5%;
+
 
 $padding: 15px;
 $maxTextWidth: 200px;
@@ -28,7 +28,7 @@ $maxTextWidth: 200px;
     width: $cardWidth;
     background-color: #F5F5F5;
     flex-direction: column;
-    border-radius: $borderRadius;
+    border-radius: variables.$borderRadius;
 }
 .card-image {
     background-color: gray;
@@ -40,11 +40,11 @@ $maxTextWidth: 200px;
     display: block; /* removes inline spacing gap */
 }
 .card > *:first-child {
-    border-radius: $borderRadius $borderRadius 0 0;
+    border-radius: variables.$borderRadius variables.$borderRadius 0 0;
 
 }
 .card > *:last-child {
-    border-radius: 0 0 $borderRadius $borderRadius;
+    border-radius: 0 0 variables.$borderRadius variables.$borderRadius;
 }
 .card-title {
     right: auto;
