@@ -31,9 +31,9 @@ const config = {
     devtool: 'source-map',
     resolve: {
         alias: {
-            "@images": path.join(__dirname, 'src/_images/'),
-            "@partials": path.join(__dirname, 'src/_partials/'),
-            "@root": path.join(__dirname, 'src/_root/')
+            "@images": path.join(__dirname, 'src/images/'),
+            "@partials": path.join(__dirname, 'src/partials/'),
+            "@root": path.join(__dirname, 'src/root/')
         },
         extensions: ['.tsx', '.ts', '.js'],
     },
@@ -72,9 +72,14 @@ const config = {
                 use: ['css-loader', 'sass-loader'],
             },
             {
-                test: /\.svg$/,
-                loader: 'svg-inline-loader'
-            }
+                test: /\.(jpe?g|png|svg|gif)$/i,
+                type: "asset",
+            },
+            {
+                test: /\.svg$/i,
+                resourceQuery: /raw/, // *.svg?raw
+                type: 'asset/source',
+            },
         ],
     },
     output: {

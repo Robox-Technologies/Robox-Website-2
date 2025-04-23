@@ -1,0 +1,103 @@
+@use 'variables';
+
+$bottomRowHeight: 54px;
+
+.footer {
+    position: relative;
+    border-top: 1px solid variables.$secondary;
+}
+
+.footerContent {
+    padding: 0 variables.$articleMargin;
+    
+    hr {
+        border-color: variables.$themeBlack;
+        z-index: -99;
+    }
+}
+
+.footerLinks {
+    display: flex;
+    justify-content: start;
+    gap: 10%;
+    padding: 32px 0;
+}
+
+.footerColumn > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+        margin-bottom: 16px;
+
+        a > * {
+            width: 16px;
+            margin-right: 8px;
+        }
+    }
+}
+
+.footerBottom {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: $bottomRowHeight;
+
+    & > * {
+        flex: 1;
+    }
+
+    & > *:first-child {
+        text-align: left;
+    }
+    & > *:last-child {
+        text-align: right;
+    }
+}
+
+.privacyPolicy {
+    color: variables.$primary;
+    text-decoration: underline;
+}
+
+.footerBg {
+    $clipWidth: 75%;
+    $clipDeviation: 2%;
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+
+    background: #ff5e63;
+    clip-path: polygon(calc($clipWidth + $clipDeviation) 0, calc($clipWidth - $clipDeviation) 100%, 100% 100%, 100% 0%);
+
+    .eyes {
+        position: absolute;
+        bottom: 50%;
+        right: 10%;
+    }
+}
+
+.bgContent {
+    position: relative;
+    height: 100%;
+
+    .footerBottom {
+        position: absolute;
+        padding: 0 variables.$articleMargin;
+        width: 100%;
+        bottom: 0;
+    }
+
+    hr {
+        position: absolute;
+        width: 100%;
+        bottom: $bottomRowHeight;
+        right: variables.$articleMargin;
+        border-color: variables.$primary;
+        z-index: 9;
+    }
+}

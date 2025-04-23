@@ -1,21 +1,20 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Toolbox Customization Codelab</title>
-        <script src="index.ts"></script>
-        <link href="./index.scss" rel="stylesheet" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+  <head>
+    <meta charset="utf-8" />
+    <title>Toolbox Customization Codelab</title>
+    <script src="index.ts"></script>
+    <%~ include('src/partials/metadata.html') %>
+    <link href="./index.scss" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     </head>
   <!-- header element -->
-    <body onload="">
-
+    <body>
         <div id="workspaceTabs">
-            <button id="back-button">
+            <a id="back-button" href="/student">
                 <i class="fa-solid fa-chevron-left"></i>
-            </button>
+            </a>
             <div id="project-name">
                 <form id="project-name-form">
                     <input id="project-name-input" type="text">
@@ -57,10 +56,10 @@
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                     </button>
                     <button class="sideButtons button" id="disconnect">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                        <i class="fa-solid fa-plug-circle-xmark"></i>
                     </button>
                     <button class="sideButtons button" id="console">
-                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                        <i class="fa-solid fa-terminal"></i>
                     </button>
                 </div>
                 

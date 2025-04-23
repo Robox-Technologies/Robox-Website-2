@@ -113,6 +113,7 @@ class Pico extends EventTarget {
         let connected = await this.communication.connect(port)
         if (connected) {
             this.emit({event: "connect", options: {}})
+            if (this.restarting) this.restarting = false
             this.firmwareCheck()
         }
     }
@@ -153,32 +154,45 @@ class USBCommunication {
         ])
     }
     async read() {
-        const terminationLength = "\n".length
+        let error_string = ''
         try {
-            let message = ""
-            while (true) { //Forever loop for reading the pico
+            usbloop: while (true) { //Forever loop for reading the pico
                 const { value, done } = await this.currentReader.read()
                 if (done) {
                     this.currentReader.releaseLock(); //Disconnects the serial port since the port is released
                     break;
                 }
-                message += value
-                let lineBreak = message.indexOf("\n")
-                let consoleMessages : picoMessage[] = []
-                while (lineBreak !== -1) {
-                    let terminatedMessage = message.slice(0, lineBreak)
-                    message = message.slice(lineBreak + terminationLength)
-                    try {
-                        consoleMessages.push(JSON.parse(terminatedMessage))
-                    }
-                    catch(err) {
-                        console.warn("Not valid JSON")
-                    }
-                    lineBreak = message.indexOf("\n")
+                let consoleMessages : picoMessage[] = [] //The console messages SHOULD be sent full JSON, but sometimes that does not happen
+                try {
+                    if (typeof value !== "string") continue
+                    consoleMessages = [JSON.parse(value)] //If the message is broken JSON then this errors and goes to the next step
+                    error_string = ''
                 }
+                catch (err) {
+                    error_string += value
+                    let rawErrorMessages = error_string.split("\n")
+                    let index = 0
+                    errorloop: for (const errorMessage of rawErrorMessages) { //Every JSON object is delimited by a new line, so even if the message is split if you loop over it you can join them together!
+                        try {
+                            if (typeof errorMessage !== "string") {
+                                throw new Error("Invalid input: expected a JSON string");
+                            }
+                            consoleMessages.push(JSON.parse(errorMessage))
+                            
+                        }
+                        catch (err) {
+                            break errorloop; //Not yet a full JSON message
+                        }
+                        index += 1
+                    }
+                    rawErrorMessages.splice(0, index)
+                    error_string = rawErrorMessages.join("\n") 
+                }
+    
                 for (const message of consoleMessages) {
                     this.parent.read(message)
                 }
+                consoleMessages = []
             }
         } catch(err) {
             console.warn(err)

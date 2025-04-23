@@ -1,8 +1,9 @@
+@use '@root/variables';
 $navEdges: #717171;
 $componentHeight: 48px;
 
 //How big the seperators are in the category
-$seperatorHeight: 40px;
+$seperatorHeight: 20px;
 //The colour of the middle seperator line
 $seperatorColour: black;
 //The size of the middle seperator line
@@ -17,9 +18,10 @@ $iconHeight: 20px;
 $archWidth: 48px;
 
 //How big the sidebar is
-$toolboxWidth: 170px;
+$toolboxWidth: 200px;
 
 //How much the tabs extend
+$extensionRest: 16px;
 $extensionAmount: 20px;
 //This is the height for the top and bottom divs
 $barHeight: 75px;
@@ -30,31 +32,32 @@ $dropShadowColour: rgb(47, 47, 47);
 
 $backgroundColour: #E6F0FF;
 
-$roboxRed: #FF6166;
-$roboxBlue: #2588C7;
-
 $barPadding: 2.5%;
 $topBarButtonGap: 10px;
 
 $downloadButtonSize: 60px;
+
+@mixin extendTransition {
+    transition-property: width, margin-left;
+    transition-duration: .5s;
+}
 
 // Makes our label white.
 .blocklyTreeLabel {
     color: white;
     font-size: large;
 }
-.blocklyToolboxDiv {
-    border-right: $seperatorStrokeSize solid $navEdges;
-}
 .side-arch > svg > path{
     fill: rgba(0,0,0,0)
 }
 .categoryIcon { 
+    @include extendTransition;
     height: $iconHeight;
     width: $iconHeight;
     color: white;
     position: absolute;
-    left: calc(($archWidth/3) - ($iconHeight/2));
+    left: calc(($archWidth/3) - ($iconHeight/2) + $extensionRest);
+    margin-left: 0px;
 }
 
 .categoryIcon::before { 
@@ -70,16 +73,15 @@ $downloadButtonSize: 60px;
     border-bottom: 0;
     margin: 0;
 }
-.blocklyTreeSeparator > .seperator {
-    height: $seperatorStrokeSize;
-    background-color: $seperatorColour;
-    width: $seperatorLength;
-}
 /* Adds padding around the group of categories and separators. */
 
 /* Adds space between the categories, rounds the corners and adds space around the label. */
-.blocklyTreeRow {
+.blocklyToolboxCategory {
     border-top: $seperatorStrokeSize solid #F5F5F5;
+    
+    &:last-child {
+        border-bottom: $seperatorStrokeSize solid #F5F5F5;
+    }
 }
 .blocklyTreeLabel { 
     color: black;
@@ -89,21 +91,25 @@ $downloadButtonSize: 60px;
 }
 .blocklyToolboxDiv {
     background-color: white;
-    border-right: $seperatorStrokeSize 3px $navEdges;
     padding: 0;
     width: $toolboxWidth;
+    border-right: $seperatorStrokeSize solid $navEdges;
 }
 
 .blocklyFlyout { 
     transform: translate(calc($toolboxWidth - $seperatorStrokeSize * 2), -$seperatorStrokeSize) !important;
     border: $seperatorStrokeSize solid $navEdges;
     width: 430px;
+    background-color: rgb(245, 245, 245);;
 }
 /* Stacks the icon on top of the label. */
 .blocklyTreeRowContentContainer {
     display: flex;
     position: relative;
     align-items: center;
+}
+.blocklyTreeRowContentContainer >svg >path {
+    fill: white;
 }
 .blocklyTreeRow {
     height: initial;
@@ -112,27 +118,19 @@ $downloadButtonSize: 60px;
     height: $componentHeight;
     width: $componentHeight;
 }
-.extender.extended {
+.extender {
+    @include extendTransition;
+
     height: $componentHeight;
     border-right: 1px solid rgba(0, 0, 0, 0);
     margin-right: -1px;
     z-index: 0;
     box-sizing: border-box;
-    width: $extensionAmount;
+    width: $extensionRest;
 
-}
-.extender{
-    height: $componentHeight;
-    border-right: 1px solid rgba(0, 0, 0, 0);
-    margin-right: -1px;
-    z-index: 0;
-    box-sizing: border-box;
-    width: 0;
-
-}
-.extended.categoryIcon { 
-    left: calc(($archWidth/3) - ($iconHeight/2))+$extensionAmount;
-
+    &.extended {
+        width: calc($extensionAmount + $extensionRest);
+    }
 }
 
 .blocklyTreeRow { 
@@ -161,13 +159,13 @@ body {
     background-color: $backgroundColour;
 }
 #workspaceTabs {
-    background-color: $roboxRed;
+    background-color: variables.$themeRed;
 }
 #workspaceTabs, #actionBar {
     height: $barHeight;
     display: flex;
     justify-content: space-between;
-    width: calc(100% - 2*$barPadding);
+    width: 100%;
     padding: 0 $barPadding 0 $barPadding;
     flex-direction: row;
     align-content: center;
@@ -211,12 +209,23 @@ $nameInputDropShadowMult: 2;
     border: 0;
     font-size: 20px;
     color: white;
+    display: flex;
+}
+#back-button:hover {
+    cursor: pointer;
+}
+#back-button > svg > path {
+    color: white;
+}
+#back-button > svg {
+    display: block;
+    margin: auto;
 }
 
 .topButton {
     width: 30px;
     height: 30px;
-    background-color: $roboxBlue;
+    background-color: variables.$themeBlue;
     border-radius: 50%;
     border: none;
     filter: drop-shadow(calc($dropshadowBase*$topButtonsDropShadowMult) calc($dropshadowBase*$topButtonsDropShadowMult) $dropShadowColour);
@@ -243,15 +252,17 @@ $nameInputDropShadowMult: 2;
     height: 100%;
     font-weight: bold;
     font-size: larger;
+    width: 270px;
     padding: 0 40px 0 40px;
     border-right: $seperatorStrokeSize solid white;
 
 }
 #connection-managment {
-    background-color: $roboxRed;
+    background-color: variables.$themeRed;
     display: flex;
     justify-content: space-between;
     padding: 0;
+    width: 310px;
     height: 50px;
     border-radius: 2em;
     
@@ -292,8 +303,8 @@ $blocklyUIButtonsDropShadowMult: 2;
 }
 .uiButtons {
     background-color: white;
-    color: $roboxBlue;
-    border: $seperatorStrokeSize solid $roboxBlue;
+    color: variables.$themeBlue;
+    border: $seperatorStrokeSize solid variables.$themeBlue;
     font-size: calc((30px/$blocklyUIIconSize)*$blocklyUIIconSize);
     width: $blocklyUIIconSize;
     height: $blocklyUIIconSize;
@@ -305,6 +316,7 @@ $blocklyUIButtonsDropShadowMult: 2;
     cursor: pointer;
 }
 #connection-managment[status="disconnected"] {
+    background-color: variables.$themeBlue;
     #download-robox-button {
         display: none;
     }
@@ -332,35 +344,9 @@ $blocklyUIButtonsDropShadowMult: 2;
         display: none;
     }
 }
-#connection-managment[status="loading"] {
-    #download-robox-button {
-        display: none;
-    }
-    #connect-robox-button {
-        display: none;
-    }
-    #stop-robox-button {
-        display: none;
-    }
-    #run-robox-button {
-        display: none;
-    }
 
-    #loading {
-        display: block;
-    }
-
-    #options {
-        display: none;
-    }
-    #disconnect {
-        display: none;
-    }
-    #console {
-        display: none;
-    }
-}
 #connection-managment[status="connected"] {
+    background-color: variables.$themeYellow;
     #download-robox-button {
         display: block;
     }
@@ -389,6 +375,7 @@ $blocklyUIButtonsDropShadowMult: 2;
     }
 }
 #connection-managment[status="downloaded"] {
+    background-color: variables.$themeGreen;
     #download-robox-button {
         display: none;
     }
@@ -418,6 +405,7 @@ $blocklyUIButtonsDropShadowMult: 2;
 }
 
 #connection-managment[status="running"] {
+    background-color: variables.$themeRed;
     #download-robox-button {
         display: none;
     }
@@ -444,4 +432,24 @@ $blocklyUIButtonsDropShadowMult: 2;
     #console {
         display: block;
     }
+}
+#connection-managment[loading="true"] {
+    
+    #download-robox-button {
+        display: none;
+    }
+    #connect-robox-button {
+        display: none;
+    }
+    #stop-robox-button {
+        display: none;
+    }
+    #run-robox-button {
+        display: none;
+    }
+
+    #loading {
+        display: block;
+    }
+
 }

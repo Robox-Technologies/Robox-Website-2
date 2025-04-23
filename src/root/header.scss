@@ -1,0 +1,64 @@
+@use 'variables';
+
+$headerHeight: 56px;
+
+.header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vw;
+    height: $headerHeight;
+    padding-left: variables.$articleMargin;
+    background-color: variables.$primary;
+    z-index: 999;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-right: 16px;
+
+    img {
+        height: 30px;
+    }
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.ctaButtons {
+    clip-path: polygon(5% 0, 100% 0, 100% 100%, 0% 100%);
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    background-color: variables.$themeBlue;
+    height: $headerHeight;
+    padding-right: variables.$articleMargin;
+    padding-left: calc(variables.$articleMargin + 25px);
+}
+
+.btn {
+    @include variables.dropShadowSmall;
+
+    background: variables.$primary;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: black;
+
+    * {
+        margin-right: 8px;
+    }
+}
+
+.btn.store {
+    background: #ff6666;
+    color: variables.$primary;
+    padding: 8px 24px;
+}

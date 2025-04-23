@@ -17,10 +17,12 @@ def generatePrint(typ, message):
 motors = Motors()
 motor_speed = 60
 `
-const ws = Blockly.getMainWorkspace()
 
+let alreadyDownloaded = false
+let skipDownloadStep = true
 
-document.addEventListener("DOMContentLoaded", (event) => {
+export function postBlocklyWSInjection() {
+    const ws = Blockly.getMainWorkspace()
     const connectionManagment = document.getElementById("connection-managment")
 
     const connectButton = document.getElementById("connect-robox-button")
@@ -35,30 +37,59 @@ document.addEventListener("DOMContentLoaded", (event) => {
         const picoEvent = event as CustomEvent
         if (!picoEvent.detail.restarting) { //Disconnected
             connectionManagment.setAttribute("status",  "disconnected")
+            connectionManagment.setAttribute("loading",  "false")
         }
     })
     pico.addEventListener("connect", (event) => {
-        connectionManagment.setAttribute("status",  "connected")
+        if (skipDownloadStep || alreadyDownloaded) {
+            connectionManagment.setAttribute("status",  "downloaded")
+        }
+        else {
+            connectionManagment.setAttribute("status",  "connected")
+        }
+        connectionManagment.setAttribute("loading",  "false")
     })
     pico.addEventListener("download", (event) => {
+        if (skipDownloadStep) {
+            pico.runCode()
+            connectionManagment.setAttribute("status",  "running")
+            connectionManagment.setAttribute("loading",  "false")
+            return
+        }
         connectionManagment.setAttribute("status",  "downloaded")
-    })
+        connectionManagment.setAttribute("loading",  "false")
 
-    connectButton?.addEventListener("click", () => pico.request());
+    })
+    ws.addChangeListener((event) => {
+        if (event.isUiEvent ) return; //Checking if this update changed the blocks
+        if (connectionManagment.getAttribute("status") === "downloaded") connectionManagment.setAttribute("status",  "connected") //If they are waiting to run the program then go back to download
+        alreadyDownloaded = false //Saying that this workspace has changed
+    });
+    connectButton?.addEventListener("click", () => {
+        pico.request()
+        connectionManagment.setAttribute("loading",  "true")
+    });
     downloadButton?.addEventListener("click", () => {
-        let code = pythonGenerator.workspaceToCode(ws);
-        let finalCode = `${scriptDependency}\n${code}\nevent_begin()`
-        pico.sendCode(finalCode)
-        connectionManagment.setAttribute("status",  "loading")
+        sendCode(ws)
+        alreadyDownloaded = true
+        connectionManagment.setAttribute("loading",  "true")
 
     })
     stopButton?.addEventListener("click", () => {
         pico.restart()
-        connectionManagment.setAttribute("status",  "loading")
+        connectionManagment.setAttribute("loading",  "true")
     })
     runButton?.addEventListener("click", () => {
-        pico.runCode()
+        if (skipDownloadStep) {
+            return sendCode(ws)
+        }
         connectionManagment.setAttribute("status",  "running")
+        connectionManagment.setAttribute("loading",  "false")
     })
-})
+}
+function sendCode(ws: Blockly.Workspace) {
+    let code = pythonGenerator.workspaceToCode(ws);
+    let finalCode = `${scriptDependency}\n${code}\nevent_begin()`
+    pico.sendCode(finalCode)
+}
 

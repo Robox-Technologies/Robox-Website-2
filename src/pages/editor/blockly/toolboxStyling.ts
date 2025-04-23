@@ -1,13 +1,8 @@
 import * as Blockly from 'blockly';
 
-import archSVG from "./Arch.svg"
+import archSVG from "./Arch.svg?raw"
+
 type HexColor = `#${string}`;
-
-const animationTime = 300
-const extensionAmount = 20;
-
-const archWidth = 48
-const iconHeight = 20
 
 class RoboxToolboxCategories extends Blockly.ToolboxCategory {
     /**
@@ -50,36 +45,14 @@ class RoboxToolboxCategories extends Blockly.ToolboxCategory {
         const dom = this.htmlDiv_
         const icon = dom?.querySelector(".categoryIcon")
         const extender = dom?.querySelector(".extender")
-        if (!icon || !(icon instanceof HTMLElement)) return
+        if (!icon || !(icon instanceof SVGElement)) return
         if (!extender || !(extender instanceof HTMLElement)) return
         if (isSelected) {
-            const extenderAnimation = [
-                { width: `${extender.offsetWidth}px` },
-                { width: `${extensionAmount}px` },
-            ];
-            const iconAnimation = [
-                { left: `${icon.offsetLeft}px` },
-                { left: `${((archWidth/3)-(iconHeight/2))+extensionAmount}px` },
-            ];
-            icon.animate(iconAnimation, { duration: animationTime, iterations: 1})
-            extender.animate(extenderAnimation, { duration: animationTime, iterations: 1})
+            icon.style.marginLeft = "20px";
             extender.classList.add("extended")
-            icon.classList.add("extended")
-        }
-        else {
-            const extenderAnimation = [
-                { width: `${extender.offsetWidth}px` },
-                { width: `0px` },
-            ];
-            const iconAnimation = [
-                { left: `${icon.offsetLeft}px` },
-                { left: `${((archWidth/3)-(iconHeight/2))}px` },
-            ];
-
-            icon.animate(iconAnimation, { duration: animationTime, iterations: 1})
-            extender.animate(extenderAnimation, { duration: animationTime, iterations: 1})
+        } else {
+            icon.style.marginLeft = "0px";
             extender.classList.remove("extended")
-            icon.classList.remove("extended")
         }
     }
 }
