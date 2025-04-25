@@ -297,12 +297,7 @@ class BLECommunication {
         try {
             this.rxCharacteristic.addEventListener("characteristicvaluechanged", (event) => {
                 const target = event.target as BluetoothRemoteGATTCharacteristic;
-                if (!target || !target.value) return;
-                let data = new TextDecoder().decode(target.value);
-                this.parent.read(JSON.parse(data));
-            });
-        } catch(err) {
-            console.warn(err)
+                const value = this.textDecoder.decode(rawValue).replace(/\u0000/g, ''); //since the null character keeps on appearing
         }
     }
     async write(messages: string | string[]) {
