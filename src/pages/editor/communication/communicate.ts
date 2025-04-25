@@ -1,5 +1,5 @@
-
 const piVendorId = 0x2e8a
+
 
 const COMMANDS = {
     FIRMWARECHECK: "x019FIRMCHECK\r",
@@ -9,9 +9,9 @@ const COMMANDS = {
     RESTARTPROGRAM: "x069\r",
     KEYBOARDINTERRUPT: "\x03\n"
 }
-
+const MAX_CHUNK_SIZE = 20;  // Max size for GATT write (usually 20 bytes)
 type picoMessage = {
-    type: "console" | "confirmation" | "error",
+    type: "console" | "confirmation" | "error" | "awake",
     message: string,
 }
 
@@ -28,16 +28,17 @@ type firmwareOptions = {
 type picoOptions = {
     message: string
 }
-type EventPayload = { event: 'console'; options: picoOptions } | { event: 'downloaded'; options: {} } | { event: 'firmware'; options: firmwareOptions } | { event: 'confirmation'; options: picoOptions } | { event: 'error'; options: picoOptions } | { event: 'connect'; options: connectOptions } | { event: 'disconnect'; options: disconnectOptions }
+type EventPayload = { event: 'console'; options: picoOptions } | { event: 'awake'; options: picoOptions } | { event: 'console'; options: picoOptions } | { event: 'downloaded'; options: {} } | { event: 'firmware'; options: firmwareOptions } | { event: 'confirmation'; options: picoOptions } | { event: 'error'; options: picoOptions } | { event: 'connect'; options: connectOptions } | { event: 'disconnect'; options: disconnectOptions }
 
 class Pico extends EventTarget {
-    communication: USBCommunication
+    communication: USBCommunication | BLECommunication
     firmwareVersion: number
     restarting: boolean
     firmware: boolean
     constructor(method: "USB" | "Bluetooth", firmwareVersion=1) {
         super()
         if (method === "USB") this.communication = new USBCommunication(this)
+        else if (method === "Bluetooth") this.communication = new BLECommunication(this)
         this.restarting = false
         this.firmware = false
         this.firmwareVersion = 1
@@ -80,6 +81,9 @@ class Pico extends EventTarget {
         if (type === "confirmation") {
             this.firmware = true //The firmware check was successful!
         }
+        if (type === "awake") {
+            this.firmware = true //The firmware check was successful!
+        }
         this.emit({event: type, options: payload})
     }
     write(command: string) {
@@ -93,15 +97,17 @@ class Pico extends EventTarget {
         }, 1000);
     }
     restart() {
-        this.communication.restart()
         this.restarting = true
+        this.communication.restart()
     }
     request() {
         this.communication.request()
     }
     sendCode(code: string) {
         this.communication.write([
-            `${COMMANDS.STARTUPLOAD}${code}\r${COMMANDS.ENDUPLOAD}`
+            COMMANDS.STARTUPLOAD, 
+            `${code}\r`, 
+            COMMANDS.ENDUPLOAD
         ])
     }
     runCode() {
@@ -280,83 +286,159 @@ class USBCommunication {
     }
 }
 class BLECommunication {
-    rxCharacteristic: BluetoothRemoteGATTCharacteristic
-    txCharacteristic: BluetoothRemoteGATTCharacteristic
     device: BluetoothDevice
     server: BluetoothRemoteGATTServer
-    uartService: BluetoothRemoteGATTService
-    constructor(private parent: Pico, baudRate = 9600) {
-
+    service: BluetoothRemoteGATTService
+    characteristic: BluetoothRemoteGATTCharacteristic
+    textEncoder: TextEncoder
+    textDecoder: TextDecoder
+    constructor(private parent: Pico) {
+        this.textEncoder = new TextEncoder();
+        this.textDecoder = new TextDecoder("utf-8", { ignoreBOM: true });
     }
+
     restart() {
-        this.write([
-            COMMANDS.RESTARTPROGRAM
-        ])
+        this.write(COMMANDS.RESTARTPROGRAM)
     }
-    async read() {
+
+    async read(): Promise<void> {
         try {
-            this.rxCharacteristic.addEventListener("characteristicvaluechanged", (event) => {
+            await this.characteristic.startNotifications();
+    
+            let buffer = '';
+    
+            this.characteristic.addEventListener("characteristicvaluechanged", (event: Event) => {
                 const target = event.target as BluetoothRemoteGATTCharacteristic;
+                const rawValue = target.value!;
+    
+                // Strip null characters before processing
                 const value = this.textDecoder.decode(rawValue).replace(/\u0000/g, ''); //since the null character keeps on appearing
+    
+                buffer += value;
+    
+                const parts = buffer.split('\r');
+                buffer = parts.pop() ?? '';
+    
+                const consoleMessages: picoMessage[] = [];
+    
+                for (const part of parts) {
+                    const trimmed = part.trim();
+                    if (!trimmed) continue;
+    
+                    try {
+                        const parsed = JSON.parse(trimmed) as picoMessage;
+                        consoleMessages.push(parsed);
+                    } catch {
+                        // Ignore malformed JSON chunks
+                    }
+                }
+    
+                for (const message of consoleMessages) {
+                    if (this.parent.restarting && message.type === "awake") {
+                        this.parent.emit({ event: "connect", options: {} });
+                        continue;
+                    }
+                    this.parent.read(message);
+                }
+            });
+    
+        } catch (err) {
+            console.warn('Error starting notifications:', err);
         }
     }
-    async write(messages: string | string[]) {
-        try {
-            if (typeof messages === "object") { //Check if its an array object
-                for (const message of messages) {
-                    let commandBuffer = new TextEncoder().encode(message);
-                    await this.txCharacteristic.writeValue(commandBuffer);
-                }                
-            }
-            else {
-                let commandBuffer = new TextEncoder().encode(messages);
-                await this.txCharacteristic.writeValue(commandBuffer);
-            }
-        }
-        catch(err) {
-            this.parent.emit({"event": "error", options: { "message": "Could not write to pico!"}})
-        }
-    }
-    async connect() {
-        if (this.device && this.device.gatt) {
+    
+    
+    
 
-            this.server = await this.device.gatt.connect();
-        }
-        else {
-            this.parent.emit({event: "error", options: {message: "Could not connect to the server!"}})
-            return
-        }
-        this.uartService = await this.server.getPrimaryService('6e400001-b5a3-f393-e0a9-e50e24dcca9e');
+async write(messages: string | string[]): Promise<void> {
+    try {
+        // If messages is an array, handle each message separately
+        if (Array.isArray(messages)) {
+            for (const msg of messages) {
+                // Split each message into chunks of size MAX_CHUNK_SIZE
+                const chunks: string[] = [];
+                for (let i = 0; i < msg.length; i += MAX_CHUNK_SIZE) {
+                    chunks.push(msg.slice(i, i + MAX_CHUNK_SIZE));
+                }
 
-        this.txCharacteristic = await this.uartService.getCharacteristic('6e400002-b5a3-f393-e0a9-e50e24dcca9e'); // TX from Web to Pico
-        this.rxCharacteristic = await this.uartService.getCharacteristic('6e400003-b5a3-f393-e0a9-e50e24dcca9e'); // RX from Pico to Web
-        await this.rxCharacteristic.startNotifications();
-        this.read()
-        return true
-    }
-    async disconnect() {
-        if (this.device && this.device.gatt) {
-            this.device.gatt.disconnect();
+                // Send each chunk of the message separately
+                for (const chunk of chunks) {
+                    console.log("Sending chunk:", chunk);  // Debugging: Check each chunk sent
+                    await this.characteristic.writeValue(this.textEncoder.encode(chunk));
+                    // Optional: small delay between writes to avoid flooding the Bluetooth connection
+                    await new Promise(resolve => setTimeout(resolve, 10));
+                }
+            }
+        } else {
+            // If messages is a single string, just split it into chunks and send
+            const chunks: string[] = [];
+            for (let i = 0; i < messages.length; i += MAX_CHUNK_SIZE) {
+                chunks.push(messages.slice(i, i + MAX_CHUNK_SIZE));
+            }
+
+            // Send each chunk of the message separately
+            for (const chunk of chunks) {
+                console.log("Sending chunk:", chunk);  // Debugging: Check each chunk sent
+                await this.characteristic.writeValue(this.textEncoder.encode(chunk));
+                // Optional: small delay between writes to avoid flooding the Bluetooth connection
+                await new Promise(resolve => setTimeout(resolve, 10));
+            }
         }
-        return true
-    }
-    async request() {
-        const device = await navigator.bluetooth.requestDevice({
-            acceptAllDevices: true,
-            optionalServices: ['6e400001-b5a3-f393-e0a9-e50e24dcca9e'] // Nordic UART Service UUID
-        });
-        if (device) {
-            this.device = device
-            this.connect()
-        }
-        else {
-            this.parent.emit({event: "error", options: {message: "Could not connect to the pico! Try resetting it?"}})
-            console.warn("Could not connect to the port")
-            return
-        }
-       
+    } catch (err) {
+        console.warn(err);
+        this.parent.emit({ event: "error", options: { message: "Could not write to pico!" } });
     }
 }
-export let pico = new Pico("USB")
+
+    
+
+    async connect(device: any) {
+        try {
+            this.device = device
+            this.server = await this.device.gatt!.connect();
+            this.service = await this.server.getPrimaryService(0xffe0);
+            this.characteristic = await this.service.getCharacteristic(0xffe1);
+
+            this.read(); // Start notifications
+            return true;
+
+        } catch (err) {
+            this.parent.emit({ event: "error", options: { message: "Failed to connect to the Pico via BLE!" } });
+            console.warn(err);
+            return false;
+        }
+    }
+
+    async disconnect() {
+        try {
+            if (this.device?.gatt?.connected) {
+                await this.device.gatt.disconnect();
+            }
+        } catch (err) {
+            this.parent.emit({ event: "error", options: { message: "Could not disconnect from Pico" } });
+        }
+        return true;
+    }
+
+    async request() {
+        try {
+            let device = navigator.bluetooth.requestDevice({
+                filters: [{ services: [0xffe0] }]
+            });
+            device.then(async (port) => {
+                this.parent.connect(port)
+            })
+        } 
+        catch (error: any) {
+            if (error.name !== "NotFoundError") {
+                this.parent.emit({ event: "error", options: { message: "Could not connect to the pico! Try resetting it?" } });
+                console.warn("Could not connect via BLE", error);
+            }
+        }
+    }
+}
+
+export let pico = new Pico("Bluetooth")
 pico.init()
 pico.startupConnect()
+
