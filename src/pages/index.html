@@ -14,47 +14,151 @@
     </div>
 
     <article>
-        <section>
-            <section class="articleSection LTR">
-                <div class="text">
-                    <h1>Meet Ro/Box</h1>
-        
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur.
-                        Feugiat dictum pulvinar nunc molestie diam mattis nunc leo accumsan.
-                        Quis enim eu pellentesque purus enim.
-                        Cum urna semper gravida congue vulputate ipsum neque ornare tellus.
-                        Feugiat vitae mollis rhoncus laoreet quam suspendisse convallis curabitur nulla.
-                    </p>
+        <section class="articleSection LTR">
+            <div class="text">
+                <h1>Meet Ro/Box</h1>
+    
+                <p>
+                    Lorem ipsum dolor sit amet consectetur.
+                    Feugiat dictum pulvinar nunc molestie diam mattis nunc leo accumsan.
+                    Quis enim eu pellentesque purus enim.
+                    Cum urna semper gravida congue vulputate ipsum neque ornare tellus.
+                    Feugiat vitae mollis rhoncus laoreet quam suspendisse convallis curabitur nulla.
+                </p>
 
-                    <a class="ctaButton" href="/about">About Us</a>
-                </div>
-        
-                <img src="images/article1.png" class="media">
-            </section>
-        
-            <section class="articleSection RTL equalWidth section2">
-                <div class="text">
-                    <h1>Lorem ipsum</h1>
-        
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur.
-                        Feugiat dictum pulvinar nunc molestie diam mattis nunc leo accumsan.
-                        Quis enim eu pellentesque purus enim.
-                        Cum urna semper gravida congue vulputate ipsum neque ornare tellus.
-                        Feugiat vitae mollis rhoncus laoreet quam suspendisse convallis curabitur nulla.
-                        <br><br>
-                        Lorem ipsum
-                        <br><br>
-                        Lorem ipsum
-                    </p>
-                </div>
-        
-                <img src="images/goober-star.svg?raw" class="goober">
-
-                <img src="images/article2.png" class="media">
-            </section>
+                <a class="ctaButton" href="/about">About us</a>
+            </div>
+    
+            <img src="images/article1.png" class="media">
         </section>
+    
+        <section class="articleSection RTL equalWidth section2">
+            <div class="text">
+                <h1>Lorem ipsum</h1>
+    
+                <p>
+                    Lorem ipsum dolor sit amet consectetur.
+                    Feugiat dictum pulvinar nunc molestie diam mattis nunc leo accumsan.
+                    Quis enim eu pellentesque purus enim.
+                    Cum urna semper gravida congue vulputate ipsum neque ornare tellus.
+                    Feugiat vitae mollis rhoncus laoreet quam suspendisse convallis curabitur nulla.
+                    <br><br>
+                    Lorem ipsum
+                    <br><br>
+                    Lorem ipsum
+                </p>
+            </div>
+    
+            <img src="images/goober-star.svg?raw" class="goober">
+
+            <img src="images/article2.png" class="media">
+        </section>
+
+        <section class="boxToBot">
+            <div class="intro">
+                <h1>
+                    Box-to-Bot
+                </h1>
+                <p>
+                    Steve, le- (Poi-)
+                    Le poisson Steve (Poisson Steve)<br>
+                    Il est orange (Orange, ooh-ooh)
+                    Il a des bras, et des jambes<br>
+                    Le poisson Steve
+                </p>
+            </div>
+        
+            <div class="columns">
+                <div class="steps">
+                    <p>1. brilliant bento</p>
+                    <p>2. take the challenge</p>
+                    <p>3. veggie-packed quiche</p>
+                    <p>4. games night bites</p>
+                </div>
+                
+                <img class="boxToBotImg" src="images/boxToBot/1.png">
+            </div>
+        </section>
+
+        <section class="roboxHub centred">
+            <h1>Empowering Students to Learn</h1>
+
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,<br>
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br>
+                Ut enim ad minim veniam, quis nostrud exercitation
+            </p>
+
+            <div class="cards">
+                <%~ include('src/partials/card.html', {
+                    class: "roboxHubCard",
+                    title: 'Assembly', 
+                    imageSource: "images/roboxHubCard.png", 
+                    descriptions: [
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 
+                    ]
+                }) %>
+
+                <%~ include('src/partials/card.html', {
+                    class: "roboxHubCard",
+                    title: 'Workshop', 
+                    imageSource: "images/roboxHubCard.png", 
+                    descriptions: [
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 
+                    ]
+                }) %>
+
+                <%~ include('src/partials/card.html', {
+                    class: "roboxHubCard",
+                    title: 'Lessons', 
+                    imageSource: "images/roboxHubCard.png", 
+                    descriptions: [
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 
+                    ]
+                }) %>
+            </div>
+            
+            <a class="ctaButton" href="/about">Visit Ro/Box Hub</a>
+        </section>
+
+        <section class="articleSection RTL equalWidth teacherHub">
+            <div class="text">
+                <h1>Teacher Hub</h1>
+    
+                <p>
+                    Lorem ipsum dolor sit amet consectetur.
+                    Feugiat dictum pulvinar nunc molestie diam mattis nunc leo accumsan.
+                    <br><br>
+                    Lorem ipsum
+                    <br><br>
+                    Lorem ipsum
+                    <br><br>
+                    Lorem ipsum
+                </p>
+
+                <a class="ctaButton" href="/about">Visit Teacher Hub</a>
+            </div>
+
+            <img src="images/article3.png" class="media">
+        </section>
+
+        <section class="centred">
+            <h1>See the Kit in Action</h1>
+
+            <iframe style="width: 80%; aspect-ratio: 1.7777777778;" src="https://www.youtube-nocookie.com/embed/lCaun_EiJZQ?autoplay=0&mute=1" frameborder="0" allow="autoplay; encrypted-media;" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </section>
+
+        <!-- <section>
+            <h1>Check out our Kits</h1>
+            
+            <p>Lorem ipsum dolor sit amet</p>
+
+            <div class="cards">
+
+            </div>
+
+            <a class="ctaButton" href="/about">Visit our store</a>
+        </section> -->
     </article>
     
     <%~ include('src/partials/footer.html') %>

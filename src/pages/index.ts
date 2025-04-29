@@ -1,1 +1,1 @@
-console.log(2)
+import './boxToBot.ts';

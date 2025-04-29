@@ -37,6 +37,78 @@
     }
 }
 
+.boxToBot {
+    .intro {
+        text-align: center;
+    }
+
+    .columns {
+        display: flex;
+        justify-content: space-around;
+        gap: 200px;
+        padding-bottom: 30vh;
+    }
+    
+    .steps {
+        margin-top: 30vh;
+    }
+
+    .steps > p {
+        margin-top: 50vh;
+    }
+
+    .boxToBotImg {
+        padding-top: 40vh;
+        height: 100px;
+        position: sticky;
+        position: -webkit-sticky;
+        top: 0;
+    }
+
+    @keyframes pop {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.2);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .scale-animate {
+        animation: pop 0.3s ease-in-out;
+    }
+}
+
+.roboxHub, .teacherHub {
+    background-color: variables.$tone2;
+}
+
+.roboxHub {
+    .ctaButton {
+        margin-top: variables.$articleMargin;
+    }
+
+    .cards {
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        gap: variables.$articleMargin;
+        margin-top: variables.$articleMargin;
+    
+        .roboxHubCard {
+            width: inherit;
+            flex: 1;
+    
+            .card-image {
+                aspect-ratio: inherit;
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 1000px) {
     .section2 > .goober {
         visibility: hidden;
