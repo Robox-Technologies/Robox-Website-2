@@ -1,5 +1,5 @@
 <head>
-    <script src="./index.ts"></script>
+    <script src="./index.ts" defer></script>
     <link href="./index.scss" rel="stylesheet" />
     <%~ include('src/partials/metadata.html') %>
 </head>
@@ -8,7 +8,6 @@
     <%~ include('src/partials/header.html') %>
 
     <div class="hero">
-        <img src="images/hero.png" class="heroImg">
         <img src="@images/logo-full.svg?raw" class="logo">
         <h1>Unbox the Fun</h1>
     </div>
@@ -48,38 +47,49 @@
                     Lorem ipsum
                 </p>
             </div>
-    
-            <img src="images/goober-star.svg?raw" class="goober">
 
+            <img src="images/goober-star.svg?raw" class="goober">
             <img src="images/article2.png" class="media">
         </section>
 
         <section class="boxToBot">
             <div class="intro">
                 <h1>
-                    Box-to-Bot
+                    Box-to-Bot in 4 Steps
                 </h1>
                 <p>
-                    Steve, le- (Poi-)
-                    Le poisson Steve (Poisson Steve)<br>
-                    Il est orange (Orange, ooh-ooh)
-                    Il a des bras, et des jambes<br>
-                    Le poisson Steve
+                    We know how difficult robotics can be.<br>
+                    It’s why we’ve made Robox easy to follow for all ages.
                 </p>
             </div>
         
             <div class="columns">
                 <div class="steps">
-                    <p>1. brilliant bento</p>
-                    <p>2. take the challenge</p>
-                    <p>3. veggie-packed quiche</p>
-                    <p>4. games night bites</p>
+                    <%
+                    const steps = [
+                        ["Un/Box your Ro/Box", "Open your RoboGenius kit and familiarize yourself with all the components"],
+                        ["Assemble", "Use our comprehensive guide to build your first robot project"],
+                        ["Unleash your creativity", "Design and customise to truly make Ro/Box your own"],
+                        ["Code", "Use our intuitive software to bring your creation to life"]
+                    ]
+
+                    for (let i in steps) {
+                    %>
+                        <div class="step">
+                            <h1 class="stepNumber"><%= parseInt(i)+1 %></h1>
+                            <div>
+                                <h2 class="title"><%= steps[i][0] %></h2>
+                                <p class="description"><%= steps[i][1] %></p>
+                            </div>
+                        </div>
+                    <%}%>
                 </div>
                 
                 <img class="boxToBotImg" src="images/boxToBot/1.png">
             </div>
         </section>
-
+    </article>
+    <article class="hubs">
         <section class="roboxHub centred">
             <h1>Empowering Students to Learn</h1>
 
@@ -96,7 +106,9 @@
                     imageSource: "images/roboxHubCard.png", 
                     descriptions: [
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 
-                    ]
+                    ],
+                    goober: "./images/goober-pentagon.svg?raw",
+                    gooberClass: "gooberPentagon"
                 }) %>
 
                 <%~ include('src/partials/card.html', {
@@ -114,7 +126,9 @@
                     imageSource: "images/roboxHubCard.png", 
                     descriptions: [
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor", 
-                    ]
+                    ],
+                    goober: "./images/goober-spiky.svg?raw",
+                    gooberClass: "gooberSpiky"
                 }) %>
             </div>
             
@@ -140,26 +154,52 @@
             </div>
 
             <img src="images/article3.png" class="media">
-        </section>
 
-        <section class="centred">
+            <div class="goober">
+                <img src="./images/goober-square.svg?raw" class="shape">
+                <img src="@images/eyes.svg?raw" class="eyes">
+            </div>
+        </section>
+    </article>
+    <!-- <article>
+        <section class="centred videoSection">
             <h1>See the Kit in Action</h1>
 
-            <iframe style="width: 80%; aspect-ratio: 1.7777777778;" src="https://www.youtube-nocookie.com/embed/lCaun_EiJZQ?autoplay=0&mute=1" frameborder="0" allow="autoplay; encrypted-media;" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe src="https://www.youtube-nocookie.com/embed/lCaun_EiJZQ?autoplay=0&mute=1" frameborder="0" allow="autoplay; encrypted-media;" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </section>
 
-        <!-- <section>
+        <section>
             <h1>Check out our Kits</h1>
             
             <p>Lorem ipsum dolor sit amet</p>
 
             <div class="cards">
+                <%~ include('src/partials/card.html', {
+                    class: "productCard",
+                    imageSource: "images/roboxHubCard.png", 
+                    descriptions: [
+                        "Lorem ipsum",
+                        "Lorem ipsum",
+                        "Lorem ipsum",
+                        "Lorem ipsum",
+                    ]
+                }) %>
 
+                <%~ include('src/partials/card.html', {
+                    class: "productCard",
+                    imageSource: "images/roboxHubCard.png", 
+                    descriptions: [
+                        "Lorem ipsum",
+                        "Lorem ipsum",
+                        "Lorem ipsum",
+                        "Lorem ipsum", 
+                    ]
+                }) %>
             </div>
 
             <a class="ctaButton" href="/about">Visit our store</a>
-        </section> -->
-    </article>
+        </section>
+    </article> -->
     
     <%~ include('src/partials/footer.html') %>
 </body>
