@@ -53,6 +53,7 @@
         justify-content: space-between;
         align-items: start;
         padding-bottom: calc(30vh - $bottomSpace);
+        gap: variables.$standardGap;
     }
     
     .steps {
@@ -97,7 +98,7 @@
         padding-top: calc(50vh - $bottomSpace);
         width: $imgWidth;
         min-width: $minSize;
-        aspect-ratio: 1;
+        // aspect-ratio: 1;
         object-fit: contain;
         position: sticky;
         position: -webkit-sticky;
@@ -247,9 +248,10 @@ article.hubs {
 @media screen and (max-width: 600px) {
     .boxToBotImg {
         display: none;
-        .steps > .step {
-            margin-top: 10vh;
-        }
+    }
+
+    .boxToBot .steps > .step {
+        margin-top: 20vh;
     }
 }
 
