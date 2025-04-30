@@ -89,6 +89,11 @@
     }
 }
 
+.storyHeadline {
+    padding: variables.$standardGap;
+    text-align: center;
+}
+
 @media screen and (max-width: 1300px) {
     .hero > .content {
         flex-direction: column;
