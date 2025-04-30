@@ -1,19 +1,31 @@
-<header class="header">
-    <nav class="navLinks">
-        <a href="/" class="logo">
-            <img src="@images/logo-full.svg" alt="Robox Logo">
-        </a>
-        <div class="navItems">
-            <a href="/about">About</a>
-            <a href="#contactUs">Contact</a>
+<header>
+    <script src="@root/hamburgerMenu.ts" async defer></script>
+    
+    <div class="header">
+        <nav class="navLinks">
+            <a href="/" class="logo">
+                <img src="@images/logo-full.svg" alt="Robox Logo">
+            </a>
+            <div class="navItems">
+                <a href="/about">About</a>
+                <a href="#contactUs">Contact</a>
+            </div>
+        </nav>
+    
+        <div class="ctaButtons">
+            <a href="/student" class="btn"><i class="fa-regular fa-compass"></i> Robox Hub</a>
+            <a href="#" class="btn"><i class="fa-solid fa-graduation-cap"></i> Teacher Resources</a>
+            <!-- <a href="#" class="btn store">Store</a> -->
+    
+            <button class="hamburger" aria-label="Toggle menu"></button>
         </div>
-    </nav>
+    </div>
 
-    <div class="ctaButtons">
+    <div class="hamburgerMenu">
+        <a href="/about">About</a>
+        <a href="#contactUs">Contact</a>
+
         <a href="/student" class="btn"><i class="fa-regular fa-compass"></i> Robox Hub</a>
         <a href="#" class="btn"><i class="fa-solid fa-graduation-cap"></i> Teacher Resources</a>
-        <!-- <a href="#" class="btn store">Store</a> -->
-
-        <button class="hamburger" aria-label="Toggle menu"></button>
     </div>
 </header>

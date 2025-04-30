@@ -1,36 +1,35 @@
-import Lottie from '@lottielab/lottie-player/web';
 import hamburgerIcon from '@images/hamburger.json';
 
 const hamburger = document.querySelector('.hamburger') as HTMLButtonElement;
-const navLinks = document.querySelector('.navLinks') as HTMLElement;
-const hamburgerLottie = document.createElement("lottie-player") as Lottie;
+const hamburgerMenu = document.querySelector('.hamburgerMenu') as HTMLElement;
+const hamburgerLottie = document.createElement("lottie-player");
 
 var hamburgerMenuOpened = false;
 
-hamburgerLottie.setAttribute('src', JSON.stringify(hamburgerIcon));
-hamburgerLottie.setAttribute('autoplay', 'false');
+hamburgerLottie.setAttribute('src', hamburgerIcon);
 hamburgerLottie.setAttribute('background', 'transparent');
+hamburgerLottie.setAttribute('direction', '-1');
 hamburger.appendChild(hamburgerLottie);
 
 hamburger.addEventListener('click', (e) => {
     e.stopPropagation(); // Prevent the click from bubbling up
-    navLinks.classList.toggle('active');
-    
-    // Animate hamburger
     hamburgerMenuOpened = !hamburgerMenuOpened;
-    hamburgerLottie.direction = hamburgerMenuOpened ? 1 : -1;
-    hamburgerLottie.play();
+
+    updateHamburger();
 });
 
-// Close menu when clicking outside
-document.addEventListener('click', (event) => {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.navLinks') && !target.closest('.hamburger')) {
-        navLinks.classList.remove('active');
-        const lines = hamburger.querySelectorAll('.hamburger-line') as NodeListOf<HTMLElement>;
-        lines.forEach(line => {
-            line.style.transform = '';
-            line.style.opacity = '';
-        });
+function updateHamburger() {
+    if (hamburgerMenuOpened) {
+        hamburgerMenu.classList.add('active');
+        hamburgerMenu.style.top = '56px';
+    } else {
+        hamburgerMenu.classList.remove('active');
+        hamburgerMenu.style.top = '';
     }
-});
+
+    // Animate icon
+    // @ts-ignore
+    hamburgerLottie.setDirection(hamburgerMenuOpened ? 1 : -1);
+    // @ts-ignore
+    hamburgerLottie.play();
+}
