@@ -30,7 +30,7 @@ a {
 
 // MARK: - Heading (h1), Subheading (h2), + other text.
 // Sizing generated from Typescales. CHANGES MADE HERE MUST BE REFLECTED IN FIGMA
-p, a {
+p, a, li {
     @include variables.bodyFont;
 }
 
