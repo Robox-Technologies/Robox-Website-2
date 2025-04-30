@@ -3,15 +3,20 @@
         <a href="/" class="logo">
             <img src="@images/logo-full.svg" alt="Robox Logo">
         </a>
-        <a href="/about">About Us</a>
-        <!-- TODO: Add Resources menu -->
-        <!-- <a href="#">Resources <i class="fa-solid fa-chevron-down"></i></a> -->
-        <a href="#">Contact</a>
+        <div class="navItems">
+            <a href="/about">About</a>
+            <a href="#">Contact</a>
+        </div>
     </nav>
 
     <div class="ctaButtons">
         <a href="#" class="btn"><i class="fa-regular fa-compass"></i> Robox Hub</a>
         <a href="#" class="btn"><i class="fa-solid fa-graduation-cap"></i> Teacher Resources</a>
         <a href="#" class="btn store">Store</a>
+
+        <button class="hamburger" aria-label="Toggle menu">
+            <% //import hamburgerIcon from '@images/hamburger.json'; hamburgerIcon %>
+            <lottie-player aria-label="Open Menu" id="hamburgerIconLottie" autoplay="false" background="transparent" speed="1"></lottie-player>
+        </button>
     </div>
 </header>

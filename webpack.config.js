@@ -80,6 +80,10 @@ const config = {
                 resourceQuery: /raw/, // *.svg?raw
                 type: 'asset/source',
             },
+            {
+                test: /\.json$/i,
+                type: 'asset/source',
+            },
         ],
     },
     output: {

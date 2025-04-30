@@ -15,6 +15,24 @@ $headerHeight: 56px;
     z-index: 999;
 }
 
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    margin-right: 10px;
+    
+    .hamburger-line {
+        display: block;
+        width: 25px;
+        height: 2px;
+        background-color: variables.$primary;
+        margin: 5px 0;
+        transition: 0.3s;
+    }
+}
+
 .logo {
     display: flex;
     align-items: center;
@@ -31,34 +49,72 @@ $headerHeight: 56px;
     gap: 20px;
 }
 
+.navItems {
+    display: flex;
+    gap: 20px;
+}
+
 .ctaButtons {
     clip-path: polygon(5% 0, 100% 0, 100% 100%, 0% 100%);
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: variables.$standardGap;
     background-color: variables.$themeBlue;
     height: $headerHeight;
     padding-right: variables.$articleMargin;
-    padding-left: calc(variables.$articleMargin + 25px);
+    padding-left: calc(variables.$standardGap);
 }
 
 .btn {
-    @include variables.dropShadowSmall;
-
-    background: variables.$primary;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 6px;
     cursor: pointer;
-    color: black;
+    color: variables.$primary;
 
     * {
-        margin-right: 8px;
+        margin-right: 4px;
     }
 }
 
 .btn.store {
     background: #ff6666;
-    color: variables.$primary;
+    border: none;
+    border-radius: 6px;
     padding: 8px 24px;
+}
+
+@media (max-width: 900px) {
+    .hamburger {
+        display: block;
+    }
+
+    .navItems {
+        display: none;
+    }
+
+    // .navLinks {
+    //     position: fixed;
+    //     top: $headerHeight;
+    //     left: 0;
+    //     width: 100%;
+    //     background-color: variables.$primary;
+    //     flex-direction: column;
+    //     align-items: flex-start;
+    //     padding: 20px;
+    //     transform: translateX(-100%);
+    //     transition: transform 0.3s ease-in-out;
+    //     height: calc(100vh - $headerHeight);
+        
+    //     &.active {
+    //         transform: translateX(0);
+    //     }
+    // }
+
+    // .navItems {
+    //     flex-direction: column;
+    //     width: 100%;
+    //     gap: 15px;
+    // }
+
+    .ctaButtons > a {
+        display: none;
+    }
 }
