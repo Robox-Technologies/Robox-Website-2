@@ -66,12 +66,14 @@
             gap: variables.$standardGap;
 
             .stepNumber {
-                $size: 96px;
+                $size: 64px;
 
+                min-width: $size;
                 width: $size;
                 height: $size;
                 text-align: center;
                 line-height: $size;
+                font-size: 30px;
 
                 border-radius: 50%;
                 background: variables.$themeBlue;
@@ -82,16 +84,21 @@
             .title {
                 margin: 0;
             }
+
+            .description {
+                margin-bottom: 0;
+            }
         }
     }
 
     .boxToBotImg {
+        $minSize: 250px;
+
         padding-top: calc(50vh - $bottomSpace);
         width: $imgWidth;
-        min-width: 250px;
+        min-width: $minSize;
         aspect-ratio: 1;
         object-fit: contain;
-        min-width: 100px;
         position: sticky;
         position: -webkit-sticky;
         top: 0;
@@ -235,6 +242,15 @@ article.hubs {
 .videoSection > iframe {
     width: 80%;
     aspect-ratio: 1.7777777778;
+}
+
+@media screen and (max-width: 600px) {
+    .boxToBotImg {
+        display: none;
+        .steps > .step {
+            margin-top: 10vh;
+        }
+    }
 }
 
 @media screen and (max-width: 1000px) {
