@@ -1,16 +1,23 @@
 import Lottie from '@lottielab/lottie-player/web';
+import hamburgerIcon from '@images/hamburger.json';
 
 const hamburger = document.querySelector('.hamburger') as HTMLButtonElement;
 const navLinks = document.querySelector('.navLinks') as HTMLElement;
-const hamburgerLottie = document.getElementById('hamburgerIconLottie') as Lottie;
+const hamburgerLottie = document.createElement("lottie-player") as Lottie;
 
 var hamburgerMenuOpened = false;
+
+hamburgerLottie.setAttribute('src', JSON.stringify(hamburgerIcon));
+hamburgerLottie.setAttribute('autoplay', 'false');
+hamburgerLottie.setAttribute('background', 'transparent');
+hamburger.appendChild(hamburgerLottie);
 
 hamburger.addEventListener('click', (e) => {
     e.stopPropagation(); // Prevent the click from bubbling up
     navLinks.classList.toggle('active');
     
     // Animate hamburger
+    hamburgerMenuOpened = !hamburgerMenuOpened;
     hamburgerLottie.direction = hamburgerMenuOpened ? 1 : -1;
     hamburgerLottie.play();
 });

@@ -61,8 +61,7 @@ $headerHeight: 56px;
     gap: variables.$standardGap;
     background-color: variables.$themeBlue;
     height: $headerHeight;
-    padding-right: variables.$articleMargin;
-    padding-left: calc(variables.$standardGap);
+    padding: 0 variables.$articleMargin;
 }
 
 .btn {
