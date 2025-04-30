@@ -35,7 +35,7 @@ const config = {
             "@partials": path.join(__dirname, 'src/partials/'),
             "@root": path.join(__dirname, 'src/root/')
         },
-        extensions: ['.tsx', '.ts', '.js'],
+        extensions: ['.tsx', '.ts', '.js', ".json"],
     },
     plugins: [
         new HtmlBundlerPlugin({
@@ -45,6 +45,14 @@ const config = {
             },
             css: {
                 filename: 'public/css/[name].[contenthash:8].css', // output into dist/assets/css/ directory
+            },
+            loaderOptions: {
+                sources: [
+                    {
+                        tag: 'lottie-player',
+                        attributes: ['src'],
+                    },
+                ],
             },
             preprocessorOptions: {
                 views: [
@@ -80,6 +88,10 @@ const config = {
                 resourceQuery: /raw/, // *.svg?raw
                 type: 'asset/source',
             },
+            {
+                test: /\.json$/,
+                type: 'asset/resource',
+            }
         ],
     },
     output: {
