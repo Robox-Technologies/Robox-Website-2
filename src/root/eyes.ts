@@ -1,6 +1,6 @@
 (() => {
     const eyes = Array.from(document.getElementsByClassName("eyes")).map(eye => eye as HTMLElement);
-    const eyeMaxDist = 5;
+    const eyeMaxDist = 3;
     const falloffFac = 200;
     
     var mousePos: {x: number, y: number} | undefined = undefined;
