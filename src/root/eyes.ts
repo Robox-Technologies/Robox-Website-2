@@ -33,6 +33,6 @@
         });
     }
 
-    document.onscroll = updateEyes;
-    document.onmousemove = updateEyes;
+    document.addEventListener("scroll", updateEyes);
+    document.addEventListener("mousemove", updateEyes);
 })();

@@ -10,7 +10,7 @@ const steps = document.getElementsByClassName("step");
 const image = document.getElementsByClassName("boxToBotImg")[0] as HTMLImageElement;
 var existingImgState = -1;
 
-document.onscroll = (_) => {
+function updateBoxToBot() {
     let imgState = 0;
 
     for (let step of steps) {
@@ -33,3 +33,5 @@ document.onscroll = (_) => {
         existingImgState = imgState;
     }
 }
+
+document.addEventListener("scroll", updateBoxToBot);
