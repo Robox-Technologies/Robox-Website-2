@@ -9,6 +9,10 @@
         object-fit: contain;
     }
 
+    .text a {
+        text-decoration: underline;
+    }
+
     &.LTR {
         flex-direction: row;
     }

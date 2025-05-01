@@ -115,7 +115,7 @@ header {
 }
 
 @media (max-width: $hamburgerThreshold) {
-    .header:not(.headerWorkshop) {
+    .header {
         .hamburger {
             display: block;
         }

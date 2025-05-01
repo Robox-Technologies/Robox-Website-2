@@ -52,6 +52,13 @@ const config = {
                         tag: 'lottie-player',
                         attributes: ['src'],
                     },
+                    {
+                        tag: 'meta',
+                        attributes: ['content'],
+                        filter: (tag) => {
+                            return tag.attributes.name === 'twitter:image' || tag.attributes.property === 'og:image';
+                        },
+                    },
                 ],
             },
             preprocessorOptions: {
@@ -80,17 +87,13 @@ const config = {
                 use: ['css-loader', 'sass-loader'],
             },
             {
-                test: /\.(jpe?g|png|svg|gif|mp3)$/i,
-                type: "asset",
+                test: /\.(jpe?g|png|svg|gif|mp3|json)$/i,
+                type: "asset/resource",
             },
             {
                 test: /\.svg$/i,
                 resourceQuery: /raw/, // *.svg?raw
                 type: 'asset/source',
-            },
-            {
-                test: /\.json$/,
-                type: 'asset/resource',
             }
         ],
     },
