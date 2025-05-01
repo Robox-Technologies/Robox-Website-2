@@ -36,10 +36,10 @@ section.centred {
 }
 
 article {
-    padding: variables.$articleMargin;
+    padding: var(--articleMargin);
 
     & > section {
-        margin-top: variables.$articleMargin;
+        margin-top: var(--articleMargin);
     }
 }
 

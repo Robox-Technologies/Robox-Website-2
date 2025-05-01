@@ -2,7 +2,7 @@
 
 $hamburgerThreshold: 800px;
 
-.header {
+header {
     position: sticky;
     top: 0;
     width: 100vw;
@@ -16,7 +16,7 @@ $hamburgerThreshold: 800px;
     background-color: variables.$primary;
     width: 100%;
     height: variables.$headerHeight;
-    padding-left: variables.$articleMargin;
+    padding-left: var(--articleMargin);
 }
 
 .hamburger {
@@ -51,7 +51,7 @@ $hamburgerThreshold: 800px;
     display: none;
     flex-direction: column;
     gap: variables.$standardGap;
-    padding: variables.$standardGap variables.$articleMargin;
+    padding: variables.$standardGap var(--articleMargin);
     transition: top 0.5s ease;
     z-index: -1;
     border-bottom: 1px solid variables.$secondary;
@@ -94,7 +94,7 @@ $hamburgerThreshold: 800px;
     gap: variables.$standardGap;
     background-color: variables.$themeBlue;
     height: variables.$headerHeight;
-    padding: 0 variables.$articleMargin;
+    padding: 0 var(--articleMargin);
 }
 
 .btn {

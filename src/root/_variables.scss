@@ -19,6 +19,16 @@ $articleMargin: 64px;
 $standardGap: 32px;
 $borderRadius: 20px;
 
+:root {
+    --articleMargin: 64px;
+}
+
+@media (max-width: 1000px) {
+    :root {
+        --articleMargin: 32px;
+    }
+}
+
 // Drop shadows
 @mixin dropShadowSmall {
     box-shadow: 6px 6px 0px $dropShadow;

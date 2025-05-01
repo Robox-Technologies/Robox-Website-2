@@ -3,7 +3,7 @@
 .hero {
     width: 100vw;
     position: relative;
-    margin-bottom: calc(variables.$articleMargin * 2);
+    margin-bottom: calc(var(--articleMargin) * 2);
 
     & > img {
         width: 100%;
@@ -27,16 +27,16 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            gap: calc(variables.$articleMargin * 2);
+            gap: calc(var(--articleMargin) * 2);
 
             min-width: 500px;
             margin-top: 20vh;
             background-color: variables.$themeGreen;
             border-radius: 0 variables.$borderRadius variables.$borderRadius 0;
-            padding: variables.$articleMargin;
+            padding: var(--articleMargin);
             margin-left: calc(-1 * $falseOffset);
-            padding-left: calc(variables.$articleMargin + $falseOffset);
-            padding-bottom: calc(variables.$articleMargin * 2);
+            padding-left: calc(var(--articleMargin) + $falseOffset);
+            padding-bottom: calc(var(--articleMargin) * 2);
 
             .images {
                 display: flex;
@@ -44,7 +44,7 @@
                 align-items: end;
 
                 .bowtie {
-                    margin-bottom: variables.$articleMargin;
+                    margin-bottom: var(--articleMargin);
                     width: 30%;
                 }
                 
@@ -55,7 +55,7 @@
         }
 
         .description {
-            margin: 0 variables.$articleMargin;
+            margin: 0 var(--articleMargin);
             text-align: center;
         }
     }
@@ -67,7 +67,7 @@
     }
 
     .articleSection {
-        margin: variables.$articleMargin 0;
+        margin: var(--articleMargin) 0;
 
         .description {
             display: flex;
@@ -92,11 +92,11 @@
         align-items: start;
 
         // .title {
-        //     padding-left: max(calc(variables.$articleMargin), 20vw);
+        //     padding-left: max(calc(var(--articleMargin)), 20vw);
         // }
 
         .description {
-            margin: variables.$articleMargin;
+            margin: var(--articleMargin);
         }
     }
 
@@ -106,7 +106,7 @@
         .content > .title {
             margin-top: 30vh;
             min-width: inherit;
-            padding-bottom: variables.$articleMargin;
+            padding-bottom: var(--articleMargin);
 
             .images {
                 display: none;

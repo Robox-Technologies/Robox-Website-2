@@ -8,7 +8,7 @@ $bottomRowHeight: 54px;
 }
 
 .footerContent {
-    padding: 0 variables.$articleMargin;
+    padding: 0 var(--articleMargin);
     
     hr {
         border-color: variables.$themeBlack;
@@ -87,7 +87,7 @@ $bottomRowHeight: 54px;
 
     .footerBottom {
         position: absolute;
-        padding: 0 variables.$articleMargin;
+        padding: 0 var(--articleMargin);
         width: 100%;
         bottom: 0;
     }
@@ -96,7 +96,7 @@ $bottomRowHeight: 54px;
         position: absolute;
         width: 100%;
         bottom: $bottomRowHeight;
-        right: variables.$articleMargin;
+        right: var(--articleMargin);
         border-color: variables.$primary;
         z-index: 9;
     }
@@ -115,7 +115,7 @@ $bottomRowHeight: 54px;
     .footerBottom {
         height: inherit;
         align-items: start;
-        padding-bottom: variables.$articleMargin;
+        padding-bottom: var(--articleMargin);
 
         & > * {
             text-align: left;
@@ -130,7 +130,7 @@ $bottomRowHeight: 54px;
 
     .footerBg {
         z-index: -9;
-        $bgHeight: 58%;
+        $bgHeight: 63%;
 
         & > * {
             display: none;
