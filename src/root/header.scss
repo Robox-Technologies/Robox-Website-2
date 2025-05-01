@@ -1,16 +1,69 @@
 @use 'variables';
 
+$hamburgerThreshold: 800px;
+
 .header {
     position: sticky;
     top: 0;
+    width: 100vw;
+    z-index: 999;
+}
+
+.header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100vw;
+    background-color: variables.$primary;
+    width: 100%;
     height: variables.$headerHeight;
     padding-left: variables.$articleMargin;
+}
+
+.hamburger {
+    $hamburgerSize: 32px;
+
+    position: relative;
+    overflow: hidden;
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: $hamburgerSize;
+    height: $hamburgerSize;
+    padding: 0;
+    
+    lottie-player {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 120px;
+        height: 120px;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.hamburgerMenu {
+    position: absolute;
+    z-index: 99;
     background-color: variables.$primary;
-    z-index: 999;
+    top: -100vh;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    gap: variables.$standardGap;
+    padding: variables.$standardGap variables.$articleMargin;
+    transition: top 0.5s ease;
+    z-index: -1;
+    border-bottom: 1px solid variables.$secondary;
+
+    .btn {
+        color: variables.$themeBlack;
+
+        & > * {
+            width: 16px;
+            margin-right: 8px;
+        }
+    }
 }
 
 .logo {
@@ -29,34 +82,55 @@
     gap: 20px;
 }
 
+.navItems {
+    display: flex;
+    gap: 20px;
+}
+
 .ctaButtons {
     clip-path: polygon(5% 0, 100% 0, 100% 100%, 0% 100%);
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: variables.$standardGap;
     background-color: variables.$themeBlue;
-    height: variables.$headerHeight;
-    padding-right: variables.$articleMargin;
-    padding-left: calc(variables.$articleMargin + 25px);
+    height: variables$headerHeight;
+    padding: 0 variables.$articleMargin;
 }
 
 .btn {
-    @include variables.dropShadowSmall;
-
-    background: variables.$primary;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 6px;
     cursor: pointer;
-    color: black;
+    color: variables.$primary;
 
     * {
-        margin-right: 8px;
+        margin-right: 4px;
     }
 }
 
 .btn.store {
     background: #ff6666;
-    color: variables.$primary;
+    border: none;
+    border-radius: 6px;
     padding: 8px 24px;
+}
+
+@media (max-width: $hamburgerThreshold) {
+    .header {
+        .hamburger {
+            display: block;
+        }
+
+        .navItems {
+            display: none;
+        }
+
+        .ctaButtons > a {
+            display: none;
+        }
+    }
+}
+
+@media (min-width: $hamburgerThreshold) {
+    .hamburgerMenu.active {
+        display: none;
+    }
 }

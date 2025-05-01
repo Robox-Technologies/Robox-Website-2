@@ -8,6 +8,7 @@
     & > img {
         width: 100%;
         height: 50vh;
+        min-height: 250px;
         object-fit: cover;
         position: absolute;
         top: 0;
@@ -80,6 +81,11 @@
     }
 }
 
+.storyHeadline {
+    padding: variables.$standardGap;
+    text-align: center;
+}
+
 @media screen and (max-width: 1300px) {
     .hero > .content {
         flex-direction: column;
@@ -96,5 +102,15 @@
 
     .hero {
         margin-bottom: 0;
+
+        .content > .title {
+            margin-top: 30vh;
+            min-width: inherit;
+            padding-bottom: variables.$articleMargin;
+
+            .images {
+                display: none;
+            }
+        }
     }
 }

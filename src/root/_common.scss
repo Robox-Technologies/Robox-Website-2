@@ -12,6 +12,10 @@
         max-height: 100%;
     }
 
+    .text a {
+        text-decoration: underline;
+    }
+
     &.LTR {
         flex-direction: row;
     }
