@@ -16,7 +16,7 @@
         align-items: center;
         text-align: center;
         top: 50%;
-        right: var(--articleMargin);
+        right: 10%;
         transform: translateY(-50%);
 
         .logo {
@@ -78,7 +78,7 @@
         margin-bottom: $bottomSpace;
 
         .step {
-            margin-top: 50vh;
+            margin-top: 30vh;
             display: flex;
             align-items: center;
 
@@ -95,9 +95,24 @@
                 font-size: 30px;
 
                 border-radius: 50%;
-                background: variables.$themeBlue;
                 color: variables.$primary;
                 margin: 0;
+            }
+
+            &:nth-child(1) > .stepNumber {
+                background: variables.$themeBlue;
+            }
+
+            &:nth-child(2) > .stepNumber {
+                background: variables.$themeRed;
+            }
+
+            &:nth-child(3) > .stepNumber {
+                background: variables.$themeGreen;
+            }
+
+            &:nth-child(4) > .stepNumber {
+                background: #e47b25;
             }
 
             .title {
