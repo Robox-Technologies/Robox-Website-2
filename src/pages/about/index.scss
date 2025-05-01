@@ -3,7 +3,6 @@
 .hero {
     width: 100vw;
     position: relative;
-    margin-bottom: calc(var(--articleMargin) * 2);
 
     & > img {
         width: 100%;
@@ -62,6 +61,13 @@
 }
 
 .fullWidthImg {
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+        margin: 0;
+    }
+
     .media {
         width: 100%;
     }
@@ -83,6 +89,7 @@
 
 .storyHeadline {
     padding: variables.$standardGap;
+    margin-top: variables.$standardGap;
     text-align: center;
 }
 
@@ -112,5 +119,11 @@
                 display: none;
             }
         }
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .fullWidthImg {
+        flex-direction: column-reverse;
     }
 }
