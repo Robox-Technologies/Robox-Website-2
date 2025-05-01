@@ -7,6 +7,7 @@ const hamburgerMenu = document.querySelector('.hamburgerMenu') as HTMLElement;
 const hamburgerLottie = document.createElement("lottie-player");
 
 let hamburgerMenuOpened = false;
+let displayTimeoutID: NodeJS.Timeout | undefined = undefined;
 
 hamburgerLottie.setAttribute('src', hamburgerIcon);
 hamburgerLottie.setAttribute('background', 'transparent');
@@ -21,16 +22,18 @@ hamburger.addEventListener('click', (e) => {
 });
 
 function updateHamburger() {
+    clearTimeout(displayTimeoutID);
+
     if (hamburgerMenuOpened) {
         hamburgerMenu.style.display = 'flex';
 
-        setTimeout(() => {
+        displayTimeoutID = setTimeout(() => {
             hamburgerMenu.style.top = headerHeight;
         }, 1);
     } else {
         hamburgerMenu.style.top = '';
 
-        setTimeout(() => {
+        displayTimeoutID = setTimeout(() => {
             hamburgerMenu.style.display = 'none';
         }, 500);
     }
