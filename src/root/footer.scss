@@ -8,7 +8,7 @@ $bottomRowHeight: 54px;
 }
 
 .footerContent {
-    padding: 0 variables.$articleMargin;
+    padding: 0 var(--articleMargin);
     
     hr {
         border-color: variables.$themeBlack;
@@ -44,7 +44,6 @@ $bottomRowHeight: 54px;
     justify-content: space-between;
     align-items: center;
     height: $bottomRowHeight;
-    padding: 16px;
 
     & > * {
         flex: 1;
@@ -78,7 +77,7 @@ $bottomRowHeight: 54px;
     .eyes {
         position: absolute;
         bottom: 50%;
-        right: 10%;
+        right: calc(100% - $clipWidth - $clipDeviation - 195px);
     }
 }
 
@@ -88,7 +87,7 @@ $bottomRowHeight: 54px;
 
     .footerBottom {
         position: absolute;
-        padding: 0 variables.$articleMargin;
+        padding: 0 var(--articleMargin);
         width: 100%;
         bottom: 0;
     }
@@ -97,8 +96,46 @@ $bottomRowHeight: 54px;
         position: absolute;
         width: 100%;
         bottom: $bottomRowHeight;
-        right: variables.$articleMargin;
+        right: var(--articleMargin);
         border-color: variables.$primary;
         z-index: 9;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .footerLinks,
+    .footerBottom {
+        flex-direction: column;
+    }
+
+    .footerContent > hr {
+        border-color: variables.$primary;
+    }
+
+    .footerBottom {
+        height: inherit;
+        align-items: start;
+        padding-bottom: var(--articleMargin);
+
+        & > * {
+            text-align: left;
+            display: inline-block;
+            color: variables.$primary;
+
+            a {
+                color: variables.$primary;
+            }
+        }
+    }
+
+    .footerBg {
+        z-index: -9;
+        $bgHeight: 63%;
+
+        & > * {
+            display: none;
+        }
+
+        clip-path: polygon(0 $bgHeight, 100% $bgHeight, 100% 100%, 0 100%);
     }
 }
