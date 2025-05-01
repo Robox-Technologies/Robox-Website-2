@@ -4,7 +4,7 @@ const hamburger = document.querySelector('.hamburger') as HTMLButtonElement;
 const hamburgerMenu = document.querySelector('.hamburgerMenu') as HTMLElement;
 const hamburgerLottie = document.createElement("lottie-player");
 
-var hamburgerMenuOpened = false;
+let hamburgerMenuOpened = false;
 
 hamburgerLottie.setAttribute('src', hamburgerIcon);
 hamburgerLottie.setAttribute('background', 'transparent');
