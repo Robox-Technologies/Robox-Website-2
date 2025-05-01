@@ -12,7 +12,7 @@
         max-height: 100%;
     }
 
-    .text a {
+    .text a:not(.ctaButton) {
         text-decoration: underline;
     }
 
@@ -36,10 +36,10 @@ section.centred {
 }
 
 article {
-    padding: variables.$articleMargin;
+    padding: var(--articleMargin);
 
     & > section {
-        margin-top: variables.$articleMargin;
+        margin-top: var(--articleMargin);
     }
 }
 

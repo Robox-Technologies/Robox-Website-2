@@ -16,7 +16,7 @@
         align-items: center;
         text-align: center;
         top: 50%;
-        right: variables.$articleMargin;
+        right: var(--articleMargin);
         transform: translateY(-50%);
 
         .logo {
@@ -60,7 +60,7 @@
 .boxToBot {
     $imgWidth: 20vw;
     $bottomSpace: calc($imgWidth / 2);
-    margin-top: calc(variables.$articleMargin * 2);
+    margin-top: calc(var(--articleMargin) * 2);
 
     .intro {
         text-align: center;
@@ -146,7 +146,7 @@ article.hubs {
 
 .roboxHub {
     .ctaButton {
-        margin-top: variables.$articleMargin;
+        margin-top: var(--articleMargin);
     }
 
     .cards {
@@ -155,7 +155,7 @@ article.hubs {
         justify-content: space-evenly;
         gap: variables.$standardGap;
         flex-wrap: wrap;
-        margin-top: variables.$articleMargin;
+        margin-top: var(--articleMargin);
         z-index: 10;
     
         .roboxHubCard {
@@ -288,7 +288,7 @@ article.hubs {
             top: inherit;
             right: 0;
             bottom: 0;
-            padding: variables.$articleMargin variables.$standardGap;
+            padding: calc(variables.$standardGap * 2) variables.$standardGap;
             transform: none;
             background: linear-gradient(0deg, rgba(variables.$themeBlack, 0.7) 70%, rgba(variables.$themeBlack, 0) 100%);
         }
