@@ -8,29 +8,29 @@ const images = [img1, img2, img3, img4, img5];
 
 const steps = document.getElementsByClassName("step");
 const image = document.getElementsByClassName("boxToBotImg")[0] as HTMLImageElement;
-var existingImgState = -1;
+let currentImgIndex = -1;
 
 function updateBoxToBot() {
-    let imgState = 0;
+    let imgIndex = 0;
 
     for (let step of steps) {
         let viewportOffset = step.getBoundingClientRect();
         
         if ((viewportOffset.top + viewportOffset.bottom)/2 > window.innerHeight / 2) break;
 
-        imgState += 1;
+        imgIndex += 1;
     }
     
-    if (imgState != existingImgState) {
-        image.src = images[imgState];
+    if (imgIndex != currentImgIndex) {
+        image.src = images[imgIndex];
 
-        if (existingImgState != -1) {
+        if (currentImgIndex != -1) {
             image.classList.remove("scale-animate");
             void image.offsetWidth;
             image.classList.add("scale-animate");
         }
 
-        existingImgState = imgState;
+        currentImgIndex = imgIndex;
     }
 }
 
