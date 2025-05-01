@@ -28,8 +28,7 @@ function updateHamburger() {
     }
 
     // Animate icon
-    // @ts-ignore
-    hamburgerLottie.setDirection(hamburgerMenuOpened ? 1 : -1);
-    // @ts-ignore
-    hamburgerLottie.play();
+    let lottiePlayer = hamburgerLottie as LottiePlayer;
+    lottiePlayer.setDirection(hamburgerMenuOpened ? 1 : -1);
+    lottiePlayer.play();
 }
