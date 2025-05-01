@@ -278,4 +278,3 @@ class USBCommunication {
 }
 export let pico = new Pico("USB")
 pico.init()
-pico.startupConnect()

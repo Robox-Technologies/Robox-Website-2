@@ -19,7 +19,7 @@ motor_speed = 60
 `
 
 let alreadyDownloaded = false
-let skipDownloadStep = true
+let skipDownloadStep = false
 
 export function postBlocklyWSInjection() {
     const ws = Blockly.getMainWorkspace()
@@ -66,26 +66,32 @@ export function postBlocklyWSInjection() {
         alreadyDownloaded = false //Saying that this workspace has changed
     });
     connectButton?.addEventListener("click", () => {
+        if (connectionManagment.getAttribute("loading") === "true") return
         pico.request()
         connectionManagment.setAttribute("loading",  "true")
     });
     downloadButton?.addEventListener("click", () => {
+        if (connectionManagment.getAttribute("loading") === "true") return
         sendCode(ws)
         alreadyDownloaded = true
         connectionManagment.setAttribute("loading",  "true")
 
     })
     stopButton?.addEventListener("click", () => {
+        if (connectionManagment.getAttribute("loading") === "true") return
         pico.restart()
         connectionManagment.setAttribute("loading",  "true")
     })
     runButton?.addEventListener("click", () => {
+        if (connectionManagment.getAttribute("loading") === "true") return
         if (skipDownloadStep) {
             return sendCode(ws)
         }
         connectionManagment.setAttribute("status",  "running")
         connectionManagment.setAttribute("loading",  "false")
     })
+    pico.startupConnect()
+
 }
 function sendCode(ws: Blockly.Workspace) {
     let code = pythonGenerator.workspaceToCode(ws);
