@@ -58,7 +58,7 @@
 }
 
 .boxToBot {
-    $imgWidth: 20vw;
+    $imgWidth: max(30vw, 250px);
     $bottomSpace: calc($imgWidth / 2);
     margin-top: calc(var(--articleMargin) * 2);
 
@@ -99,8 +99,12 @@
                 margin: 0;
             }
 
-            &:nth-child(1) > .stepNumber {
-                background: variables.$themeBlue;
+            &:nth-child(1) {
+                margin-top: 45vh;
+
+                & > .stepNumber {
+                    background: variables.$themeBlue;
+                }
             }
 
             &:nth-child(2) > .stepNumber {
@@ -126,12 +130,8 @@
     }
 
     .boxToBotImg {
-        $minSize: 250px;
-
         padding-top: calc(50vh - $bottomSpace);
         width: $imgWidth;
-        min-width: $minSize;
-        // aspect-ratio: 1;
         object-fit: contain;
         position: sticky;
         position: -webkit-sticky;
