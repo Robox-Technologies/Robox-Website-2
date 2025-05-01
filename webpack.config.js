@@ -84,7 +84,8 @@ const config = {
     },
     output: {
         clean: true,
-        devtoolModuleFilenameTemplate: '[absolute-resource-path]'
+        devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+        publicPath: '/'
     }
 };
 function getHtmlFiles(directory, rootDir) {

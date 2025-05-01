@@ -1,30 +1,48 @@
 @use '@root/variables';
 
 .hero {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: variables.$themeYellow;
+    position: relative;
     background-image: url("./images/hero.jpg");
     background-repeat: no-repeat;
-    min-height: calc(95vh - variables.$headerHeight);
-    object-fit: cover;
-    object-position: left bottom;
-    padding: variables.$articleMargin;
+    background-size: cover;
+    background-position: left 30% center;
+    height: calc(100vh - variables.$headerHeight - 10px);
+    min-height: 500px;
 
-    img {
-        object-fit: contain;
+    .title {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        top: 50%;
+        right: variables.$articleMargin;
+        transform: translateY(-50%);
+
+        .logo {
+            object-fit: contain;
+            height: 50px;
+        }
+    
+        h1 {
+           font-size: 60px;
+           margin-top: 16px;
+           color: variables.$primary;
+           margin-bottom: 0;
+        }
     }
 
-    .logo {
-        height: 50px;
-    }
+    .scroll-prompt {
+        position: absolute;
+        color: variables.$primary;
+        background-color: rgba(variables.$themeBlack, 0.9);
+        border-radius: 50%;
+        padding: 8px;
+        cursor: pointer;
 
-    h1 {
-       font-size: 60px;
-       margin-top: 16px;
-       color: variables.$themeBlack;
+        bottom: 16px;
+        left: 50%;
+        transform: translateX(-50%);
     }
 }
 
@@ -262,5 +280,21 @@ article.hubs {
     
     .videoSection > iframe {
         width: 100%;
+    }
+
+    .hero {
+        .title {
+            width: 100%;
+            top: inherit;
+            right: 0;
+            bottom: 0;
+            padding: variables.$articleMargin variables.$standardGap;
+            transform: none;
+            background: linear-gradient(0deg, rgba(variables.$themeBlack, 0.7) 70%, rgba(variables.$themeBlack, 0) 100%);
+        }
+
+        .scroll-prompt {
+            background-color: transparent;
+        }
     }
 }
