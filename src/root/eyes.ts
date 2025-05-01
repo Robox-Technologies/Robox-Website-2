@@ -3,7 +3,7 @@
     const eyeMaxDist = 3;
     const falloffFac = 200;
     
-    var mousePos: {x: number, y: number} | undefined = undefined;
+    let mousePos: {x: number, y: number} | undefined = undefined;
     function updateEyes(event: Event) {
         let mouseEvent = event as MouseEvent;
 
