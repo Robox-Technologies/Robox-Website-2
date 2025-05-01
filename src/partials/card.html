@@ -1,4 +1,11 @@
-<article class="card <%= it.class %>">
+<div class="card <%= it.class %>">
+    <% if (it.goober) { %>
+        <div class="goober <%= it.gooberClass %>">
+            <img src="<%= it.goober %>" class="shape">
+            <img src="@images/eyes.svg?raw" class="eyes">
+        </div>
+    <% } %>
+
     <img class="card-image" src="<%= it.imageSource %>">
     <div class="card-info">
         <div class="card-top-row">
@@ -39,4 +46,4 @@
         <% } %>
         
     </div>
-</article>
+</div>

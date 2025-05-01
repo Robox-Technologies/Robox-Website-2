@@ -73,7 +73,7 @@ const config = {
             },
             {
                 test: /\.(jpe?g|png|svg|gif|mp3)$/i,
-                type: "asset",
+                type: "asset/resource",
             },
             {
                 test: /\.svg$/i,
@@ -84,7 +84,8 @@ const config = {
     },
     output: {
         clean: true,
-        devtoolModuleFilenameTemplate: '[absolute-resource-path]'
+        devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+        publicPath: '/'
     }
 };
 function getHtmlFiles(directory, rootDir) {

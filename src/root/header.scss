@@ -1,7 +1,5 @@
 @use 'variables';
 
-$headerHeight: 56px;
-
 .header {
     position: sticky;
     top: 0;
@@ -9,7 +7,7 @@ $headerHeight: 56px;
     align-items: center;
     justify-content: space-between;
     width: 100vw;
-    height: $headerHeight;
+    height: variables.$headerHeight;
     padding-left: variables.$articleMargin;
     background-color: variables.$primary;
     z-index: 999;
@@ -37,7 +35,7 @@ $headerHeight: 56px;
     align-items: center;
     gap: 25px;
     background-color: variables.$themeBlue;
-    height: $headerHeight;
+    height: variables.$headerHeight;
     padding-right: variables.$articleMargin;
     padding-left: calc(variables.$articleMargin + 25px);
 }
