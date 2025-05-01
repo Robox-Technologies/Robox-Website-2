@@ -1,0 +1,92 @@
+@use 'variables';
+
+$cardWidth: 250px;
+
+$backgroundColor: white;
+
+
+$padding: 15px;
+$maxTextWidth: 200px;
+
+.card > .card-buttons:not(:has(*)) {
+    display: none;
+}
+.card > .card-descriptions:not(:has(*)) {
+    display: none;
+}
+.card-info {
+    padding: $padding;
+}
+.card-button {
+    display: flex;
+    align-items: center;
+
+}
+.card {
+    background-color: $backgroundColor;
+    display: flex;
+    width: $cardWidth;
+    background-color: #F5F5F5;
+    flex-direction: column;
+    border-radius: variables.$borderRadius;
+}
+.card-image {
+    background-color: gray;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border: 0;
+    outline: none;
+    text-decoration: none;
+    display: block; /* removes inline spacing gap */
+}
+.card > *:first-child {
+    border-radius: variables.$borderRadius variables.$borderRadius 0 0;
+
+}
+.card > *:last-child {
+    border-radius: 0 0 variables.$borderRadius variables.$borderRadius;
+}
+.card-title {
+    right: auto;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    max-width: $maxTextWidth;
+}
+.card-title, .card-title > span {
+    font-size: 20px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+}
+.card-button,.card-description {
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+.card-buttons {
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+.card-top-row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding-bottom: 5px;
+}
+
+
+.options {
+    left: auto;
+    position: inherit;
+}
+.options:hover {
+    cursor: pointer;
+}
+.options > svg{
+    height: 1.3em;
+}

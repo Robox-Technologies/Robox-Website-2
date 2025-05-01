@@ -1,0 +1,116 @@
+@use '@root/variables';
+
+.hero {
+    width: 100vw;
+    position: relative;
+    margin-bottom: calc(var(--articleMargin) * 2);
+
+    & > img {
+        width: 100%;
+        height: 50vh;
+        min-height: 250px;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        z-index: -9;
+        object-position: right center;
+    }
+
+    .content {
+        display: flex;
+        align-items: end;
+
+        .title {
+            @include variables.dropShadowLarge;
+            $falseOffset: 12px; // Counters gap in drop shadow by extending bounds to left.
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: calc(var(--articleMargin) * 2);
+
+            min-width: 500px;
+            margin-top: 20vh;
+            background-color: variables.$themeGreen;
+            border-radius: 0 variables.$borderRadius variables.$borderRadius 0;
+            padding: var(--articleMargin);
+            margin-left: calc(-1 * $falseOffset);
+            padding-left: calc(var(--articleMargin) + $falseOffset);
+            padding-bottom: calc(var(--articleMargin) * 2);
+
+            .images {
+                display: flex;
+                justify-content: space-between;
+                align-items: end;
+
+                .bowtie {
+                    margin-bottom: var(--articleMargin);
+                    width: 30%;
+                }
+                
+                .eyes {
+                    width: 50%;
+                }
+            }
+        }
+
+        .description {
+            margin: 0 var(--articleMargin);
+            text-align: center;
+        }
+    }
+}
+
+.fullWidthImg {
+    .media {
+        width: 100%;
+    }
+
+    .articleSection {
+        margin: var(--articleMargin) 0;
+
+        .description {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+        }
+    
+        & > * {
+            flex: 1;
+        }
+    }
+}
+
+.storyHeadline {
+    padding: variables.$standardGap;
+    text-align: center;
+}
+
+@media screen and (max-width: 1300px) {
+    .hero > .content {
+        flex-direction: column;
+        align-items: start;
+
+        // .title {
+        //     padding-left: max(calc(var(--articleMargin)), 20vw);
+        // }
+
+        .description {
+            margin: var(--articleMargin);
+        }
+    }
+
+    .hero {
+        margin-bottom: 0;
+
+        .content > .title {
+            margin-top: 30vh;
+            min-width: inherit;
+            padding-bottom: var(--articleMargin);
+
+            .images {
+                display: none;
+            }
+        }
+    }
+}

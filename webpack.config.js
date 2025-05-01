@@ -28,14 +28,14 @@ for (const markdownGuide of markdownGuides) {
 const htmlPages = [...guideHtmlPages, ...pagesHtmlFiles]
 const config = {
     mode: 'development',
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
     resolve: {
         alias: {
-            "@images": path.join(__dirname, 'src/_images/'),
-            "@partials": path.join(__dirname, 'src/_partials/'),
-            "@root": path.join(__dirname, 'src/_root/')
+            "@images": path.join(__dirname, 'src/images/'),
+            "@partials": path.join(__dirname, 'src/partials/'),
+            "@root": path.join(__dirname, 'src/root/')
         },
-        extensions: ['.tsx', '.ts', '.js'],
+        extensions: ['.tsx', '.ts', '.js', ".json"],
     },
     plugins: [
         new HtmlBundlerPlugin({
@@ -45,6 +45,21 @@ const config = {
             },
             css: {
                 filename: 'public/css/[name].[contenthash:8].css', // output into dist/assets/css/ directory
+            },
+            loaderOptions: {
+                sources: [
+                    {
+                        tag: 'lottie-player',
+                        attributes: ['src'],
+                    },
+                    {
+                        tag: 'meta',
+                        attributes: ['content'],
+                        filter: (tag) => {
+                            return tag.attributes.name === 'twitter:image' || tag.attributes.property === 'og:image';
+                        },
+                    },
+                ],
             },
             preprocessorOptions: {
                 views: [
@@ -72,13 +87,20 @@ const config = {
                 use: ['css-loader', 'sass-loader'],
             },
             {
-                test: /\.svg$/,
-                loader: 'svg-inline-loader'
+                test: /\.(jpe?g|png|svg|gif|mp3|json)$/i,
+                type: "asset/resource",
+            },
+            {
+                test: /\.svg$/i,
+                resourceQuery: /raw/, // *.svg?raw
+                type: 'asset/source',
             }
         ],
     },
     output: {
-        clean: true
+        clean: true,
+        devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+        publicPath: '/'
     }
 };
 function getHtmlFiles(directory, rootDir) {

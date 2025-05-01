@@ -1,0 +1,67 @@
+// Theme
+$themeBlue: #2588C7;
+$themeGreen: #91CC31;
+$themeYellow: #FFCD44;
+$themeRed: #FF6166;
+$themeBlack: #405C64; // 05/Key color. To be used as subtitute for pure black.
+
+$dropShadow: #26363B; //55
+
+$headerHeight: 56px;
+
+// Whites
+$primary: #F8F8F8;
+$secondary: #C6C6C6;
+$tone2: #EFEFEF;
+
+// Numericals
+$articleMargin: 64px;
+$standardGap: 32px;
+$borderRadius: 20px;
+
+:root {
+    --articleMargin: 64px;
+}
+
+@media (max-width: 1000px) {
+    :root {
+        --articleMargin: 32px;
+    }
+}
+
+// Drop shadows
+@mixin dropShadowSmall {
+    box-shadow: 6px 6px 0px $dropShadow;
+}
+
+@mixin dropShadowLarge {
+    box-shadow: 12px 12px 0px $dropShadow;
+}
+
+// Fonts
+@mixin fontCommon {
+    color: $themeBlack;
+}
+
+@mixin headingFont {
+    @include fontCommon;
+
+    font-family: 'Nunito', sans-serif;
+    font-size: 49px;
+    font-weight: 800;
+}
+
+@mixin subheadingFont {
+    @include fontCommon;
+
+    font-family: 'Nunito', sans-serif;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+@mixin bodyFont {
+    @include fontCommon;
+
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
+}

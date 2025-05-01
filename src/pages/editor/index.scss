@@ -1,34 +1,63 @@
+@use '@root/variables';
 $navEdges: #717171;
 $componentHeight: 48px;
 
-$seperatorHeight: 40px;
+//How big the seperators are in the category
+$seperatorHeight: 20px;
+//The colour of the middle seperator line
 $seperatorColour: black;
-$seperatorStroke: 3px;
+//The size of the middle seperator line
+$seperatorStrokeSize: 3px;
+//How long the stroke line
 $seperatorLength: 80%;
 
+//How tall the icon is in the category
 $iconHeight: 20px;
 
+//How wide the arch/tab thing is in the category sidebar
 $archWidth: 48px;
 
+//How big the sidebar is
+$toolboxWidth: 200px;
+
+//How much the tabs extend
+$extensionRest: 16px;
 $extensionAmount: 20px;
-/* Makes our label white. */
+//This is the height for the top and bottom divs
+$barHeight: 75px;
+
+$dropshadowBase: 2px;
+$topButtonsDropShadowMult: 1;
+$dropShadowColour: rgb(47, 47, 47);
+
+$backgroundColour: #E6F0FF;
+
+$barPadding: 2.5%;
+$topBarButtonGap: 10px;
+
+$downloadButtonSize: 60px;
+
+@mixin extendTransition {
+    transition-property: width, margin-left;
+    transition-duration: .5s;
+}
+
+// Makes our label white.
 .blocklyTreeLabel {
     color: white;
-}
-.blocklyToolboxContents {
-    border-right: 3px solid $navEdges;
-    border-bottom: 3px solid $navEdges;
+    font-size: large;
 }
 .side-arch > svg > path{
-    stroke: $navEdges!important;
     fill: rgba(0,0,0,0)
 }
 .categoryIcon { 
+    @include extendTransition;
     height: $iconHeight;
     width: $iconHeight;
     color: white;
     position: absolute;
-    left: calc(($archWidth/3) - ($iconHeight/2));
+    left: calc(($archWidth/3) - ($iconHeight/2) + $extensionRest);
+    margin-left: 0px;
 }
 
 .categoryIcon::before { 
@@ -36,7 +65,7 @@ $extensionAmount: 20px;
 }
 .blocklyTreeSeparator {
     display: flex;
-    border-top: 3px solid #F5F5F5;
+    border-top: $seperatorStrokeSize solid #F5F5F5;
     background-color: white;
     justify-content: center;
     align-items: center;
@@ -44,16 +73,15 @@ $extensionAmount: 20px;
     border-bottom: 0;
     margin: 0;
 }
-.blocklyTreeSeparator > .seperator {
-    height: $seperatorStroke;
-    background-color: $seperatorColour;
-    width: $seperatorLength;
-}
 /* Adds padding around the group of categories and separators. */
 
 /* Adds space between the categories, rounds the corners and adds space around the label. */
-.blocklyTreeRow {
-    border-top: 3px solid #F5F5F5;
+.blocklyToolboxCategory {
+    border-top: $seperatorStrokeSize solid #F5F5F5;
+    
+    &:last-child {
+        border-bottom: $seperatorStrokeSize solid #F5F5F5;
+    }
 }
 .blocklyTreeLabel { 
     color: black;
@@ -63,12 +91,25 @@ $extensionAmount: 20px;
 }
 .blocklyToolboxDiv {
     background-color: white;
+    padding: 0;
+    width: $toolboxWidth;
+    border-right: $seperatorStrokeSize solid $navEdges;
+}
+
+.blocklyFlyout { 
+    transform: translate(calc($toolboxWidth - $seperatorStrokeSize * 2), -$seperatorStrokeSize) !important;
+    border: $seperatorStrokeSize solid $navEdges;
+    width: 430px;
+    background-color: rgb(245, 245, 245);;
 }
 /* Stacks the icon on top of the label. */
 .blocklyTreeRowContentContainer {
     display: flex;
     position: relative;
     align-items: center;
+}
+.blocklyTreeRowContentContainer >svg >path {
+    fill: white;
 }
 .blocklyTreeRow {
     height: initial;
@@ -77,34 +118,338 @@ $extensionAmount: 20px;
     height: $componentHeight;
     width: $componentHeight;
 }
-.extender.extended {
+.extender {
+    @include extendTransition;
+
     height: $componentHeight;
     border-right: 1px solid rgba(0, 0, 0, 0);
     margin-right: -1px;
     z-index: 0;
-    border-left: 1px solid $navEdges;
-    border-top: 1px solid $navEdges;
-    border-bottom: 1px solid $navEdges;
     box-sizing: border-box;
-    width: $extensionAmount;
+    width: $extensionRest;
 
+    &.extended {
+        width: calc($extensionAmount + $extensionRest);
+    }
 }
-.extender{
-    height: $componentHeight;
-    border-right: 1px solid rgba(0, 0, 0, 0);
-    margin-right: -1px;
-    z-index: 0;
-    border-left: 1px solid $navEdges;
-    border-top: 1px solid $navEdges;
-    border-bottom: 1px solid $navEdges;
-    box-sizing: border-box;
-    width: 0;
 
-}
-.extended.categoryIcon { 
-    left: calc(($archWidth/3) - ($iconHeight/2))+$extensionAmount;
-
-}
 .blocklyTreeRow { 
     margin-bottom: 0;
+}
+#blocklyDiv {
+    flex: auto;
+
+}
+.injectionDiv {
+    border-top: $seperatorStrokeSize solid $navEdges;
+    border-bottom: $seperatorStrokeSize solid $navEdges;
+    box-sizing: border-box;
+
+}
+.blocklyMainBackground {
+    stroke: none;
+}
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+    flex-direction: column;
+    display: flex;
+    background-color: $backgroundColour;
+}
+#workspaceTabs {
+    background-color: variables.$themeRed;
+}
+#workspaceTabs, #actionBar {
+    height: $barHeight;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 $barPadding 0 $barPadding;
+    flex-direction: row;
+    align-content: center;
+}
+#buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $topBarButtonGap;
+}
+#project-name-input {
+    font-size: 20px;
+    background-color: unset;
+    border-radius: unset;
+    width: 170px;
+    padding: 10px;
+    border: 0;
+}
+#download-button {
+    background-color: unset;
+    border: 0;
+}
+$nameInputDropShadowMult: 2;
+#project-name-form {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    filter: drop-shadow(calc($dropshadowBase*$nameInputDropShadowMult) calc($dropshadowBase*$nameInputDropShadowMult) $dropShadowColour);
+    border-radius: 7px;
+}
+#bluetooth, #learn {
+    font-size: 20px;
+}
+#project-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#back-button {
+    background-color: unset;
+    border: 0;
+    font-size: 20px;
+    color: white;
+    display: flex;
+}
+#back-button:hover {
+    cursor: pointer;
+}
+#back-button > svg > path {
+    color: white;
+}
+#back-button > svg {
+    display: block;
+    margin: auto;
+}
+
+.topButton {
+    width: 30px;
+    height: 30px;
+    background-color: variables.$themeBlue;
+    border-radius: 50%;
+    border: none;
+    filter: drop-shadow(calc($dropshadowBase*$topButtonsDropShadowMult) calc($dropshadowBase*$topButtonsDropShadowMult) $dropShadowColour);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+#actionBar {
+    background-color: white;
+    border-top: $seperatorStrokeSize solid $navEdges;
+    margin-top: -$seperatorStrokeSize;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#actionBar > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mainButton {
+    color: white;
+    height: 100%;
+    font-weight: bold;
+    font-size: larger;
+    width: 270px;
+    padding: 0 40px 0 40px;
+    border-right: $seperatorStrokeSize solid white;
+
+}
+#connection-managment {
+    background-color: variables.$themeRed;
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    width: 310px;
+    height: 50px;
+    border-radius: 2em;
+    
+}
+.sideButtons {
+    font-size: 20px;
+    padding: 0 15px 0 15px;
+    color: white;
+    
+}
+.categoryLabel > .blocklyFlyoutLabelText {
+    font: 400 24px sans-serif !important;
+}
+$blocklyUIIconSize: 40px;
+$zoomButtonsGap: 10px;
+.uiHolder {
+    display: flex;
+    gap: $zoomButtonsGap;
+}
+#blocklyCustomZoom {
+    flex-direction: column;
+}
+#blocklyCustomTimeControls {
+    flex-direction: row;
+    gap: 0;
+}
+$blocklyUIButtonsDropShadowMult: 2;
+#blocklyCustomZoom > .uiButtons{
+    border-radius: 50%;
+}
+
+#blocklyCustomTimeControls > .uiButtons:first-child {
+    border-radius: 7px 0 0 7px;
+    margin-right: -$seperatorStrokeSize;
+}
+#blocklyCustomTimeControls > .uiButtons:last-child {
+    border-radius: 0 7px 7px 0;
+}
+.uiButtons {
+    background-color: white;
+    color: variables.$themeBlue;
+    border: $seperatorStrokeSize solid variables.$themeBlue;
+    font-size: calc((30px/$blocklyUIIconSize)*$blocklyUIIconSize);
+    width: $blocklyUIIconSize;
+    height: $blocklyUIIconSize;
+    display: flex;
+    justify-content: center;
+    filter: drop-shadow(calc($dropshadowBase*$blocklyUIButtonsDropShadowMult) calc($dropshadowBase*$blocklyUIButtonsDropShadowMult) $dropShadowColour);
+    align-items: center;
+    padding: 20px;
+    cursor: pointer;
+}
+#connection-managment[status="disconnected"] {
+    background-color: variables.$themeBlue;
+    #download-robox-button {
+        display: none;
+    }
+    #connect-robox-button {
+        display: block;
+    }
+    #stop-robox-button {
+        display: none;
+    }
+    #run-robox-button {
+        display: none;
+    }
+
+    #loading {
+        display: none;
+    }
+
+    #options {
+        display: block;
+    }
+    #disconnect {
+        display: none;
+    }
+    #console {
+        display: none;
+    }
+}
+
+#connection-managment[status="connected"] {
+    background-color: variables.$themeYellow;
+    #download-robox-button {
+        display: block;
+    }
+    #connect-robox-button {
+        display: none;
+    }
+    #stop-robox-button {
+        display: none;
+    }
+    #run-robox-button {
+        display: none;
+    }
+    
+    #loading {
+        display: none;
+    }
+    
+    #options {
+        display: none;
+    }
+    #disconnect {
+        display: block;
+    }
+    #console {
+        display: none;
+    }
+}
+#connection-managment[status="downloaded"] {
+    background-color: variables.$themeGreen;
+    #download-robox-button {
+        display: none;
+    }
+    #connect-robox-button {
+        display: none;
+    }
+    #stop-robox-button {
+        display: none;
+    }
+    #run-robox-button {
+        display: block;
+    }
+
+    #loading {
+        display: none;
+    }
+    
+    #options {
+        display: none;
+    }
+    #disconnect {
+        display: block;
+    }
+    #console {
+        display: none;
+    }
+}
+
+#connection-managment[status="running"] {
+    background-color: variables.$themeRed;
+    #download-robox-button {
+        display: none;
+    }
+    #connect-robox-button {
+        display: none;
+    }
+    #stop-robox-button {
+        display: block;
+    }
+    #run-robox-button {
+        display: none;
+    }
+
+    #loading {
+        display: none;
+    }
+    
+    #options {
+        display: none;
+    }
+    #disconnect {
+        display: none;
+    }
+    #console {
+        display: block;
+    }
+}
+#connection-managment[loading="true"] {
+    
+    #download-robox-button {
+        display: none;
+    }
+    #connect-robox-button {
+        display: none;
+    }
+    #stop-robox-button {
+        display: none;
+    }
+    #run-robox-button {
+        display: none;
+    }
+
+    #loading {
+        display: block;
+    }
+
 }

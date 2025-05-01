@@ -1,0 +1,17 @@
+@use 'variables';
+
+.header {
+    background-color: variables.$themeBlue;
+}
+
+.navItems > a {
+    color: variables.$primary;
+}
+
+.ctaButtons {
+    background-color: variables.$themeRed;
+}
+
+.iconBtn {
+    color: white;
+}

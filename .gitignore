@@ -136,3 +136,6 @@ dist
 .pnp.*
 
 build
+.vscode
+
+**/.DS_Store

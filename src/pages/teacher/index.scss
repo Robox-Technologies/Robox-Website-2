@@ -1,0 +1,49 @@
+@use '@root/variables';
+
+.hero {
+    overflow: hidden;
+    height: 300px;
+    width: 100%;
+
+    background-image: url("./images/hero.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+
+    border-bottom: 4px solid variables.$dropShadow;
+
+    .title {
+        margin: variables.$standardGap var(--articleMargin);
+    }
+
+    .heroGoober {
+        position: relative;
+        height: 100%;
+        width: fit-content;
+
+        .shape {
+            right: 0;
+            height: 100%;
+        }
+
+        .eyes {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: variables.$standardGap;
+        }
+    }
+}
+
+article > section {
+    text-align: center;
+}
+
+@media screen and (max-width: 800px) {
+    .heroGoober {
+        display: none;
+    }
+}

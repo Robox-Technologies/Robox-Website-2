@@ -1,0 +1,81 @@
+@use 'variables';
+
+.articleSection {
+    display: flex;
+    // justify-content: space-between;
+    align-items: start;
+    gap: 50px;
+
+    .media {
+        object-fit: contain;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .text a:not(.ctaButton) {
+        text-decoration: underline;
+    }
+
+    &.LTR {
+        flex-direction: row;
+    }
+
+    &.RTL {
+        flex-direction: row-reverse;
+    }
+
+    &.equalWidth {
+        & > *:not(.goober) {
+            width: 50%;
+        }
+    }
+}
+
+section.centred {
+    text-align: center;
+}
+
+article {
+    padding: var(--articleMargin);
+
+    & > section {
+        margin-top: var(--articleMargin);
+    }
+}
+
+.ctaButton {
+    @include variables.dropShadowSmall;
+    @include variables.subheadingFont;
+
+    border-radius: variables.$borderRadius;
+    // border: 3px solid variables.$dropShadow;
+    background-color: variables.$themeRed;
+    
+    padding: 16px 25px;
+    cursor: pointer;
+    color: variables.$primary;
+    white-space: nowrap;
+
+    margin: variables.$standardGap 0;
+    display: inline-block;
+
+    * {
+        margin-right: 8px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .articleSection {
+        align-items: center;
+
+        &.LTR, &.RTL {
+            flex-direction: column;
+        }
+
+        &.equalWidth {
+            & > *:not(.goober) {
+                width: 100%;
+            }
+        }
+    }
+}
