@@ -49,6 +49,7 @@ $borderRadius: 20px;
     font-family: 'Nunito', sans-serif;
     font-size: 49px;
     font-weight: 800;
+    line-height: 125%;
 }
 
 @mixin subheadingFont {
@@ -63,5 +64,6 @@ $borderRadius: 20px;
     @include fontCommon;
 
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 16px;
+    font-size: 18px;
+    line-height: 150%;
 }
