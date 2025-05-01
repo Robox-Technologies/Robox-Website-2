@@ -1,9 +1,8 @@
 @use 'variables';
 
-$headerHeight: 56px;
 $hamburgerThreshold: 800px;
 
-header {
+.header {
     position: sticky;
     top: 0;
     width: 100vw;
@@ -16,7 +15,7 @@ header {
     justify-content: space-between;
     background-color: variables.$primary;
     width: 100%;
-    height: $headerHeight;
+    height: variables.$headerHeight;
     padding-left: variables.$articleMargin;
 }
 
@@ -94,7 +93,7 @@ header {
     align-items: center;
     gap: variables.$standardGap;
     background-color: variables.$themeBlue;
-    height: $headerHeight;
+    height: variables$headerHeight;
     padding: 0 variables.$articleMargin;
 }
 

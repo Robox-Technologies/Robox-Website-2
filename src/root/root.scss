@@ -36,6 +36,7 @@ p, a, li {
 
 h1 {
     @include variables.headingFont;
+    margin-top: 0;
 }
 
 h2 {

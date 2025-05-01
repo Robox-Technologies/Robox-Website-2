@@ -1,0 +1,300 @@
+@use '@root/variables';
+
+.hero {
+    position: relative;
+    background-image: url("./images/hero.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left 30% center;
+    height: calc(100vh - variables.$headerHeight - 10px);
+    min-height: 500px;
+
+    .title {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        top: 50%;
+        right: variables.$articleMargin;
+        transform: translateY(-50%);
+
+        .logo {
+            object-fit: contain;
+            height: 50px;
+        }
+    
+        h1 {
+           font-size: 60px;
+           margin-top: 16px;
+           color: variables.$primary;
+           margin-bottom: 0;
+        }
+    }
+
+    .scroll-prompt {
+        position: absolute;
+        color: variables.$primary;
+        background-color: rgba(variables.$themeBlack, 0.9);
+        border-radius: 50%;
+        padding: 8px;
+        cursor: pointer;
+
+        bottom: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+.section2 {
+    position: relative;
+
+    .goober {
+        position: absolute;
+        left: 15%;
+        top: -35%;
+        z-index: -9;
+    }
+}
+
+.boxToBot {
+    $imgWidth: 20vw;
+    $bottomSpace: calc($imgWidth / 2);
+    margin-top: calc(variables.$articleMargin * 2);
+
+    .intro {
+        text-align: center;
+    }
+
+    .columns {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        padding-bottom: calc(30vh - $bottomSpace);
+        gap: variables.$standardGap;
+    }
+    
+    .steps {
+        margin-bottom: $bottomSpace;
+
+        .step {
+            margin-top: 50vh;
+            display: flex;
+            align-items: center;
+
+            gap: variables.$standardGap;
+
+            .stepNumber {
+                $size: 64px;
+
+                min-width: $size;
+                width: $size;
+                height: $size;
+                text-align: center;
+                line-height: $size;
+                font-size: 30px;
+
+                border-radius: 50%;
+                background: variables.$themeBlue;
+                color: variables.$primary;
+                margin: 0;
+            }
+
+            .title {
+                margin: 0;
+            }
+
+            .description {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .boxToBotImg {
+        $minSize: 250px;
+
+        padding-top: calc(50vh - $bottomSpace);
+        width: $imgWidth;
+        min-width: $minSize;
+        // aspect-ratio: 1;
+        object-fit: contain;
+        position: sticky;
+        position: -webkit-sticky;
+        top: 0;
+    }
+
+    @keyframes pop {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .scale-animate {
+        animation: pop 0.2s ease-in-out;
+    }
+}
+
+article.hubs {
+    background-color: variables.$tone2;
+}
+
+.roboxHub {
+    .ctaButton {
+        margin-top: variables.$articleMargin;
+    }
+
+    .cards {
+        position: relative;
+        display: flex;
+        justify-content: space-evenly;
+        gap: variables.$standardGap;
+        flex-wrap: wrap;
+        margin-top: variables.$articleMargin;
+        z-index: 10;
+    
+        .roboxHubCard {
+            position: relative;
+            width: inherit;
+            flex-basis: 350px;
+            z-index: initial;
+
+            .card-image {
+                aspect-ratio: inherit;
+                border-radius: variables.$borderRadius variables.$borderRadius 0 0;
+            }
+    
+            .card-info {
+                padding: variables.$standardGap;
+            }
+
+            .goober {
+                z-index: -1;
+                position: absolute;
+                
+                img {
+                    object-fit: contain;
+                }
+
+                .shape {
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+
+                .eyes {
+                    position: absolute;
+                }
+
+                &.gooberPentagon {
+                    width: 60%;
+                    top: -20%;
+                    left: -10%;
+
+                    .eyes {
+                        width: 55%;
+                        top: 15%;
+                        right: 23%;
+                    }
+
+                    @media screen and (max-width: 1000px) {
+                        visibility: hidden;
+                    }
+                }
+
+                &.gooberSpiky {
+                    width: 80%;
+                    bottom: -30%;
+                    right: 0;
+
+                    .eyes {
+                        width: 40%;
+                        bottom: 35%;
+                        left: 20%;
+                    }
+
+                    @media screen and (max-width: 1350px) {
+                        visibility: hidden;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.teacherHub {
+    position: relative;
+
+    .goober {
+        position: absolute;
+        width: 15%;
+        min-width: 100px;
+        bottom: calc(-1 * variables.$standardGap);
+        right: calc(-1 * variables.$standardGap);
+        
+        img {
+            object-fit: contain;
+        }
+
+        .shape {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .eyes {
+            position: absolute;
+            width: 50%;
+            top: 20%;
+            left: 20%;
+        }
+
+        @media screen and (max-width: 1000px) {
+            visibility: visible;
+        }
+    }
+}
+
+.videoSection > iframe {
+    width: 80%;
+    aspect-ratio: 1.7777777778;
+}
+
+@media screen and (max-width: 600px) {
+    .boxToBotImg {
+        display: none;
+    }
+
+    .boxToBot .steps > .step {
+        margin-top: 20vh;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .goober {
+        visibility: hidden;
+    }
+    
+    .videoSection > iframe {
+        width: 100%;
+    }
+
+    .hero {
+        .title {
+            width: 100%;
+            top: inherit;
+            right: 0;
+            bottom: 0;
+            padding: variables.$articleMargin variables.$standardGap;
+            transform: none;
+            background: linear-gradient(0deg, rgba(variables.$themeBlack, 0.7) 70%, rgba(variables.$themeBlack, 0) 100%);
+        }
+
+        .scroll-prompt {
+            background-color: transparent;
+        }
+    }
+}

@@ -1,5 +1,5 @@
 <head>
-    <script src="./index.ts"></script>
+    <script src="./index.ts" defer></script>
     <link href="./index.scss" rel="stylesheet" />
     <%~ include('src/partials/metadata.html') %>
 </head>
@@ -7,7 +7,211 @@
 <body>
     <%~ include('src/partials/header.html') %>
 
-    <div style="height: 80vh"></div>
+    <div class="hero">
+        <div class="title">
+            <img src="@images/logo-darkbg.svg?raw" class="logo">
+            <h1>Unbox the Fun</h1>
+        </div>
+
+        <div class="scroll-prompt">
+            <i class="fa-solid fa-chevron-down fa-xl"></i>
+        </div>
+    </div>
+
+    <article id="scrollTarget">
+        <section class="articleSection LTR">
+            <div class="text">
+                <h1>Meet Ro/Box</h1>
+    
+                <p>
+                    Ro/Box is an ultra-affordable robotics kit designed to make STEM education accessible to any student, anywhere.
+                    Whether you’re a budding engineer or a curious coder, Ro/Box offers hands-on experience in building, programming,
+                    and problem-solving.
+                </p>
+
+                <a class="ctaButton" href="/about">About us</a>
+            </div>
+    
+            <img src="images/article1.png" class="media">
+        </section>
+    
+        <section class="articleSection RTL equalWidth section2">
+            <div class="text">
+                <h1>Build it. Code it. Bring it to life.</h1>
+    
+                <p>
+                    There is more to Ro/Box than meets the eye.
+                    Each kit is jam-packed with features <em>(as much as our budget allows)</em> to give you the most value out of an already affordable product.
+                    
+                    <ul>
+                        <li>
+                            <strong>Plywood chassis:</strong>
+                            We use sustainable material that looks both elegant and strong to create the box shape.
+                            (After all, it wouldn’t be <em>Ro/Box</em> without <em>Box</em>!)
+                        </li>
+                        <li>
+                            <strong>Reusable components:</strong>
+                            No proprietary hardware!
+                            All of the components within a Ro/Box kit can be modified, substituted, or used in other robotics projects.
+                        </li>
+                        <li>
+                            <strong>Open-sourced:</strong>
+                            We mean it.
+                            Everything from the Ro/Box design schematics, to this website, is open-sourced.
+                            It’s our way of giving to the community.
+                        </li>
+                    </ul>
+                </p>
+            </div>
+
+            <img src="images/goober-star.svg?raw" class="goober">
+            <img src="images/article2.png" class="media">
+        </section>
+
+        <section class="boxToBot">
+            <div class="intro">
+                <h1>
+                    Box-to-Bot in 4 Steps
+                </h1>
+                <p>
+                    We know how difficult robotics can be.<br>
+                    It’s why we’ve made Robox easy to follow for all ages.
+                </p>
+            </div>
+        
+            <div class="columns">
+                <div class="steps">
+                    <%
+                    const steps = [
+                        ["Un/Box your Ro/Box", "Open the packaging and familiarise yourself with all the components."],
+                        ["Assemble", "Follow our comprehensive guide to build your Ro/Box."],
+                        ["Unleash your creativity", "Design and customise to truly make Ro/Box your own."],
+                        ["Code", "Use our beginner-friendly block code editor to bring your creation to life."]
+                    ]
+
+                    for (let i = 0; i < steps.length; i++) {
+                    %>
+                        <div class="step">
+                            <h1 class="stepNumber"><%= i+1 %></h1>
+                            <div>
+                                <h2 class="title"><%= steps[i][0] %></h2>
+                                <p class="description"><%= steps[i][1] %></p>
+                            </div>
+                        </div>
+                    <%}%>
+                </div>
+                
+                <img class="boxToBotImg" src="images/boxToBot/1.png">
+            </div>
+        </section>
+    </article>
+    <article class="hubs">
+        <section class="roboxHub centred">
+            <h1>Empowering Students to Learn</h1>
+
+            <p>
+                <strong>Interactive, hands-on, and made for curious minds.</strong><br>
+                Ro/Box Hub gives learners everything they need to dive into<br>
+                the world of robotics—from step-by-step instructions<br>
+                to creative coding challenges.
+            </p>
+
+            <div class="cards">
+                <%~ include('src/partials/card.html', {
+                    class: "roboxHubCard",
+                    title: 'Assembly', 
+                    imageSource: "images/roboxHubCard1.png", 
+                    descriptions: [
+                        "Use easy-to-follow guides to build Ro/Box from scratch.", 
+                    ],
+                    goober: "./images/goober-pentagon.svg?raw",
+                    gooberClass: "gooberPentagon"
+                }) %>
+
+                <%~ include('src/partials/card.html', {
+                    class: "roboxHubCard",
+                    title: 'Workshop', 
+                    imageSource: "images/roboxHubCard2.png", 
+                    descriptions: [
+                        "Explore block coding through interactive exercises that teach how to control your Ro/Box’s movements, sensors, and actions.", 
+                    ]
+                }) %>
+
+                <%~ include('src/partials/card.html', {
+                    class: "roboxHubCard",
+                    title: 'Lessons', 
+                    imageSource: "images/roboxHubCard3.png", 
+                    descriptions: [
+                        "Build real coding skills with our structured lessons that introduce programming in a simple, visual way using our block code editor.", 
+                    ],
+                    goober: "./images/goober-spiky.svg?raw",
+                    gooberClass: "gooberSpiky"
+                }) %>
+            </div>
+            
+            <a class="ctaButton" href="/student">Visit Ro/Box Hub</a>
+        </section>
+
+        <section class="articleSection RTL equalWidth teacherHub">
+            <div class="text">
+                <h1>Teacher Hub</h1>
+    
+                <p>
+                    We know that great learning starts with confident teaching.
+                    That’s why we’ve built a dedicated Teacher Hub filled with classroom-ready resources—lesson plans,
+                    curriculums, and more.
+                </p>
+
+                <a class="ctaButton" href="/teacher">Visit Teacher Hub</a>
+            </div>
+
+            <img src="images/article3.png" class="media">
+
+            <div class="goober">
+                <img src="./images/goober-square.svg?raw" class="shape">
+                <img src="@images/eyes.svg?raw" class="eyes">
+            </div>
+        </section>
+    </article>
+    <!-- <article>
+        <section class="centred videoSection">
+            <h1>See the Kit in Action</h1>
+
+            <iframe src="https://www.youtube-nocookie.com/embed/lCaun_EiJZQ?autoplay=0&mute=1" frameborder="0" allow="autoplay; encrypted-media;" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </section>
+
+        <section>
+            <h1>Check out our Kits</h1>
+            
+            <p>Lorem ipsum dolor sit amet</p>
+
+            <div class="cards">
+                <%~ include('src/partials/card.html', {
+                    class: "productCard",
+                    imageSource: "images/roboxHubCard3.png", 
+                    descriptions: [
+                        "Lorem ipsum",
+                        "Lorem ipsum",
+                        "Lorem ipsum",
+                        "Lorem ipsum",
+                    ]
+                }) %>
+
+                <%~ include('src/partials/card.html', {
+                    class: "productCard",
+                    imageSource: "images/roboxHubCard3.png", 
+                    descriptions: [
+                        "Lorem ipsum",
+                        "Lorem ipsum",
+                        "Lorem ipsum",
+                        "Lorem ipsum", 
+                    ]
+                }) %>
+            </div>
+
+            <a class="ctaButton" href="/store">Visit our store</a>
+        </section>
+    </article> -->
     
     <%~ include('src/partials/footer.html') %>
 </body>
