@@ -83,10 +83,10 @@
                         ["Code", "Use our beginner-friendly block code editor to bring your creation to life."]
                     ]
 
-                    for (let i in steps) {
+                    for (let i = 0; i < steps.length; i++) {
                     %>
                         <div class="step">
-                            <h1 class="stepNumber"><%= parseInt(i)+1 %></h1>
+                            <h1 class="stepNumber"><%= i+1 %></h1>
                             <div>
                                 <h2 class="title"><%= steps[i][0] %></h2>
                                 <p class="description"><%= steps[i][1] %></p>
