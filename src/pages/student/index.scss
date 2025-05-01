@@ -47,13 +47,13 @@ $cardBorderRadius: 5%;
 $hoverCardBorderSize: 3px;
 $hoverCardBorderColor: variables.$themeBlue;
 
-.project-card {
+#create-project, .project-card {
     width: $projectCardWidth;
     transition: transform 0.1s ease-out;
     transform-style: preserve-3d;
     will-change: transform;
     position: relative;
-
+    cursor: pointer;
 }
 $toolbarBorderRadius: 0.5em;
 $toolbarBorderColor: variables.$primary;

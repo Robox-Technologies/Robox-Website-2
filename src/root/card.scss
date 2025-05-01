@@ -38,6 +38,7 @@ $maxTextWidth: 200px;
     outline: none;
     text-decoration: none;
     display: block; /* removes inline spacing gap */
+    object-fit: cover;
 }
 .card > *:first-child {
     border-radius: variables.$borderRadius variables.$borderRadius 0 0;
