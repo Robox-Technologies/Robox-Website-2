@@ -1,5 +1,7 @@
 import hamburgerIcon from '@images/hamburger.json';
 
+const headerHeight = '56px';
+
 const hamburger = document.querySelector('.hamburger') as HTMLButtonElement;
 const hamburgerMenu = document.querySelector('.hamburgerMenu') as HTMLElement;
 const hamburgerLottie = document.createElement("lottie-player");
@@ -20,11 +22,17 @@ hamburger.addEventListener('click', (e) => {
 
 function updateHamburger() {
     if (hamburgerMenuOpened) {
-        hamburgerMenu.classList.add('active');
-        hamburgerMenu.style.top = '56px';
+        hamburgerMenu.style.display = 'flex';
+
+        setTimeout(() => {
+            hamburgerMenu.style.top = headerHeight;
+        }, 1);
     } else {
-        hamburgerMenu.classList.remove('active');
         hamburgerMenu.style.top = '';
+
+        setTimeout(() => {
+            hamburgerMenu.style.display = 'none';
+        }, 500);
     }
 
     // Animate icon
