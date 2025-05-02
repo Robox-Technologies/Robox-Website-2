@@ -144,10 +144,6 @@ class USBCommunication {
     currentReadableStreamClosed: Promise<void>
     constructor(private parent: Pico, baudRate = 9600) {
         this.baudRate = baudRate;
-        this.textEncoder = new TextEncoderStream();
-        this.currentWriter = this.textEncoder.writable.getWriter();
-        this.textDecoder = new TextDecoderStream()
-        this.currentReader = this.textDecoder.readable.getReader();
     }
     
     async read() {
@@ -200,10 +196,11 @@ class USBCommunication {
             if (typeof messages === "object") { //Check if its an array object
                 for (const message of messages) {
                     await this.currentWriter.write(message)
+                    await new Promise(resolve => setTimeout(resolve, 10));
                 }                
             }
             else {
-                this.currentWriter.write(messages)
+                await this.currentWriter.write(messages)
             }
         }
         catch(err) {
@@ -211,57 +208,84 @@ class USBCommunication {
         }
     }
     async connect(port: SerialPort) {
-        this.port = port
-
-        //Opening the ports
+        this.port = port;
+        if (this.port?.readable?.locked || this.port?.writable?.locked) {
+            console.warn("Port already in use");
+            return false;
+        }
         try {
-            await this.port.open({ baudRate: 9600 });
+            await this.port.open({ baudRate: this.baudRate });
+        } catch (err) {
+            this.parent.emit({ event: "error", options: { message: "We are unable to open the port on the pico! Try resetting it?" } });
+            return false;
         }
-        catch(err) {
-            this.parent.emit({event: "error", options: {message: "We are unable to open the port on the pico! Try resetting it?"}})
-            return false
+    
+        if (!this.port.writable || !this.port.readable) {
+            this.parent.emit({ event: "error", options: { message: "The port is not readable/writable!" } });
+            return false;
         }
-        if (!this.port) {
-            this.parent.emit({event: "error", options: {message: "The port was not provided! Please reopen the window, click the pico device then press connect!"}})
-            return false
-        }
-        if (!this.port.writable) {
-            this.parent.emit({event: "error", options: {message: "We could not write to the pico! Try resetting it and make sure no other editors are open!"}})
-            return false
-        }
-        if (!this.port.readable) {
-            this.parent.emit({event: "error", options: {message: "We could not read the pico! Try resetting it and make sure no other editors are open!"}})
-            return false
-        }
-        //Piping our reader and streaming into the right port
+    
+        // Create streams
+        this.textEncoder = new TextEncoderStream();
+        this.textDecoder = new TextDecoderStream();
+    
+        // Pipe them AFTER creation
         this.currentWriterStreamClosed = this.textEncoder.readable.pipeTo(this.port.writable);
         this.currentReadableStreamClosed = this.port.readable.pipeTo(this.textDecoder.writable);
-        
-        this.read()
-        return true
+    
+        // Only now get writer/reader
+        this.currentWriter = this.textEncoder.writable.getWriter();
+        this.currentReader = this.textDecoder.readable.getReader();
+    
+        this.read();
+    
+        return true;
     }
     async disconnect() {
         if (this.currentReader) {
             try {
-                await this.currentReader.cancel()
-                await this.currentReadableStreamClosed?.catch((e) => { /* Ignore the error */ });
-            }
-            catch(err) {
-                this.parent.emit({"event": "error", options: { "message": "Cound not close Pico reader"}})
-                return
+                await this.currentReader.cancel();
+                this.currentReader.releaseLock();
+                await this.currentReadableStreamClosed?.catch(() => {});
+            } catch (err) {
+                this.parent.emit({
+                    event: "error",
+                    options: { message: "Could not close Pico reader" }
+                });
             }
         }
+    
         if (this.currentWriter) {
-            this.currentWriter.close();
-            await this.currentWriterStreamClosed;
+            try {
+                await this.currentWriter.close();
+                this.currentWriter.releaseLock();
+                await this.currentWriterStreamClosed?.catch(() => {});
+            } catch (err) {
+                this.parent.emit({
+                    event: "error",
+                    options: { message: "Could not close Pico writer" }
+                });
+            }
         }
-        if (this.port) await this.port.close()
-
+    
+        if (this.port?.readable?.locked || this.port?.writable?.locked) {
+            try {
+                await this.port.close();
+            } catch (err) {
+                this.parent.emit({
+                    event: "error",
+                    options: { message: "Could not close Pico port" }
+                });
+            }
+        }
+    
+        // Reinitialize for next connection
         this.textEncoder = new TextEncoderStream();
+        this.textDecoder = new TextDecoderStream();
         this.currentWriter = this.textEncoder.writable.getWriter();
-        this.textDecoder = new TextDecoderStream()
         this.currentReader = this.textDecoder.readable.getReader();
-        return true
+    
+        return true;
     }
     async request() {
         const device = navigator.serial.requestPort({ filters: [{ usbVendorId: piVendorId }] });
