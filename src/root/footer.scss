@@ -135,7 +135,6 @@ $bottomRowHeight: 54px;
         & > * {
             display: none;
         }
-
         clip-path: polygon(0 $bgHeight, 100% $bgHeight, 100% 100%, 0 100%);
     }
 }
