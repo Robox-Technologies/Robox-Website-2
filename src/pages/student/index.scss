@@ -1,5 +1,5 @@
 @use '../../root/variables';
-
+@import '../../root/lineClip.scss';
 $projectIconSize: 1.2em;
 $projectIconGap: 5px;
 
@@ -7,6 +7,17 @@ $projectCardGap: 30px;
 $projectCardWidth: 250px;
 $cardBorderRadius: 5%;
 
+$titleSidePadding: 40px;
+$titleFontsize: 49px;
+$heroTextWidth: 35%; 
+
+$borderLineWidth: 10px;
+
+
+$heroImageWidth: calc(100% - $heroTextWidth);
+$overlap: 100px;
+$borderColour: #26363b;
+$heroContainerHeight: 320px;
 #main {
     padding: 30px;
 }
@@ -124,41 +135,19 @@ $toolbarWidth: 130px;
     color: white;
 }
 
-$heroTextWidth: 35%; 
 
-$borderLineWidth: 10px;
-
-
-$heroImageWidth: calc(100% - $heroTextWidth);
-$overlap: 100px;
-$borderColour: #26363b;
-$heroContainerHeight: 320px;
 #hero {
     height: 320px;
     width: 100%;
     display: flex;
     flex-direction: row;
     background-color: #26363b;
-}
-#hero-image {
-    height: $heroContainerHeight;
-    width: $heroImageWidth ;
-    clip-path: polygon(calc($overlap + $borderLineWidth) 0, 100% 0, 100% 100%, $borderLineWidth 100%);
 
-    position: absolute;
-    object-fit:cover;
-    left: $heroTextWidth
+    @include slantedLine(200px, $borderColour, $borderLineWidth, $heroTextWidth, left);
 }
-#hero-title-container {
-    height: 320px;
-    background-color: variables.$themeYellow;
-    width: calc($heroTextWidth + $overlap);
-    clip-path: polygon(0 0, calc(100% - $borderLineWidth) 0, calc(100% - $borderLineWidth - $overlap) 100%, 0 100%);
-    position: absolute;
-    z-index: 1;
-}
-$titleSidePadding: 40px;
-$titleFontsize: 49px;
+
+
+
 #hero-title {
     font-size: $titleFontsize;
     position: relative;
@@ -182,3 +171,11 @@ $titleFontsize: 49px;
 .card {
     background-color: white !important;
 }
+
+#hero-title-container {
+    background-color: variables.$themeYellow;
+}
+#hero-image {
+    object-fit:cover;
+}
+
