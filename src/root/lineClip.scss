@@ -35,12 +35,12 @@
     flex-direction: row;
     @include clipThing($direction, $lineWidth, $overlap);
     > :first-child {
-        width: calc($heroTextWidth + $overlap);
+        width: calc($firstContainerWidth + $overlap);
         position: absolute;
         height: inherit;
     }
     > :last-child {
-        left: $heroTextWidth;
+        left: $firstContainerWidth;
         position: absolute;
         height: inherit;
         width: calc(100% - $firstContainerWidth);
