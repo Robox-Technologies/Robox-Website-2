@@ -1,19 +1,32 @@
 @mixin clipThing($direction: left, $borderLineWidth, $overlap) {
     @if $direction == left {
         > :first-child {
-            clip-path: polygon(0 0, calc(100% - $borderLineWidth) 0, calc(100% - $borderLineWidth - $overlap) 100%, 0 100%);
+            clip-path: polygon(0 0, 
+            calc(100% - #{$borderLineWidth}) 0, 
+            calc(100% - #{$borderLineWidth} - #{$overlap}) 100%, 
+            0 100%);
         }
         > :last-child {
-            clip-path: polygon(calc($overlap + $borderLineWidth) 0, 100% 0, 100% 100%, $borderLineWidth 100%);
+            clip-path: polygon(calc(
+            #{$overlap} + #{$borderLineWidth}) 0, 
+            100% 0, 
+            100% 100%, 
+            #{$borderLineWidth} 100%);
         }
         
     }
     @if $direction == right {
         > :first-child {
-            clip-path: polygon(0 0, calc(100% - $borderLineWidth - $overlap) 0, calc(100% - $borderLineWidth) 100%, 0 100%);
+            clip-path: polygon(0 0, 
+            calc(100% - #{$borderLineWidth} - #{$overlap}) 0, 
+            calc(100% - #{$borderLineWidth}) 100%, 
+            0 100%);
         }
         > :last-child {
-            clip-path: polygon($borderLineWidth 0, 100% 0, 100% 100%, calc($overlap + $borderLineWidth) 100%);
+            clip-path: polygon(#{$borderLineWidth} 0, 
+            100% 0, 
+            100% 100%, 
+            calc(#{$overlap} + #{$borderLineWidth}) 100%);
         }
     }
 }
