@@ -73,14 +73,11 @@
             },
         ],
     }) %>
-    <section id="hero">
-        <div id="hero-title-container">
-            <h1 id="hero-title">
-                Robox Hub
-            </h1>
-        </div>
-        <img id="hero-image" src="./student-hub-hero.jpg">
-    </section>
+    <!-- Hero title -->
+    <%~ include('src/partials/title-hero.html', {
+        text: "Robox Hub",
+        image: "./student-hub-hero.jpg"
+    }) %>
     
     <div id="main" class="item-sections">
         
