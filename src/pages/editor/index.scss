@@ -107,6 +107,7 @@ $downloadButtonSize: 60px;
     display: flex;
     position: relative;
     align-items: center;
+    flex-direction: row;
 }
 .blocklyTreeRowContentContainer >svg >path {
     fill: white;

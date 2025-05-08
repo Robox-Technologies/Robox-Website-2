@@ -1,15 +1,19 @@
 
 import * as Blockly from 'blockly';
 
+//@ts-ignore
+import { ContinuousToolbox } from '@blockly/continuous-toolbox';
 
 
 import theme from "./blockly/theme"
 
 import {toolbox} from "./blockly/toolbox"
 import "./blockly/toolboxStyling"
-import { RoundedFlyout } from './blockly/toolboxStyling';
+
 import { CustomUndoControls, CustomZoomControls } from './blockly/customUI';
 import { MyWorkspace } from '../../types/blockly';
+
+
 
 import { Project } from '../../types/projects';
 import { getProject, loadBlockly, saveBlockly, renameProject } from '../../root/serialization';
@@ -36,11 +40,12 @@ document.addEventListener("DOMContentLoaded", () => {
         toolbox: toolbox,
         theme: theme,
         plugins: {
-            flyoutsVerticalToolbox: RoundedFlyout
+            toolbox: ContinuousToolbox,
         },
         zoom: {
             controls: false,
         },
+        renderer: 'Zelos',
         trashcan: false,
     }) as MyWorkspace;
     postBlocklyWSInjection()

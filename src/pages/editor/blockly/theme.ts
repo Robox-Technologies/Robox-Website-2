@@ -1,4 +1,10 @@
 import * as Blockly from 'blockly';
+// FORGIVE ME but for some reason blockly does not have every theme work in typescript
+// there is an active pull (https://github.com/google/blockly-samples/pull/2474) but has not been merged yet
+//So gotta ignore TS complaining for now
+//@ts-ignore
+import * as BlocklyThemeModernRaw from '@blockly/theme-modern';
+const BlocklyThemeModern = BlocklyThemeModernRaw as Blockly.Theme;
 
 Blockly.Msg.EVENT_COLOR = "#277DA1";
 
@@ -18,12 +24,12 @@ Blockly.Msg.PROCEDURES_COLOR = "#577590";
 
 
 
-// FORGIVE ME but for some reason blockly does not have every theme work in typescript
-// there is an active pull (https://github.com/google/blockly-samples/pull/2474) but has not been merged yet
-//So gotta ignore TS complaining for now
-//@ts-ignore
-import * as BlocklyThemeModernRaw from '@blockly/theme-modern';
-const BlocklyThemeModern = BlocklyThemeModernRaw as Blockly.Theme;
+
+
+
+
+
+
 export default Blockly.Theme.defineTheme('Robox', {
     name: "robox",
     'base': BlocklyThemeModern,

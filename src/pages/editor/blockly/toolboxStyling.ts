@@ -68,13 +68,7 @@ class RoboxToolboxSeperator extends Blockly.ToolboxSeparator {
         return dom
     }
 }
-export class RoundedFlyout extends Blockly.VerticalFlyout {
-    override readonly CORNER_RADIUS = 0;
-    constructor(workspaceOptions: Blockly.Options) {
-        super(workspaceOptions);
-        
-    }
-}
+
 //Overriding the flyoutscale value (to prevent it scaliing with the workspace)
 
 Blockly.VerticalFlyout.prototype.getFlyoutScale = function() {
