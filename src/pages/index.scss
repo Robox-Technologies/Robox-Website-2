@@ -290,7 +290,7 @@ article.hubs {
 
 @media screen and (max-width: 1000px) {
     .goober {
-        visibility: hidden;
+        display: none;
     }
     
     .videoSection > iframe {
