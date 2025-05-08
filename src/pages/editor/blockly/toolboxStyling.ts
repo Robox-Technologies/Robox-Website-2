@@ -75,6 +75,12 @@ export class RoundedFlyout extends Blockly.VerticalFlyout {
         
     }
 }
+//Overriding the flyoutscale value (to prevent it scaliing with the workspace)
+
+Blockly.VerticalFlyout.prototype.getFlyoutScale = function() {
+    return 1;
+};
+
 
 //TODO: add names for the variable and procedure category
 
