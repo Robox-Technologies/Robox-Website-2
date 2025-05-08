@@ -19,7 +19,7 @@ motor_speed = 60
 `
 
 let alreadyDownloaded = false
-let skipDownloadStep = false
+let skipDownloadStep = true
 
 export function postBlocklyWSInjection() {
     const ws = Blockly.getMainWorkspace()
@@ -85,7 +85,7 @@ export function postBlocklyWSInjection() {
     runButton?.addEventListener("click", () => {
         if (connectionManagment.getAttribute("loading") === "true") return
         if (skipDownloadStep) {
-            return sendCode(ws)
+            sendCode(ws)
         }
         connectionManagment.setAttribute("status",  "running")
         connectionManagment.setAttribute("loading",  "false")
