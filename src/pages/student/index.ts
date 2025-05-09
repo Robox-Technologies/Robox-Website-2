@@ -60,7 +60,8 @@ function applyProjects() {
                 toolbaClone.style.left = (options.offsetLeft+offsetLeftToolbar).toString()
                 toolbaClone.style.top = (options.offsetTop+offsetTopToolbar).toString()
 
-
+                wrapper.setAttribute("toolbar", "")
+                toolbar.closest("card-wrapper")?.removeAttribute("toolbar")
                 clone.appendChild(toolbaClone)
                 toolbar.remove()
                 toolbaClone.show()
@@ -73,29 +74,6 @@ function applyProjects() {
     }
 }
 function afterProjectsSetup() {
-    //Create the hover effect
-    const projectCards = document.querySelectorAll(".card-wrapper") as NodeListOf<HTMLElement>
-    for (const projectCard of projectCards) {
-        let element: HTMLElement | null = null
-
-        projectCard.addEventListener('mousemove', (e: MouseEvent) => {
-            const rect = projectCard.getBoundingClientRect();
-            const x = e.clientX - rect.left; // x within container
-            const y = e.clientY - rect.top;  // y within container
-            const rotateX = ((y / rect.height) - 0.5) * 20; // max 5deg tilt
-            const rotateY = ((x / rect.width) - 0.5) * -20;
-            element = projectCard.firstElementChild as HTMLElement
-            if (!element) return
-            if (projectCard.querySelector("#toolbar")?.hasAttribute("open")) return //Checking if element has the toolbar in it
-            hoverElement(element, true, rotateX, rotateY);
-        }, {passive: true});
-        projectCard.addEventListener('mouseleave', () => {
-            element = projectCard.firstChild as HTMLElement
-            if (!element) return
-            hoverElement(element, false)
-        }, {passive: true});
-    }
-    //Create the projects
     const createProjectButton = document.getElementById("create-project")
     createProjectButton?.addEventListener("click", (event) => {
         createProject("unnamed project")
