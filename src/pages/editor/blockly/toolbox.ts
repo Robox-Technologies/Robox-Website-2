@@ -61,10 +61,6 @@ export const toolbox = {
             },
             {
                 'kind': 'block',
-                'type': 'logic_null',
-            },
-            {
-                'kind': 'block',
                 'type': 'logic_ternary',
             },
         ],
@@ -316,32 +312,6 @@ export const toolbox = {
               },
             },
           },
-          {
-            'kind': 'block',
-            'type': 'math_random_float',
-          },
-          {
-            'kind': 'block',
-            'type': 'math_atan2',
-            'inputs': {
-              'X': {
-                'shadow': {
-                  'type': 'math_number',
-                  'fields': {
-                    'NUM': 1,
-                  },
-                },
-              },
-              'Y': {
-                'shadow': {
-                  'type': 'math_number',
-                  'fields': {
-                    'NUM': 1,
-                  },
-                },
-              },
-            },
-          },
         ],
       },
       {
@@ -352,10 +322,6 @@ export const toolbox = {
             "icon": "categoryIcon fa fa-table-list"
         },
         'contents': [
-          {
-            'kind': 'block',
-            'type': 'lists_create_with',
-          },
           {
             'kind': 'block',
             'type': 'lists_create_with',
