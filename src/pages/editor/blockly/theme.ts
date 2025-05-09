@@ -73,10 +73,11 @@ export default Blockly.Theme.defineTheme('Robox', {
     },
     blockStyles: {
         'logic_blocks': {
-            'colourPrimary': '%{BKY_LOGIC_COLOR}'
+            'colourPrimary': '%{BKY_LOGIC_COLOR}',
         },
         'loop_blocks': {
             'colourPrimary': '%{BKY_LOOPS_COLOR}'
+
         },
         'math_blocks': {
             'colourPrimary': '%{BKY_MATH_COLOR}'
@@ -93,8 +94,14 @@ export default Blockly.Theme.defineTheme('Robox', {
         "system_blocks": {
             'colourPrimary': '%{BKY_SYSTEM_COLOR}'
         },
-        "events_blocks": {
+        "event_blocks": {
             'colourPrimary': '%{BKY_EVENT_COLOR}'
+        },
+        "variable_blocks": {
+            'colourPrimary': '%{BKY_VARIABLES_COLOR}'
+        },
+        "procedure_blocks": {
+            'colourPrimary': '%{BKY_PROCEDURES_COLOR}'
         },
         
     },

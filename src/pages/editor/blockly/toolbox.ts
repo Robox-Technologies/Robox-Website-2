@@ -427,18 +427,28 @@ export const toolbox = {
             "icon": "categoryIcon fa fa-eye"
         },
         'contents': [
-          {
-            'kind': 'block',
-            'type': 'ultrasonic_distance',
-          },
-          {
-            'kind': 'block',
-            'type': 'distance_bool',
-          },
-          {
-            'kind': 'block',
-            'type': 'sensor_bool',
-          },
+            {
+                "kind": "block",
+                "type": "ultrasonic_distance"
+            },
+            {
+                "kind": "block",
+                "type": "sensor_bool"
+            },
+            {
+                "kind": "block",
+                "type": "distance_bool",
+                "inputs": {
+                    "number": {
+                        "shadow": {
+                            "type": "math_number",
+                            "fields": {
+                                "NUM": 10
+                            }
+                        }
+                    }
+                }
+            }
         ]
       },
       {
