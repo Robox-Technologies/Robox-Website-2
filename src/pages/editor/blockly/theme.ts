@@ -64,6 +64,12 @@ export default Blockly.Theme.defineTheme('Robox', {
         "events_category": {
             'colour': '%{BKY_EVENT_COLOR}'
         },
+        "variable_category": {
+            'colour': '%{BKY_VARIABLES_COLOR}'
+        },
+        "procedure_category": {
+            'colour': '%{BKY_PROCEDURES_COLOR}'
+        },
     },
     blockStyles: {
         'logic_blocks': {

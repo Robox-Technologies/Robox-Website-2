@@ -23,11 +23,6 @@ export const toolbox = {
         'categorystyle': 'events_category',
         'contents': [
             {
-                "kind": "label",
-                "text": "Events",
-                "web-class": "categoryLabel"
-            },
-            {
                 'kind': 'block',
                 'type': 'event_begin',
             },
@@ -43,12 +38,7 @@ export const toolbox = {
             "icon": "categoryIcon fa fa-cog"
         },
         'categorystyle': 'logic_category',
-        'contents': [
-            {
-                "kind": "label",
-                "text": "Logic",
-                "web-class": "categoryLabel"
-            },          
+        'contents': [         
             {
                 'kind': 'block',
                 'type': 'controls_if',
@@ -87,11 +77,6 @@ export const toolbox = {
             "icon": "categoryIcon fa fa-repeat"
         },
         'contents': [
-            {
-                "kind": "label",
-                "text": "Loops",
-                "web-class": "categoryLabel"
-            },
             {
             'kind': 'block',
             'type': 'controls_repeat_ext',
@@ -158,11 +143,6 @@ export const toolbox = {
             "icon": "categoryIcon fa fa-plus"
         },
         'contents': [
-            {
-                "kind": "label",
-                "text": "Math",
-                "web-class": "categoryLabel"
-            },
           {
             'kind': 'block',
             'type': 'math_number',
@@ -372,11 +352,6 @@ export const toolbox = {
             "icon": "categoryIcon fa fa-table-list"
         },
         'contents': [
-            {
-                "kind": "label",
-                "text": "Lists",
-                "web-class": "categoryLabel"
-            },
           {
             'kind': 'block',
             'type': 'lists_create_with',
@@ -486,11 +461,6 @@ export const toolbox = {
             "icon": "categoryIcon fa fa-eye"
         },
         'contents': [
-            {
-                "kind": "label",
-                "text": "Sensors",
-                "web-class": "categoryLabel"
-            },
           {
             'kind': 'block',
             'type': 'ultrasonic_distance',
@@ -513,11 +483,6 @@ export const toolbox = {
             "icon": "categoryIcon fa fa-robot"
         },
         'contents': [
-            {
-                "kind": "label",
-                "text": "System",
-                "web-class": "categoryLabel"
-            },
           {
             'kind': 'block',
             'type': 'sleep',
@@ -577,11 +542,6 @@ export const toolbox = {
             "icon": "categoryIcon fa fa-truck-monster"
         },
         'contents': [
-            {
-                "kind": "label",
-                "text": "Motors",
-                "web-class": "categoryLabel"
-            },
           {
             'kind': 'block',
             'type': 'motor_move',
@@ -654,11 +614,6 @@ export const toolbox = {
             "icon": "categoryIcon fa fa-gears"
         },
         'contents': [
-            {
-                "kind": "label",
-                "text": "Functions",
-                "web-class": "categoryLabel"
-            },
         ],
         'categorystyle': 'procedure_category',
         'custom': 'PROCEDURE',

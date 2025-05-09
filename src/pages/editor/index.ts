@@ -2,7 +2,7 @@
 import * as Blockly from 'blockly';
 
 //@ts-ignore
-import { ContinuousToolbox } from '@blockly/continuous-toolbox';
+import { ContinuousToolbox, ContinuousMetrics, ContinuousFlyout } from '@blockly/continuous-toolbox';
 
 
 import theme from "./blockly/theme"
@@ -41,6 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
         theme: theme,
         plugins: {
             toolbox: ContinuousToolbox,
+            flyoutsVerticalToolbox: ContinuousFlyout,
+            metricsManager: ContinuousMetrics,
         },
         zoom: {
             controls: false,
