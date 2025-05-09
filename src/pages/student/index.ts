@@ -98,7 +98,8 @@ function afterProjectsSetup() {
     //Create the projects
     const createProjectButton = document.getElementById("create-project")
     createProjectButton?.addEventListener("click", (event) => {
-        createProject("unnamed project")
+        let uuid = createProject("unnamed project")
+        window.location.href = `/editor?id=${uuid}`
         applyProjects()
         afterProjectsSetup()
     })
