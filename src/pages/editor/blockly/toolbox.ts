@@ -67,7 +67,7 @@ export const toolbox = {
     },
     {
         'kind': 'category',
-        'name': 'Loops',
+        'name': 'Control',
         'categorystyle': 'loop_category',
         "cssConfig": {
             "icon": "categoryIcon fa fa-repeat"
