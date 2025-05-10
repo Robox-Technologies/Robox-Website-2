@@ -93,6 +93,10 @@ export const toolbox = {
           },
           {
             'kind': 'block',
+            'type': 'controls_forever',
+          },
+          {
+            'kind': 'block',
             'type': 'controls_for',
             'inputs': {
               'FROM': {

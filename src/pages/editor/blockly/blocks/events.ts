@@ -4,7 +4,7 @@ import * as Blockly from 'blockly/core';
 const events = [
     {
         "type": "event_begin",
-        "message0": "Begin event %1 %2",
+        "message0": "On start %1 %2",
         "args0": [
           {
             "type": "input_dummy"
