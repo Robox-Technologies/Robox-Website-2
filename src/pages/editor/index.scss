@@ -326,6 +326,9 @@ $blocklyUIButtonsDropShadowMult: 2;
     #stop-robox-button {
         display: none;
     }
+    #code-download-robox-button {
+        display: none;
+    }
     #run-robox-button {
         display: none;
     }
@@ -354,6 +357,9 @@ $blocklyUIButtonsDropShadowMult: 2;
         display: none;
     }
     #stop-robox-button {
+        display: none;
+    }
+    #code-download-robox-button {
         display: none;
     }
     #run-robox-button {
@@ -388,7 +394,9 @@ $blocklyUIButtonsDropShadowMult: 2;
     #run-robox-button {
         display: block;
     }
-
+    #code-download-robox-button {
+        display: none;
+    }
     #loading {
         display: none;
     }
@@ -418,7 +426,9 @@ $blocklyUIButtonsDropShadowMult: 2;
     #run-robox-button {
         display: none;
     }
-
+    #code-download-robox-button {
+        display: none;
+    }
     #loading {
         display: none;
     }
@@ -441,6 +451,9 @@ $blocklyUIButtonsDropShadowMult: 2;
     #connect-robox-button {
         display: none;
     }
+    #code-download-robox-button {
+        display: none;
+    }
     #stop-robox-button {
         display: none;
     }
@@ -452,4 +465,34 @@ $blocklyUIButtonsDropShadowMult: 2;
         display: block;
     }
 
+}
+#connection-managment[status="no-serial"] {
+    background-color: variables.$themeYellow;
+    #download-robox-button {
+        display: none;
+    }
+    #connect-robox-button {
+        display: none;
+    }
+    #stop-robox-button {
+        display: none;
+    }
+    #run-robox-button {
+        display: none;
+    }
+    #code-download-robox-button {
+        display: block;
+    }
+    #loading {
+        display: none;
+    }
+    #options {
+        display: block;
+    }
+    #disconnect {
+        display: none;
+    }
+    #console {
+        display: none;
+    }
 }
