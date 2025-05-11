@@ -21,6 +21,7 @@ motor_speed = 60
 let alreadyDownloaded = false
 let skipDownloadStep = true
 
+
 export function postBlocklyWSInjection() {
     const ws = Blockly.getMainWorkspace()
     const connectionManagment = document.getElementById("connection-managment")
