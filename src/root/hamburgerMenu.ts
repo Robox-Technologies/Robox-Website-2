@@ -25,7 +25,7 @@ function updateHamburger() {
     clearTimeout(displayTimeoutID);
 
     if (hamburgerMenuOpened) {
-        hamburgerMenu.style.display = 'flex';
+        hamburgerMenu.classList.add("active");
 
         displayTimeoutID = setTimeout(() => {
             hamburgerMenu.style.top = headerHeight;
@@ -34,7 +34,7 @@ function updateHamburger() {
         hamburgerMenu.style.top = '';
 
         displayTimeoutID = setTimeout(() => {
-            hamburgerMenu.style.display = 'none';
+            hamburgerMenu.classList.remove("active");
         }, 500);
     }
 

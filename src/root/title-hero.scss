@@ -1,0 +1,34 @@
+@use './lineClip.scss';
+
+$titleSidePadding: 40px;
+$titleFontsize: 49px;
+$heroTextWidth: max(350px, 35%); 
+
+$borderLineWidth: 10px;
+
+
+$heroImageWidth: calc(100% - $heroTextWidth);
+$overlap: 10vw;
+$borderColour: #26363b;
+$heroContainerHeight: 320px;
+
+.hero-image-title {
+    height: 320px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: #26363b;
+
+    @include lineClip.slantedLine($overlap, $borderColour, $borderLineWidth, $heroTextWidth, left);
+}
+
+.hero-title {
+    font-size: $titleFontsize;
+    position: relative;
+    top: calc($heroContainerHeight - $titleFontsize - $titleSidePadding);
+    left: $titleSidePadding;
+    margin: 0;
+}
+.hero-image {
+    object-fit:cover;
+}
