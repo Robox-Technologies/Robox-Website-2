@@ -1,6 +1,8 @@
 import * as Blockly from 'blockly';
 
 import archSVG from "./Arch.svg?raw"
+//@ts-ignore
+import { ContinuousFlyout } from '@blockly/continuous-toolbox';
 
 type HexColor = `#${string}`;
 
@@ -71,12 +73,18 @@ class RoboxToolboxSeperator extends Blockly.ToolboxSeparator {
 
 //Overriding the flyoutscale value (to prevent it scaliing with the workspace)
 
-Blockly.VerticalFlyout.prototype.getFlyoutScale = function() {
-    return 1;
-};
 
+class RoboxFlyout extends ContinuousFlyout {
+    constructor(workspaceOptions: Blockly.Options) {
+        super(workspaceOptions);
+    }
+    //Fixing the flyout scale (to prevent it scaling with zoom buttons)
+    /** @override */
+    getFlyoutScale(): number {
+        return 0.8
+    }
+}
 
-//TODO: add names for the variable and procedure category
 
 Blockly.registry.register(
     Blockly.registry.Type.TOOLBOX_ITEM,
@@ -87,4 +95,9 @@ Blockly.registry.register(
     Blockly.registry.Type.TOOLBOX_ITEM,
     Blockly.ToolboxSeparator.registrationName,
     RoboxToolboxSeperator, true
+);
+Blockly.registry.register(
+    Blockly.registry.Type.FLYOUTS_VERTICAL_TOOLBOX,
+    'RoboxFlyout',
+    RoboxFlyout, true
 );

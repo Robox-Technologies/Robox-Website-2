@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         theme: theme,
         plugins: {
             toolbox: ContinuousToolbox,
-            flyoutsVerticalToolbox: ContinuousFlyout,
+            flyoutsVerticalToolbox: "RoboxFlyout",
             metricsManager: ContinuousMetrics,
         },
         zoom: {
