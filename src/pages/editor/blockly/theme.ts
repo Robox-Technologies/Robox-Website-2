@@ -29,13 +29,12 @@ Blockly.Msg.PROCEDURES_COLOR = "#577590";
 
 
 
-
 export default Blockly.Theme.defineTheme('Robox', {
     name: "robox",
-    'base': BlocklyThemeModern,
+    'base': Blockly.Themes.Classic,
     componentStyles: {
         'workspaceBackgroundColour': '#F5F5F5',
-        'toolboxBackgroundColour': "#F",
+        'toolboxBackgroundColour': "#FFFFFF",
         'flyoutBackgroundColour': '#F5F5F5',
         'flyoutOpacity': 1,
     },
@@ -83,7 +82,8 @@ export default Blockly.Theme.defineTheme('Robox', {
             'colourPrimary': '%{BKY_MATH_COLOR}'
         },
         'list_blocks': {
-            'colourPrimary': '%{BKY_LISTS_COLOR}'
+            'colourPrimary': '%{BKY_LISTS_COLOR}',
+            'colourSecondary': "#FFFFFF"
         },
         'sensor_blocks': {
             'colourPrimary': '%{BKY_SENSOR_COLOR}'

@@ -478,18 +478,18 @@ export const toolbox = {
             }
           },
           {
-            'kind': 'block',
-            'type': 'print',
-            "inputs": {
-              'string': {
-                'shadow': {
-                  'type': 'text',
-                  'fields': {
-                    'TEXT': '',
-                  },
-                },
-              },
-            }
+          "kind": "block",
+          "type": "print",
+          "inputs": {
+              "string": {
+                  "shadow": {
+                      "type": "text",
+                      "fields": {
+                          "TEXT": ""
+                      }
+                  }
+              }
+          }
           },
           {
             'kind': 'block',
