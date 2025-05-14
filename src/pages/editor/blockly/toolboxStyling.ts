@@ -83,7 +83,7 @@ class RoboxFlyout extends ContinuousFlyout {
     }
     /** @override */
     reflowInternal_() {
-        this.width_ = 100
+        this.width_ = 300
     }
 }
 
