@@ -3,7 +3,7 @@ import * as Blockly from 'blockly';
 // there is an active pull (https://github.com/google/blockly-samples/pull/2474) but has not been merged yet
 //So gotta ignore TS complaining for now
 
-const BlocklyThemeModern = BlocklyThemeModernRaw as Blockly.Theme;
+
 
 Blockly.Msg.EVENT_COLOR = "#277DA1";
 
