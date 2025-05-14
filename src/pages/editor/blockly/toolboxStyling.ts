@@ -1,8 +1,8 @@
 import * as Blockly from 'blockly';
 
 import archSVG from "./Arch.svg?raw"
-//@ts-ignore
-import { ContinuousFlyout } from '@blockly/continuous-toolbox';
+
+import { ContinuousFlyout, ContinuousMetrics } from '@blockly/continuous-toolbox';
 
 type HexColor = `#${string}`;
 
