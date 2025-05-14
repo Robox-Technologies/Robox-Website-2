@@ -75,13 +75,15 @@ class RoboxToolboxSeperator extends Blockly.ToolboxSeparator {
 
 
 class RoboxFlyout extends ContinuousFlyout {
-    constructor(workspaceOptions: Blockly.Options) {
-        super(workspaceOptions);
-    }
+
     //Fixing the flyout scale (to prevent it scaling with zoom buttons)
     /** @override */
     getFlyoutScale(): number {
         return 0.8
+    }
+    /** @override */
+    reflowInternal_() {
+        this.width_ = 100
     }
 }
 
