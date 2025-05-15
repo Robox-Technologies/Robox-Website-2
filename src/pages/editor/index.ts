@@ -15,13 +15,19 @@ import { MyWorkspace } from '../../@types/blockly';
 
 
 
+
 import { Project } from '../../@types/projects';
 import { getProject, loadBlockly, saveBlockly, renameProject, downloadBlocklyProject } from '../../root/serialization';
 
 import {registerFieldColour} from '@blockly/field-colour';
 import { postBlocklyWSInjection } from './usb';
 import { registerControls } from './controls';
+
+import * as monaco from 'monaco-editor';
+
 registerFieldColour();
+
+const sidePanelWidth = "500px"
 
 const blocks = require.context("./blockly/blocks", false, /\.ts$/);
 const generators = require.context("./blockly/generators", false, /\.ts$/);
@@ -35,9 +41,23 @@ generators.keys().forEach(modulePath => {
     // use generator
 });
 
+const blockCodingEnabled = true
 
 document.addEventListener("DOMContentLoaded", () => {
-    const workspace = Blockly.inject('blocklyDiv', {
+    if (blockCodingEnabled) blockCoding()
+    else coding()
+
+})
+function coding() {
+    const injectionDiv = document.getElementById('injectionDiv')
+    if (!injectionDiv) return
+    monaco.editor.create(injectionDiv, {
+        value: 'print("hello")',
+        language: 'python'
+    });
+}
+function blockCoding() {
+    const workspace = Blockly.inject('injectionDiv', {
         toolbox: toolbox,
         theme: theme,
         plugins: {
@@ -139,6 +159,4 @@ document.addEventListener("DOMContentLoaded", () => {
         if (event.isUiEvent) return;
         saveBlockly(workspaceId, workspace);
     });
-
-})
-
+}
