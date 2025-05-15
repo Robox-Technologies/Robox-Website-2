@@ -20,6 +20,7 @@ import { getProject, loadBlockly, saveBlockly, renameProject, downloadBlocklyPro
 
 import {registerFieldColour} from '@blockly/field-colour';
 import { postBlocklyWSInjection } from './usb';
+import { registerControls } from './controls';
 registerFieldColour();
 
 const blocks = require.context("./blockly/blocks", false, /\.ts$/);
@@ -47,6 +48,14 @@ document.addEventListener("DOMContentLoaded", () => {
         zoom: {
             controls: false,
         },
+        move:{
+            scrollbars: {
+                horizontal: true,
+                vertical: true
+            },
+            drag: true,
+            wheel: false
+        },
         renderer: 'Zelos',
         trashcan: false,
     }) as MyWorkspace;
@@ -58,6 +67,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     else return
     if (!project) return
+    //Register Ashtons controls
+    registerControls(workspace)
     if (navigator.serial) {
         postBlocklyWSInjection()
     }
@@ -125,6 +136,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 })
-
-
 
