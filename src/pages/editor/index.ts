@@ -56,6 +56,11 @@ document.addEventListener("DOMContentLoaded", () => {
             drag: true,
             wheel: false
         },
+        grid: {
+            spacing: 20,
+            length: 5,
+            colour: "#ccc",
+        },
         renderer: 'Zelos',
         trashcan: false,
     }) as MyWorkspace;
