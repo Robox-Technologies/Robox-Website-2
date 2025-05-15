@@ -96,10 +96,13 @@ $downloadButtonSize: 60px;
     border-right: $seperatorStrokeSize solid $navEdges;
 }
 
-.blocklyFlyout { 
+.injectionDiv > .blocklyFlyout { 
     transform: translate(calc($toolboxWidth - $seperatorStrokeSize * 2), -$seperatorStrokeSize) !important;
     border: $seperatorStrokeSize solid $navEdges;
     background-color: rgb(245, 245, 245);;
+}
+.blocklyMutatorBackground {
+    fill: #fff !important;
 }
 /* Stacks the icon on top of the label. */
 .blocklyTreeRowContentContainer {
