@@ -19,6 +19,8 @@
     "html-bundler-webpack-plugin": "^4.19.1",
     "markdown-it": "^14.1.0",
     "memory-cache": "^0.2.0",
+    "monaco-editor": "^0.52.2",
+    "monaco-editor-webpack-plugin": "^7.1.0",
     "parse5": "^7.2.1",
     "prismjs": "^1.30.0",
     "relative-time": "^1.0.0",
