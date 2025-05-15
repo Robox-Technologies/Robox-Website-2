@@ -3,6 +3,7 @@ import fs from 'fs'
 import webpack from 'webpack';
 import HtmlBundlerPlugin from "html-bundler-webpack-plugin"
 import CopyPlugin from "copy-webpack-plugin"
+import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
 
 
 const __dirname = path.resolve();
@@ -68,7 +69,8 @@ const config = {
                     path.join(__dirname, 'src/guides/'),
                 ],
             },
-        })
+        }),
+        new MonacoWebpackPlugin()
     ],
     module: {
         rules: [
