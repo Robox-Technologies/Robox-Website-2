@@ -69,4 +69,7 @@ $modalTitleTextGap: 10px;
     border-radius: $modalButtonRoundedCorners;
     font-size: $modalButtonText;
 }
-
+.modal-content {
+    display: flex;
+    flex-direction: column;
+}
