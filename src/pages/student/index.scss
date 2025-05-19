@@ -155,9 +155,39 @@ $toolbarWidth: 130px;
 #delete-confirm-button {
     background-color: variables.$themeRed;
 }
+
 $trashcanSize: 30px;
-#delete-modal > .modal-top-bar > .modal-title > .fa-trash-can {
-    color: variables.$themeRed;
-    font-size: $trashcanSize;
+#delete-modal {
+    .fa-trash-can {
+        color: variables.$themeRed;
+        font-size: $trashcanSize;
+    }
 }
+$renameInputSize: 20px;
+$renameInputWidth: 70%;
+#rename-modal {
+    .fa-pencil {
+        color: variables.$themeBlue;
+        font-size: $trashcanSize;
+    }
+    #rename-confirm-button {
+        background-color: variables.$themeGreen;
+    }
+    .modal-content {
+        justify-content: center;
+        align-items: center;
+        p {
+            text-align: center;
+        }
+        #new-project-name {
+            width: $renameInputWidth;
+            color: variables.$themeBlack;
+            padding: 5px;
+            font-size: $renameInputSize;
+            border: variables.$strokeSize variables.$tone3 solid
+        }
+    }
+    
+} 
+
 

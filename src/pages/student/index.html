@@ -73,6 +73,24 @@
             },
         ],
     }) %>
+    <%~ include('src/partials/modal.html', {
+        id: "rename-modal",
+        title: 'Rename Project <i class="fa-solid fa-pencil"></i>', 
+        content: [
+            "<p>Enter a new name for your project</p>",
+            "<input id='new-project-name' type='text'>"
+        ],
+        buttons: [
+            {
+                id: "cancel-confirm-button",
+                content: "Cancel",
+            },
+            {
+                id: "rename-confirm-button",
+                content: "Rename",
+            },
+        ],
+    }) %>
     <!-- Hero title -->
     <%~ include('src/partials/title-hero.html', {
         text: "Robox Hub",
