@@ -149,3 +149,15 @@ $toolbarWidth: 130px;
     background-color: variables.$themeYellow;
 }
 
+#cancel-confirm-button {
+    background-color: variables.$themeBlue;
+}
+#delete-confirm-button {
+    background-color: variables.$themeRed;
+}
+$trashcanSize: 30px;
+#delete-modal > .modal-top-bar > .modal-title > .fa-trash-can {
+    color: variables.$themeRed;
+    font-size: $trashcanSize;
+}
+
