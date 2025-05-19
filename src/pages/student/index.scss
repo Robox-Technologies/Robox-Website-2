@@ -1,11 +1,11 @@
 @use '../../root/variables';
-
 $projectIconSize: 1.2em;
 $projectIconGap: 5px;
 
 $projectCardGap: 30px;
 $projectCardWidth: 250px;
 $cardBorderRadius: 5%;
+
 
 #main {
     padding: 30px;
@@ -124,48 +124,10 @@ $toolbarWidth: 130px;
     color: white;
 }
 
-$heroTextWidth: 35%; 
-
-$borderLineWidth: 10px;
 
 
-$heroImageWidth: calc(100% - $heroTextWidth);
-$overlap: 100px;
-$borderColour: #26363b;
-$heroContainerHeight: 320px;
-#hero {
-    height: 320px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    background-color: #26363b;
-}
-#hero-image {
-    height: $heroContainerHeight;
-    width: $heroImageWidth ;
-    clip-path: polygon(calc($overlap + $borderLineWidth) 0, 100% 0, 100% 100%, $borderLineWidth 100%);
 
-    position: absolute;
-    object-fit:cover;
-    left: $heroTextWidth
-}
-#hero-title-container {
-    height: 320px;
-    background-color: variables.$themeYellow;
-    width: calc($heroTextWidth + $overlap);
-    clip-path: polygon(0 0, calc(100% - $borderLineWidth) 0, calc(100% - $borderLineWidth - $overlap) 100%, 0 100%);
-    position: absolute;
-    z-index: 1;
-}
-$titleSidePadding: 40px;
-$titleFontsize: 49px;
-#hero-title {
-    font-size: $titleFontsize;
-    position: relative;
-    top: calc($heroContainerHeight - $titleFontsize - $titleSidePadding);
-    left: $titleSidePadding;
-    margin: 0;
-}
+
 .lesson-card > .card-info > .card-descriptions {
     display: flex;
     justify-content: space-between;
@@ -182,3 +144,56 @@ $titleFontsize: 49px;
 .card {
     background-color: white !important;
 }
+
+.hero-title-container {
+    background-color: variables.$themeYellow;
+}
+
+#cancel-confirm-button {
+    background-color: variables.$themeBlue;
+}
+#delete-confirm-button {
+    background-color: variables.$themeRed;
+}
+
+$trashcanSize: 30px;
+#delete-modal {
+    .fa-trash-can {
+        color: variables.$themeRed;
+        font-size: $trashcanSize;
+    }
+}
+$renameInputSize: 20px;
+$renameInputWidth: 70%;
+$renameInputRoundedCorners: 10px;
+$renameInputPadding: 5px;
+$renameContentPadding: 5%;
+#rename-modal {
+    .fa-pencil {
+        color: variables.$themeBlue;
+        font-size: $trashcanSize;
+    }
+    #rename-confirm-button {
+        background-color: variables.$themeGreen;
+    }
+    .modal-content {
+        justify-content: center;
+        padding: calc($renameContentPadding*2) $renameContentPadding;
+        align-items: center;
+        p {
+            text-align: center;
+            margin-top: 0;
+        }
+        #new-project-name {
+            width: $renameInputWidth;
+            color: variables.$themeBlack;
+            padding: $renameInputPadding;
+            font-size: $renameInputSize;
+            border-radius: $renameInputRoundedCorners;
+            border: variables.$strokeSize variables.$themeBlue solid
+        }
+    }
+    
+} 
+
+

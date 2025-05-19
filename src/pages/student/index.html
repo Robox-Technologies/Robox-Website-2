@@ -57,10 +57,10 @@
     </dialog>
     <%~ include('src/partials/modal.html', {
         id: "delete-modal",
-        title: '<i class="fa-solid fa-trash-can"></i>', 
-        descriptions: [
-            "<span>Are you sure you want to delete `` </span>",
-            "it will be deleted forever (a very long time)"
+        title: 'Delete Project <i class="fa-solid fa-trash-can"></i>', 
+        content: [
+            "<p><span>Are you sure you want to delete <span class='wave-text'><span>p</span><span>r</span><span>o</span><span>j</span><span>e</span><span>c</span><span>t</span></span> </span></p>",
+            "<p>it will be deleted forever (a very long time)</p>"
         ],
         buttons: [
             {
@@ -69,18 +69,33 @@
             },
             {
                 id: "delete-confirm-button",
-                content: "delete",
+                content: "Delete",
             },
         ],
     }) %>
-    <section id="hero">
-        <div id="hero-title-container">
-            <h1 id="hero-title">
-                Robox Hub
-            </h1>
-        </div>
-        <img id="hero-image" src="./student-hub-hero.jpg">
-    </section>
+    <%~ include('src/partials/modal.html', {
+        id: "rename-modal",
+        title: 'Rename Project <i class="fa-solid fa-pencil"></i>', 
+        content: [
+            "<p>Enter a new name for your project</p>",
+            "<input id='new-project-name' type='text'>"
+        ],
+        buttons: [
+            {
+                id: "cancel-confirm-button",
+                content: "Cancel",
+            },
+            {
+                id: "rename-confirm-button",
+                content: "Rename",
+            },
+        ],
+    }) %>
+    <!-- Hero title -->
+    <%~ include('src/partials/title-hero.html', {
+        text: "Robox Hub",
+        image: "./student-hub-hero.jpg"
+    }) %>
     
     <div id="main" class="item-sections">
         

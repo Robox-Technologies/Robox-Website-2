@@ -1,7 +1,22 @@
 @use 'variables';
 
 $modalOpacity: 0.5;
+$titleFontSize: 20px;
+$modalPadding: 2.5%;
+$modalRoundedCorners: 20px;
 
+$modalTopandBottomBarHeight: 60px;
+
+$modalButtonPadding:20px;
+$modalButtonRoundedCorners:10px;
+
+$modalWidth: 500px;
+$modalContentHeight: 300px;
+$modalButtonGap: 20px;
+
+$modalButtonText: 15px;
+
+$modalTitleTextGap: 15px;
 .modal::backdrop {
     background-color: rgba(0,0,0,$modalOpacity)
 }
@@ -12,8 +27,54 @@ $modalOpacity: 0.5;
 }
 .modal-title {
     margin-top: 0;
+    font-size: $titleFontSize;
+    margin-bottom: 0;
+    align-items: center;
+    display: inherit;
+    gap: $modalTitleTextGap;
 }
 .modal-title > svg{
     margin-top: 0;
-    height: 2em;
+}
+.modal {
+    border-radius: $modalRoundedCorners;
+    padding: 0;
+    width: $modalWidth;
+}
+.modal > * {
+    padding: $modalPadding;
+}
+.modal-top-bar, .modal-bottom-bar{
+    height: $modalTopandBottomBarHeight;
+    display: flex;
+    align-items: center;
+
+}
+.modal-bottom-bar {
+    justify-content: flex-end;
+}
+.modal-top-bar {
+    border-bottom: variables.$strokeSize variables.$tone3 solid;
+    
+}
+
+.modal-bottom-bar {
+    border-top: variables.$strokeSize variables.$tone3 solid;
+    background-color: variables.$tone2;
+    gap: $modalButtonGap;
+}
+.button.modal-button {
+    background-color: variables.$themeBlue;
+    color: white;
+    padding: calc($modalButtonPadding/2) $modalButtonPadding calc($modalButtonPadding/2) $modalButtonPadding;
+    border-radius: $modalButtonRoundedCorners;
+    font-size: $modalButtonText;
+
+}
+.button.modal-button:hover {
+    cursor: pointer;
+}
+.modal-content {
+    display: flex;
+    flex-direction: column;
 }
