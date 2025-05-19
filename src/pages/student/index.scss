@@ -165,6 +165,9 @@ $trashcanSize: 30px;
 }
 $renameInputSize: 20px;
 $renameInputWidth: 70%;
+$renameInputRoundedCorners: 10px;
+$renameInputPadding: 5px;
+$renameContentPadding: 5%;
 #rename-modal {
     .fa-pencil {
         color: variables.$themeBlue;
@@ -175,16 +178,19 @@ $renameInputWidth: 70%;
     }
     .modal-content {
         justify-content: center;
+        padding: calc($renameContentPadding*2) $renameContentPadding;
         align-items: center;
         p {
             text-align: center;
+            margin-top: 0;
         }
         #new-project-name {
             width: $renameInputWidth;
             color: variables.$themeBlack;
-            padding: 5px;
+            padding: $renameInputPadding;
             font-size: $renameInputSize;
-            border: variables.$strokeSize variables.$tone3 solid
+            border-radius: $renameInputRoundedCorners;
+            border: variables.$strokeSize variables.$themeBlue solid
         }
     }
     

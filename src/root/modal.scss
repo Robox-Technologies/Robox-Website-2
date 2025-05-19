@@ -16,7 +16,7 @@ $modalButtonGap: 20px;
 
 $modalButtonText: 15px;
 
-$modalTitleTextGap: 10px;
+$modalTitleTextGap: 15px;
 .modal::backdrop {
     background-color: rgba(0,0,0,$modalOpacity)
 }
@@ -57,6 +57,7 @@ $modalTitleTextGap: 10px;
     border-bottom: variables.$strokeSize variables.$tone3 solid;
     
 }
+
 .modal-bottom-bar {
     border-top: variables.$strokeSize variables.$tone3 solid;
     background-color: variables.$tone2;
@@ -68,6 +69,10 @@ $modalTitleTextGap: 10px;
     padding: calc($modalButtonPadding/2) $modalButtonPadding calc($modalButtonPadding/2) $modalButtonPadding;
     border-radius: $modalButtonRoundedCorners;
     font-size: $modalButtonText;
+
+}
+.button.modal-button:hover {
+    cursor: pointer;
 }
 .modal-content {
     display: flex;
