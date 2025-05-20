@@ -18,6 +18,12 @@ body {
     border: 0;
 }
 
+.standard-button {
+    color: white;
+    padding: calc(variables.$standardButtonPadding/2) variables.$standardButtonPadding;
+    border-radius: variables.$standardButtonRoundedCorners;
+    font-size: variables.$standardButtonFontSize;
+}
 a {
     text-decoration: none;
     -webkit-text-decoration: none;
