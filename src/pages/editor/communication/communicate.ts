@@ -29,7 +29,7 @@ type picoOptions = {
 }
 type EventPayload = { event: 'console'; options: picoOptions } | { event: 'downloaded'; options: {} } | { event: 'firmware'; options: firmwareOptions } | { event: 'confirmation'; options: picoOptions } | { event: 'error'; options: picoOptions } | { event: 'connect'; options: connectOptions } | { event: 'disconnect'; options: disconnectOptions }
 
-class Pico extends EventTarget {
+export class Pico extends EventTarget {
     communication: USBCommunication
     firmwareVersion: number
     restarting: boolean
@@ -97,6 +97,13 @@ class Pico extends EventTarget {
             COMMANDS.KEYBOARDINTERRUPT, 
             "import machine\r",
             "machine.reset()\r"
+        ])
+    }
+    bootsel() {
+        this.communication.write([
+            COMMANDS.KEYBOARDINTERRUPT, 
+            "import machine\r",
+            "machine.bootloader()\r"
         ])
     }
     request() {
