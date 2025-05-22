@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             event.stopPropagation()
         })
-        let cancelButton: HTMLElement | null = modal.querySelector("#cancel-confirm-button")
+        let cancelButton: HTMLElement | null = modal.querySelector(".close-modal-button")
         if (!cancelButton) return
         cancelButton.addEventListener("click", (event) => {
             modal.close()

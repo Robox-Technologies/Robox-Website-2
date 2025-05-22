@@ -1,8 +1,11 @@
 <dialog class="modal" id="<%= it.id %>">
     <div class="modal-top-bar">
         <h1 class="modal-title">
-        <%~ it.title ? it.title : ""%>
+            <%~ it.title ? it.title : ""%>
         </h1>
+        <button class="button close-modal-button">
+            <i class="fa-solid fa-circle-xmark"></i>
+        </button>
     </div>
     <% if (it.content) { %>
     <div class="modal-content">
@@ -15,9 +18,7 @@
     <div class="modal-bottom-bar">
         <% if (it.buttons) { %>
             <% it.buttons.forEach(function(button){ %>
-                <button id="<%= button.id || '' %>" class=" button  <%= button.classes || "" %>">
-                    <%~ button %>
-                </button>
+                <%~ button %>
             <% }) %>
         <% } %>
     </div>

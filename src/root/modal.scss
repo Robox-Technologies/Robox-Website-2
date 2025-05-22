@@ -53,9 +53,17 @@ $modalTitleTextGap: 15px;
 .modal-bottom-bar {
     justify-content: flex-end;
 }
+.modal-top-bar .close-modal-button {
+    margin-left: auto;
+    font-size: 30px;
+    color: variables.$themeRed;
+}
+.modal-top-bar .close-modal-button:hover {
+    cursor: pointer;
+}
 .modal-top-bar {
     border-bottom: variables.$strokeSize variables.$tone3 solid;
-    
+    display: flex;
 }
 
 .modal-bottom-bar {
