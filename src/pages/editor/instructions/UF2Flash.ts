@@ -7,7 +7,6 @@ import { pico } from "../communication/communicate";
 document.addEventListener("DOMContentLoaded", () => {
     let stage1 = document.querySelector("dialog#bootsel-boot-modal") as HTMLDialogElement | null
     if (!stage1) return
-    stage1.showModal()
     let autoBootselButton = document.querySelector("button#bootsel-boot-confirm") as HTMLButtonElement | null
     if (!autoBootselButton) return
    
