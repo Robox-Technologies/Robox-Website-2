@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
         modal.addEventListener("click", (event: MouseEvent) => {
             let element = event?.target as HTMLElement | null
             if (!element) return
-            let rect = element.getBoundingClientRect();
+            let rect = modal.getBoundingClientRect();
             if (rect.left > event.clientX ||
                 rect.right < event.clientX ||
                 rect.top > event.clientY ||
