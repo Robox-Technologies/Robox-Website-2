@@ -46,6 +46,17 @@
             },
         ],
     }) %>
+    <%~ include('src/partials/modal.html', {
+        id: "color-calibration-modal",
+        title: '2. Flash the Ro\\Box', 
+        content: [
+            "<p>Place Ro/Box on white calibration surface</p>",
+        ],
+        buttons: [
+            '<button id="calibrate-button" class="button standard-button">Calibrate</button>',
+        ],
+    }) %>
+    
     <body>
         <%~ include('src/partials/header-workshop.html') %>
 
