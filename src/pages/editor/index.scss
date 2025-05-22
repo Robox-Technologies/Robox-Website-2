@@ -499,3 +499,27 @@ $blocklyUIButtonsDropShadowMult: 2;
         display: none;
     }
 }
+#next-bootsel-button:not([enabled]) {
+    background-color: variables.$tone3;
+    color: variables.$tone2;
+}
+#next-bootsel-button[enabled] {
+    background-color: variables.$themeGreen;
+    color: white
+}
+#bootsel-boot-confirm {
+    background-color: variables.$themeGreen;
+}
+#bootsel-loading {
+    display: none;
+    font-size: 40px;
+}
+#next-bootsel-button:not([enabled]):hover {
+    cursor: not-allowed;
+}
+#next-bootsel-button:hover {
+    cursor: not-allowed;
+}
+#bootsel-flash-modal .modal-content {
+    height: 250px;
+}
