@@ -15,15 +15,9 @@
     <div class="modal-bottom-bar">
         <% if (it.buttons) { %>
             <% it.buttons.forEach(function(button){ %>
-                <% if (button.link) { %>
-                    <a id="<%= button.id || '' %>" href="<%= button.link%>" class="modal-link <%= button.classes || "" %>">
-                        <%~ button.content %>
-                    </a>
-                <% } else { %>
-                    <button id="<%= button.id || '' %>" class="modal-button button  <%= button.classes || "" %>">
-                        <%~ button.content %>
-                    </button>
-                <% } %>
+                <button id="<%= button.id || '' %>" class=" button  <%= button.classes || "" %>">
+                    <%~ button %>
+                </button>
             <% }) %>
         <% } %>
     </div>

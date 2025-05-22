@@ -63,7 +63,7 @@ $modalTitleTextGap: 15px;
     background-color: variables.$tone2;
     gap: $modalButtonGap;
 }
-.button.modal-button {
+.modal-bottom-bar button {
     background-color: variables.$themeBlue;
     color: white;
     padding: calc($modalButtonPadding/2) $modalButtonPadding calc($modalButtonPadding/2) $modalButtonPadding;
@@ -71,7 +71,7 @@ $modalTitleTextGap: 15px;
     font-size: $modalButtonText;
 
 }
-.button.modal-button:hover {
+.modal-bottom-bar button:hover {
     cursor: pointer;
 }
 .modal-content {
