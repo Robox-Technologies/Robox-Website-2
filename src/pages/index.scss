@@ -72,6 +72,8 @@
         align-items: start;
         padding-bottom: calc(30vh - $bottomSpace);
         gap: variables.$standardGap;
+        margin-left: 20vw;
+        margin-right: 20vw;
     }
     
     .steps {
@@ -137,7 +139,7 @@
         position: -webkit-sticky;
         top: 0;
     }
-
+    
     @keyframes pop {
         0% {
             transform: scale(1);
