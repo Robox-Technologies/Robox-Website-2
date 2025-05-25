@@ -206,7 +206,7 @@ class USBCommunication {
             if (typeof messages === "object") { //Check if its an array object
                 for (const message of messages) {
                     await this.currentWriter.write(message)
-                    await new Promise(resolve => setTimeout(resolve, 1));
+                    await new Promise(resolve => setTimeout(resolve, 5));
                 }                
             }
             else {
