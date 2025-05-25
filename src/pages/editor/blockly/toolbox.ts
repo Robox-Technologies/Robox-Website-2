@@ -515,66 +515,97 @@ export const toolbox = {
         ]
       },
       {
-        'kind': 'category',
-        'name': 'Motors',
-        'categorystyle': 'motor_category',
-        "cssConfig": {
-            "icon": "categoryIcon fa fa-truck-monster"
+  "kind": "category",
+  "name": "Motors",
+  "categorystyle": "motor_category",
+  "cssConfig": {
+    "icon": "categoryIcon fa fa-truck-monster"
+  },
+  "contents": [
+    {
+      "kind": "block",
+      "type": "motor_stop"
+    },
+    {
+      "kind": "block",
+      "type": "motor_reverse"
+    },
+    {
+      "kind": "block",
+      "type": "motor_move_simple"
+    },
+    {
+      "kind": "block",
+      "type": "motor_turn_simple"
+    },
+    {
+      "kind": "block",
+      "type": "motor_set_speed",
+      "inputs": {
+        "speed": {
+          "shadow": {
+            "type": "math_number",
+            "fields": {
+              "NUM": 50
+            }
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "motor_dual_speed",
+      "inputs": {
+        "left_speed": {
+          "shadow": {
+            "type": "math_number",
+            "fields": {
+              "NUM": 50
+            }
+          }
         },
-        'contents': [
-          {
-            'kind': 'block',
-            'type': 'motor_move',
-          },
-          {
-            'kind': 'block',
-            'type': 'motor_turn',
-          },
-          {
-            'kind': 'block',
-            'type': 'motor_switch',
-          },
-          {
-            'kind': 'block',
-            'type': 'motor_percentage',
-            "inputs": {
-              'left_motor': {
-                'shadow': {
-                  'type': 'math_number',
-                  'fields': {
-                    'NUM': 50,
-                  },
-                },
-              },
-              'right_motor': {
-                'shadow': {
-                  'type': 'math_number',
-                  'fields': {
-                    'NUM': 50,
-                  },
-                },
-              },
+        "right_speed": {
+          "shadow": {
+            "type": "math_number",
+            "fields": {
+              "NUM": 50
             }
-            
-          },
-          {
-            'kind': 'block',
-            'type': 'motor_single_move',
-            "inputs": {
-              'power': {
-                'shadow': {
-                  'type': 'math_number',
-                  'fields': {
-                    'NUM': 50,
-                  },
-                },
-              },
+          }
+        }
+      }
+    },
+    {
+      "kind": "block",
+      "type": "motor_dual_speed_duration",
+      "inputs": {
+        "left_speed": {
+          "shadow": {
+            "type": "math_number",
+            "fields": {
+              "NUM": 50
             }
-  
-          },
-  
-        ]
-      },
+          }
+        },
+        "right_speed": {
+          "shadow": {
+            "type": "math_number",
+            "fields": {
+              "NUM": 50
+            }
+          }
+        },
+        "duration": {
+          "shadow": {
+            "type": "math_number",
+            "fields": {
+              "NUM": 2
+            }
+          }
+        }
+      }
+    }
+  ]
+},
       {
         'kind': 'sep',
       },
