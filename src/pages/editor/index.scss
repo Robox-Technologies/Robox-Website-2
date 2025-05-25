@@ -304,6 +304,24 @@ $blocklyUIButtonsDropShadowMult: 2;
 #blocklyCustomTimeControls > .uiButtons:last-child {
     border-radius: 0 7px 7px 0;
 }
+
+#calibrate-button, #calibrate-outcome-button {
+    svg {
+        display: none;
+    }
+}
+#calibrate-outcome-button[calibrating], #calibrate-button[calibrating] {
+    font-size: 0;
+    width: 76px;
+    max-height: 37px !important;
+    svg {
+        font-size: 20px;
+        display: inline;
+    }
+}
+button[calibrating]:hover {
+    cursor: not-allowed;
+}
 .uiButtons {
     background-color: white;
     color: variables.$themeBlue;
