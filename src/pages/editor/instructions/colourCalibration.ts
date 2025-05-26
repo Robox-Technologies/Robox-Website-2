@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!calibrateModal) return
     let calibrateOutcomeModal = document.getElementById("color-calibration-outcome-modal") as HTMLDialogElement | null
     if (!calibrateOutcomeModal) return
-    calibrateModal.showModal()
     let calibrateButton = document.getElementById("calibrate-button") as HTMLButtonElement | null
     if (!calibrateButton) return
     // Define the calibration model stage 2
