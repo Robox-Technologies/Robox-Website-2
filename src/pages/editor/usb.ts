@@ -19,6 +19,7 @@ motor_speed = 60
 `
 
 let alreadyDownloaded = false
+let downloadingToPico = false
 
 
 export function postBlocklyWSInjection() {
@@ -46,9 +47,13 @@ export function postBlocklyWSInjection() {
         connectionManagment.setAttribute("loading",  "false")
     })
     pico.addEventListener("download", (event) => {
+            connectionManagment.setAttribute("loading",  "false")
+
+        if (downloadingToPico) {
+            connectionManagment.setAttribute("status",  "downloaded")
+        }
         pico.runCode()
-        connectionManagment.setAttribute("status",  "downloaded")
-        connectionManagment.setAttribute("loading",  "false")
+        
 
     })
     ws.addChangeListener((event) => {
@@ -69,6 +74,7 @@ export function postBlocklyWSInjection() {
 
     })
     downloadConnectionButton?.addEventListener("click", () => {
+        downloadingToPico = true
         sendCode(ws)
     })
     stopButton?.addEventListener("click", () => {
