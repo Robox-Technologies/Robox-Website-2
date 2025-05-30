@@ -13,7 +13,7 @@
       "skipLibCheck": true
     },
     "include": [
-      "./src",             // frontend code
-      "./src/@types/**/*"        // <-- your svg.d.ts lives here
+      "./src",          
+      "./src/@types/**/*"
     ]
 }

@@ -83,9 +83,7 @@ $toolbarWidth: 130px;
 #project-delete > svg > path{
     color: variables.$themeRed;
 }
-.card-wrapper:hover > .project-card, .card-wrapper:hover > .lesson-card:hover {
-    border: $hoverCardBorderSize solid variables.$themeBlue;
-}
+
 .project-card:has(> #toolbar[open]) {
     border: $hoverCardBorderSize solid variables.$themeGreen;
     z-index: 1;
@@ -197,3 +195,9 @@ $renameContentPadding: 5%;
 } 
 
 
+.card-wrapper:hover:not([toolbar]) {
+    transform: translateY(-2px);
+}
+.card-wrapper:hover > .project-card, .card-wrapper:hover > .lesson-card:hover {
+    border: $hoverCardBorderSize solid variables.$themeBlue;
+}
