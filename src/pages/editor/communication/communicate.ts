@@ -181,7 +181,6 @@ class USBCommunication {
                     rawErrorMessages.splice(0, index)
                     error_string = rawErrorMessages.join("\n") 
                 }
-    
                 for (const message of consoleMessages) {
                     this.parent.read(message)
                 }
@@ -301,4 +300,6 @@ class USBCommunication {
     }
 }
 export let pico = new Pico("USB")
-pico.init()
+if (navigator.serial) {
+    pico.init()
+}

@@ -2,6 +2,8 @@ import * as Blockly from 'blockly';
 
 import archSVG from "./Arch.svg?raw"
 
+import { ContinuousFlyout, ContinuousMetrics } from '@blockly/continuous-toolbox';
+
 type HexColor = `#${string}`;
 
 class RoboxToolboxCategories extends Blockly.ToolboxCategory {
@@ -68,15 +70,23 @@ class RoboxToolboxSeperator extends Blockly.ToolboxSeparator {
         return dom
     }
 }
-export class RoundedFlyout extends Blockly.VerticalFlyout {
-    override readonly CORNER_RADIUS = 0;
-    constructor(workspaceOptions: Blockly.Options) {
-        super(workspaceOptions);
-        
+
+//Overriding the flyoutscale value (to prevent it scaliing with the workspace)
+
+
+class RoboxFlyout extends ContinuousFlyout {
+
+    //Fixing the flyout scale (to prevent it scaling with zoom buttons)
+    /** @override */
+    getFlyoutScale(): number {
+        return 0.8
+    }
+    /** @override */
+    reflowInternal_() {
+        this.width_ = 300
     }
 }
 
-//TODO: add names for the variable and procedure category
 
 Blockly.registry.register(
     Blockly.registry.Type.TOOLBOX_ITEM,
@@ -87,4 +97,9 @@ Blockly.registry.register(
     Blockly.registry.Type.TOOLBOX_ITEM,
     Blockly.ToolboxSeparator.registrationName,
     RoboxToolboxSeperator, true
+);
+Blockly.registry.register(
+    Blockly.registry.Type.FLYOUTS_VERTICAL_TOOLBOX,
+    'RoboxFlyout',
+    RoboxFlyout, true
 );

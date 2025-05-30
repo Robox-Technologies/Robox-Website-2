@@ -9,7 +9,9 @@
     "deploy": "npx tsc && nodemon --ignore ./dist/ -e html,css,js,ts,ejs,md,scss --exec npm run prod"
   },
   "dependencies": {
+    "@blockly/continuous-toolbox": "^6.0.12",
     "@blockly/field-colour": "^5.0.12",
+    "@blockly/theme-modern": "^6.0.10",
     "blockly": "^11.2.2",
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",
