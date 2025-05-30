@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Scroll for vertical movement,
 // Shift + scroll for horizontal movement
     registerControls(workspace)
-    if (navigator.serial) {
+    if ("serial" in navigator) {
         postBlocklyWSInjection()
     }
     else {
