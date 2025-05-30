@@ -141,5 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
         saveBlockly(workspaceId, workspace);
     });
 
+    const settingsButton = document.getElementById("settings-button") as HTMLButtonElement | null
+
 })
 

@@ -84,7 +84,18 @@
                     </button>
                 </form>
             </div>
+            
             <div id="buttons">
+                <button id="robox-settings-button" class="button standard-button">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+                <%~ include('src/partials/toolbar.html', {
+                    id: "settings-toolbar",
+                    content: [
+                        "<button class='button' id='robox-settings-save'>Save Settings</button>",
+                        "<button class='button' id='robox-settings-close'>Close</button>",
+                    ],
+                }) %>
             </div>
         </div>
         <div id="blocklyDiv">
