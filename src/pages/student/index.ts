@@ -61,7 +61,7 @@ function applyProjects() {
                 toolbaClone.style.top = (options.offsetTop+offsetTopToolbar).toString()
 
                 wrapper.setAttribute("toolbar", "")
-                toolbar.closest("card-wrapper")?.removeAttribute("toolbar")
+                toolbar.closest(".card-wrapper")?.removeAttribute("toolbar")
                 clone.appendChild(toolbaClone)
                 toolbar.remove()
                 toolbaClone.show()
