@@ -318,105 +318,79 @@ $blocklyUIButtonsDropShadowMult: 2;
     padding: 20px;
     cursor: pointer;
 }
+#connection-managment {
+    #download-robox-button {
+        display: none;
+    }
+    #connect-robox-button {
+        display: none;
+    }
+    #stop-robox-button {
+        display: none;
+    }
+    #code-download-robox-button {
+        display: none;
+    }
+    #run-robox-button {
+        display: none;
+    }
+
+    #loading {
+        display: none;
+    }
+
+    #options {
+        display: none;
+    }
+    #disconnect {
+        display: none;
+    }
+    #console {
+        display: none;
+    }
+    #download {
+        display: none;
+    }
+}
 #connection-managment[status="disconnected"] {
     background-color: variables.$themeBlue;
-    #download-robox-button {
-        display: none;
-    }
     #connect-robox-button {
         display: block;
     }
-    #stop-robox-button {
-        display: none;
-    }
-    #code-download-robox-button {
-        display: none;
-    }
-    #run-robox-button {
-        display: none;
-    }
-
-    #loading {
-        display: none;
-    }
-
-    #options {
+    #download {
         display: block;
-    }
-    #disconnect {
-        display: none;
-    }
-    #console {
-        display: none;
     }
 }
 
-#connection-managment[status="connected"] {
-    background-color: variables.$themeYellow;
-    #download-robox-button {
-        display: block;
-    }
-    #connect-robox-button {
-        display: none;
-    }
-    #stop-robox-button {
-        display: none;
-    }
-    #code-download-robox-button {
-        display: none;
-    }
-    #run-robox-button {
-        display: none;
-    }
-    
-    #loading {
-        display: none;
-    }
-    
-    #options {
-        display: none;
-    }
-    #disconnect {
-        display: block;
-    }
-    #console {
-        display: none;
-    }
-}
 #connection-managment[status="downloaded"] {
     background-color: variables.$themeGreen;
-    #download-robox-button {
-        display: none;
-    }
-    #connect-robox-button {
-        display: none;
-    }
-    #stop-robox-button {
-        display: none;
-    }
     #run-robox-button {
         display: block;
     }
-    #code-download-robox-button {
-        display: none;
-    }
-    #loading {
-        display: none;
-    }
     
-    #options {
-        display: none;
-    }
-    #disconnect {
+    #download {
         display: block;
-    }
-    #console {
-        display: none;
     }
 }
 
 #connection-managment[status="running"] {
     background-color: variables.$themeRed;
+    #stop-robox-button {
+        display: block;
+    }
+    #console {
+        display: block;
+    }
+}
+
+#connection-managment[status="no-serial"] {
+    background-color: variables.$themeYellow;
+    #code-download-robox-button {
+        display: block;
+    }
+}
+
+#connection-managment[loading="true"] {
     #download-robox-button {
         display: none;
     }
@@ -424,18 +398,15 @@ $blocklyUIButtonsDropShadowMult: 2;
         display: none;
     }
     #stop-robox-button {
-        display: block;
-    }
-    #run-robox-button {
         display: none;
     }
     #code-download-robox-button {
         display: none;
     }
-    #loading {
+    #run-robox-button {
         display: none;
     }
-    
+
     #options {
         display: none;
     }
@@ -443,83 +414,24 @@ $blocklyUIButtonsDropShadowMult: 2;
         display: none;
     }
     #console {
-        display: block;
+        display: none;
     }
-}
-#connection-managment[loading="true"] {
+    #download {
+        display: none;
+    }
     
-    #download-robox-button {
-        display: none;
-    }
-    #connect-robox-button {
-        display: none;
-    }
-    #code-download-robox-button {
-        display: none;
-    }
-    #stop-robox-button {
-        display: none;
-    }
-    #run-robox-button {
-        display: none;
-    }
-
     #loading {
         display: block;
+        width: 100%;
+        border-right: unset;
     }
 
 }
 #connection-managment[status="no-serial"] {
     background-color: variables.$themeYellow;
-    #download-robox-button {
-        display: none;
-    }
-    #connect-robox-button {
-        display: none;
-    }
-    #stop-robox-button {
-        display: none;
-    }
-    #run-robox-button {
-        display: none;
-    }
     #code-download-robox-button {
         display: block;
     }
-    #loading {
-        display: none;
-    }
-    #options {
-        display: block;
-    }
-    #disconnect {
-        display: none;
-    }
-    #console {
-        display: none;
-    }
-}
-#next-bootsel-button:not([enabled]) {
-    background-color: variables.$tone3;
-    color: variables.$tone2;
-}
-#next-bootsel-button[enabled] {
-    background-color: variables.$themeGreen;
-    color: white
-}
-#bootsel-boot-confirm {
-    background-color: variables.$themeGreen;
-}
-#bootsel-loading {
-    display: none;
-    font-size: 40px;
-}
-#next-bootsel-button:not([enabled]):hover {
-    cursor: not-allowed;
-}
-#next-bootsel-button:hover {
-    cursor: not-allowed;
-}
-#bootsel-flash-modal .modal-content {
-    height: 250px;
+
+
 }

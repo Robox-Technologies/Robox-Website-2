@@ -8,12 +8,15 @@ export function registerControls(workspace: WorkspaceSvg) {
         const dy = event.deltaY * scrollSpeed;
         //Two seperate variables in case we want to change the formulas later
         const dx = event.deltaX * scrollSpeed;
+        // Shift + scroll for horizontal movement
         if (event.shiftKey) {
             workspace.scrollX += dx
         }
+        // Control + scroll for zoom,
         else if (event.ctrlKey) {
             workspace.zoomCenter(dy * zoomSpeed)
         }
+        // Scroll for vertical movement,
         else {
             workspace.scrollY += dy
         }
