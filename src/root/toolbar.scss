@@ -26,3 +26,19 @@ $toolbarPadding: 5px 20px 5px 5px;
 .toolbar > .button:hover{
     cursor: pointer;
 }
+.toolbar button {
+    padding: 5%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.toolbar > button:nth-child(2n) {
+    margin-top: 5px;
+}
+$iconSpacing: 5px;
+.toolbar button svg, .toolbar button i {
+    margin-right: $iconSpacing;
+    width: 20px;
+    box-sizing: border-box;
+}
