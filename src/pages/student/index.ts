@@ -87,7 +87,11 @@ function hoverElement(element: HTMLElement, up: boolean, rotateX: number = 0, ro
 document.addEventListener("click", (event: MouseEvent) => {
     let item = event.target as HTMLElement | null
     let toolbar = document.getElementById("toolbar") as HTMLDialogElement | null
-    if (item && toolbar && toolbar.hasAttribute("open")) {
+    if (item && toolbar && toolbar.hasAttribute("open") && !item.closest("#toolbar")) {
+        let card = item.closest(".card")
+        if (card && card.hasAttribute("toolbar")) {
+            return
+        }
         toolbar.close()
     }
 })
@@ -96,5 +100,25 @@ document.addEventListener("DOMContentLoaded", (event) => {
     applyProjects()
 
     afterProjectsSetup();
-    // (document.getElementById("delete-modal") as HTMLDialogElement)?.showModal()
+    const deleteModal = document.getElementById("delete-modal") as HTMLDialogElement | null
+    if (!deleteModal) return
+    const deleteButton = document.getElementById("project-delete") as HTMLButtonElement | null
+    const editButton = document.getElementById("project-edit") as HTMLButtonElement | null
+    if (!deleteButton || !editButton) return
+    deleteButton.addEventListener("click", (event) => {
+        deleteModal.showModal()
+    })
+    const confirmDeleteButton = document.getElementById("delete-confirm-button") as HTMLButtonElement | null
+    if (!confirmDeleteButton) return
+    confirmDeleteButton.addEventListener("click", (event) => {
+        const projectId = document.querySelector(".card[toolbar]")?.id
+        if (!projectId) return
+        if (!deleteModal) return
+        deleteModal.close()
+        const projects = getProjects()
+        delete projects[projectId]
+        localStorage.setItem("projects", JSON.stringify(projects))
+        applyProjects()
+        afterProjectsSetup()
+    })
 })
