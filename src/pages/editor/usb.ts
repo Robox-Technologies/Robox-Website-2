@@ -101,3 +101,10 @@ function sendCode(ws: Blockly.Workspace) {
     let finalCode = `${scriptDependency}\n${code}\nevent_begin()`
     pico.sendCode(finalCode)
 }
+let rotation = 0;
+const degreesPerTooth = 60; // Adjust this value to match one gear tooth visually
+function rotateOneTooth(cog: HTMLElement) {
+    rotation += degreesPerTooth;
+    cog.style.transition = 'transform 0.5s ease-out';
+    cog.style.transform = `rotate(${rotation}deg)`;
+}
