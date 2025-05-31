@@ -177,6 +177,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     gap: $topBarButtonGap;
 }
 #project-name-input {
@@ -304,6 +305,24 @@ $blocklyUIButtonsDropShadowMult: 2;
 #blocklyCustomTimeControls > .uiButtons:last-child {
     border-radius: 0 7px 7px 0;
 }
+
+#calibrate-button, #calibrate-outcome-button {
+    svg {
+        display: none;
+    }
+}
+#calibrate-outcome-button[calibrating], #calibrate-button[calibrating] {
+    font-size: 0;
+    width: 76px;
+    max-height: 37px !important;
+    svg {
+        font-size: 20px;
+        display: inline;
+    }
+}
+button[calibrating]:hover {
+    cursor: not-allowed;
+}
 .uiButtons {
     background-color: white;
     color: variables.$themeBlue;
@@ -382,7 +401,18 @@ $blocklyUIButtonsDropShadowMult: 2;
         display: block;
     }
 }
-
+$settingsToolbarWidth: 200px;
+#settings-toolbar {
+    width: $settingsToolbarWidth;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(10px - $settingsToolbarWidth );
+    top: 35px;
+}
+#robox-settings-calibrate > svg {
+    color: variables.$themeBlue;
+}
 #connection-managment[status="no-serial"] {
     background-color: variables.$themeYellow;
     #code-download-robox-button {
@@ -425,5 +455,13 @@ $blocklyUIButtonsDropShadowMult: 2;
         width: 100%;
         border-right: unset;
     }
+
+}
+#connection-managment[status="no-serial"] {
+    background-color: variables.$themeYellow;
+    #code-download-robox-button {
+        display: block;
+    }
+
 
 }

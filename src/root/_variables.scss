@@ -7,6 +7,12 @@ $themeBlack: #405C64; // 05/Key color. To be used as subtitute for pure black.
 
 $dropShadow: #26363B; //55
 
+$tone1: #F8F8F8;
+$tone2: #EFEFEF;
+$tone3: #717171;
+$tone4: #000000;
+
+$strokeSize: 3px;
 $headerHeight: 56px;
 
 // Whites
@@ -19,6 +25,10 @@ $articleMargin: 64px;
 $standardGap: 32px;
 $borderRadius: 20px;
 
+//Buttons
+$standardButtonPadding: 5%;
+$standardButtonFontSize: 15px;
+$standardButtonRoundedCorners:10px;
 :root {
     --articleMargin: 64px;
 }

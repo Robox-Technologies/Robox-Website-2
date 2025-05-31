@@ -6,6 +6,7 @@ const COMMANDS = {
     STARTUPLOAD: "x032BEGINUPLD\r",
     ENDUPLOAD: "x04\r",
     STARTPROGRAM: "x021STARTPROG\r",
+    CALIBRATECOLOR: "x20COLORCALIBRATE\r",
     KEYBOARDINTERRUPT: "\x03\n"
 }
 
@@ -27,9 +28,9 @@ type firmwareOptions = {
 type picoOptions = {
     message: string
 }
-type EventPayload = { event: 'console'; options: picoOptions } | { event: 'downloaded'; options: {} } | { event: 'firmware'; options: firmwareOptions } | { event: 'confirmation'; options: picoOptions } | { event: 'error'; options: picoOptions } | { event: 'connect'; options: connectOptions } | { event: 'disconnect'; options: disconnectOptions }
+type EventPayload = { event: 'calibrated'; options: picoOptions } | { event: 'console'; options: picoOptions } | { event: 'downloaded'; options: {} } | { event: 'firmware'; options: firmwareOptions } | { event: 'confirmation'; options: picoOptions } | { event: 'error'; options: picoOptions } | { event: 'connect'; options: connectOptions } | { event: 'disconnect'; options: disconnectOptions }
 
-class Pico extends EventTarget {
+export class Pico extends EventTarget {
     communication: USBCommunication
     firmwareVersion: number
     restarting: boolean
@@ -99,12 +100,22 @@ class Pico extends EventTarget {
             "machine.reset()\r"
         ])
     }
+    bootsel() {
+        this.communication.write([
+            COMMANDS.KEYBOARDINTERRUPT, 
+            "import machine\r",
+            "machine.bootloader()\r"
+        ])
+    }
     request() {
         this.communication.request()
     }
+    calibrate() {
+        this.communication.write(COMMANDS.CALIBRATECOLOR)
+    }
     sendCode(code: string) {
         this.communication.write([
-            `${COMMANDS.STARTUPLOAD}${code}\r${COMMANDS.ENDUPLOAD}`
+            `${COMMANDS.STARTUPLOAD}${code}\n\r${COMMANDS.ENDUPLOAD}`
         ])
     }
     runCode() {
@@ -195,7 +206,7 @@ class USBCommunication {
             if (typeof messages === "object") { //Check if its an array object
                 for (const message of messages) {
                     await this.currentWriter.write(message)
-                    await new Promise(resolve => setTimeout(resolve, 10));
+                    await new Promise(resolve => setTimeout(resolve, 5));
                 }                
             }
             else {

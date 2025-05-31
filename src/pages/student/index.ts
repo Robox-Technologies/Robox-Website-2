@@ -84,17 +84,7 @@ function afterProjectsSetup() {
 function hoverElement(element: HTMLElement, up: boolean, rotateX: number = 0, rotateY: number = 0) {
     element.style.transform = `scale(${up ? 1.05 : 1})`;//`translateY(${up ? -10 : 0}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 }
-document.addEventListener("click", (event: MouseEvent) => {
-    let item = event.target as HTMLElement | null
-    let toolbar = document.getElementById("toolbar") as HTMLDialogElement | null
-    if (item && toolbar && toolbar.hasAttribute("open") && !item.closest("#toolbar")) {
-        let card = item.closest(".card")
-        if (card && card.hasAttribute("toolbar")) {
-            return
-        }
-        toolbar.close()
-    }
-})
+
 document.addEventListener("DOMContentLoaded", (event) => {
     //Populate the projects
     applyProjects()
