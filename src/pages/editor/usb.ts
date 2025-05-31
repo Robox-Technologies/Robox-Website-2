@@ -31,6 +31,8 @@ export function postBlocklyWSInjection() {
     const stopButton = document.getElementById("stop-robox-button")
     const runButton = document.getElementById("run-robox-button")
 
+    const settingsButton = document.getElementById("robox-settings-button")
+
     if (!connectionManagment) return
     
 
@@ -80,6 +82,16 @@ export function postBlocklyWSInjection() {
         if (connectionManagment.getAttribute("loading") === "true") return
         connectionManagment.setAttribute("status",  "running")
         connectionManagment.setAttribute("loading",  "false")
+    })
+    settingsButton?.addEventListener("click", (event) => {
+        //Rotate the cog as an animation
+        const cog = document.querySelector('#robox-settings-button svg') as HTMLElement | null;
+        if (!cog) return
+        rotateOneTooth(cog);
+        let dialog = document.getElementById("settings-toolbar") as HTMLDialogElement | null
+        if (!dialog || dialog.open ) return
+        dialog.show()
+        event.stopPropagation()
     })
     pico.startupConnect()
 

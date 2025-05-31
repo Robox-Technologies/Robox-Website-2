@@ -177,6 +177,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     gap: $topBarButtonGap;
 }
 #project-name-input {
@@ -400,7 +401,18 @@ button[calibrating]:hover {
         display: block;
     }
 }
-
+$settingsToolbarWidth: 200px;
+#settings-toolbar {
+    width: $settingsToolbarWidth;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(10px - $settingsToolbarWidth );
+    top: 35px;
+}
+#robox-settings-calibrate > svg {
+    color: variables.$themeBlue;
+}
 #connection-managment[status="no-serial"] {
     background-color: variables.$themeYellow;
     #code-download-robox-button {
