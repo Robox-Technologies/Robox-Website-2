@@ -88,7 +88,8 @@ const config = {
         alias: {
             "@images": path.join(__dirname, 'src/images/'),
             "@partials": path.join(__dirname, 'src/partials/'),
-            "@root": path.join(__dirname, 'src/root/')
+            "@root": path.join(__dirname, 'src/root/'),
+            "@types": path.join(__dirname, 'src/types/')
         },
         extensions: ['.tsx', '.ts', '.js', ".json"],
     },
