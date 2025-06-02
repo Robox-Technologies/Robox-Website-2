@@ -110,10 +110,40 @@ header {
 }
 
 .btn.store {
-    background: #ff6666;
+    background: variables.$themeRed;
     border: none;
     border-radius: 6px;
     padding: 8px 24px;
+}
+
+
+#cart {
+    position: relative;
+    text-decoration: none;
+
+    i, svg {
+        color: variables.$primary;
+    }
+
+    p {
+        color: variables.$primary;
+        font-size: 10px;
+        text-align: center;
+        line-height: 20px;
+        margin: 0;
+        padding: 0 5px;
+    }
+
+    div {
+        position: absolute;
+        background-color: variables.$themeRed;
+        min-width: 20px;
+        height: 20px;
+        border-radius: 10px;
+        right: -10px;
+        top: -8px;
+        margin: 0;
+    }
 }
 
 @media (max-width: $hamburgerThreshold) {

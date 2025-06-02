@@ -1,16 +1,16 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import paymentRouter from "./store.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename).replace("/build", "");
 
-// import payment from "./shop.js"
 app.use(express.json());
 
 
-// app.use("/api/store", payment);
+app.use("/api/store", paymentRouter);
 
 app.use("/", express.static("./dist"));
 

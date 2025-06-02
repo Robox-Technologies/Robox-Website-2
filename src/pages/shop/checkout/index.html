@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <%~ include('src/partials/metadata.html') %>
+        <script src="checkout.js" defer="defer"></script>
+        <link href="checkout.scss" defer="defer" rel="stylesheet" />
+        <title>Robox - Robotics for Everyone</title>
+    </head>
+    <body>
+        <%~ include('src/partials/header.html') %>
+        
+        <article class="content">
+            <h1>
+                Payment
+            </h1>
+            <div id="main-content">
+                <div id="payment-card">
+                    <h2 class="section-title">
+                        Payment
+                    </h2>
+                    <form id="payment-form">
+                        
+                        <div id="stripe-content">
+                            <label style="display: none;"for="email" id="email-label">Email</label>
+                            <input style="display: none;"type="email" id="email" name="email" required />
+                            <div id="spinner" class="lds-dual-ring"></div>
+                            <div id="address-element">
+                            </div>
+                            <br>
+    
+                            <div id="payment-element">
+                
+                            </div>
+                            
+                            <div id="error-message">
+                
+                            </div>
+                        </div>
+                        
+                        <button id="submit" class="button">Place order and pay</button>
+                    </form>
+                </div>
+                <div id="order-summary">
+                    <h2 class="section-title">
+                        Order Summary
+                    </h2>
+                    <div id="order-body">
+                        <div id="cost-breakdown">
+                            <p id="order-value-label">
+                                Order value () item/s:
+                            </p>
+                            <p id="order-value-value">
+        
+                            </p>
+                            <ul id="itemised-list"></ul>
+                            <hr class="cart-item-break">
+                            <p>
+                                Shipping cost
+                            </p>
+                            <p id="shipping-cost">
+                                $10
+                            </p>
+                            <p>Order Total</p>
+                            <p id="total-value">
+                                <br><span style="font-size: x-small; color: grey;"></span>
+                            </p>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        
+        <%~ include('src/partials/footer.html') %>
+    </body>
+</html>

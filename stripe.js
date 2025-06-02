@@ -1,19 +1,17 @@
 import stripe from 'stripe'
 import 'dotenv/config'
 
-import { StripeSuperProduct, ProductStatus } from './types/index';
-
 export const stripeAPI = new stripe(process.env.STRIPE_KEY)
 
-export async function getAllStripe(type: 'price' | 'product'): Promise<stripe.Product[] | stripe.Price[] | undefined > {
+export async function getAllStripe(type) {
     if (type === "price") {
-        return await recursiveItemGrab(stripeAPI.prices) as stripe.Price[]
+        return await recursiveItemGrab(stripeAPI.prices)
     }
     else {
-        return await recursiveItemGrab(stripeAPI.products) as stripe.Product[]
+        return await recursiveItemGrab(stripeAPI.products)
     }
 }
-async function recursiveItemGrab(API: stripe.ProductsResource | stripe.PricesResource): Promise<stripe.Product[] | stripe.Price[]> {
+async function recursiveItemGrab(API) {
     let item = await API.list();
     const itemArray = [...item.data];
     let has_more = item.has_more;
@@ -22,22 +20,22 @@ async function recursiveItemGrab(API: stripe.ProductsResource | stripe.PricesRes
     while (has_more) {
         let moreItems = await API.list({
             starting_after: item.data[item.data.length - 1].id,
-        } as stripe.RequestOptions); // Explicitly cast to RequestOptions
+        });
         has_more = moreItems.has_more;
         itemArray.push(...moreItems.data);
     }
 
     if (API === stripeAPI.products) {
-        return itemArray as stripe.Product[];
+        return itemArray;
     } else {
-        return itemArray as stripe.Price[]; 
+        return itemArray; 
     }
 }
 
-function isValidStatus(status: any): status is ProductStatus {
+function isValidStatus(status) {
     return ["available", "not-available", "preorder"].includes(status);
 }
-export async function getProduct(id: string): Promise<StripeSuperProduct | false> {
+export async function getProduct(id) {
     try {
         if (id === "quantity") return false
         let product = await stripeAPI.products.retrieve(id);
@@ -65,24 +63,38 @@ export async function getProduct(id: string): Promise<StripeSuperProduct | false
         return false
     }
 }
-export async function getProductList(): Promise<StripeSuperProduct[] | []> {
-    let products = await getAllStripe("product") as stripe.Product[];
-    let prices = await getAllStripe("price") as stripe.Price[];
+export async function getProductList() {
+    let products = await getAllStripe("product");
+    let prices = await getAllStripe("price");
     let productList = [];
     for (let i = 0; i < products.length; i++) {
         const status = isValidStatus(products[i].metadata.status) ? products[i].metadata.status : undefined;
-        if (!status) {
-            console.error("Product does not have a proper status")
-            return [];
+        if (!status || !products[i].active) {
+            continue;
         }
+        
+        let displayStatus = "On Backorder";
+        switch (status) {
+            case "available":
+                displayStatus = "Available - Ready to Ship";
+                break;
+            case "preorder":
+                displayStatus = "Preorder";
+                break;
+            default:
+                break;
+        }
+
         productList.push({
             name: products[i].name,
-            description: products[i].description,
+            internalName: products[i].name.replaceAll(" ", "-").replaceAll("/", "").toLowerCase(), // Use this for filenames
+            description: products[i].description ?? "",
             images: products[i].images,
             price_id: prices[i].id,
             price: prices[i].unit_amount / 100,
             item_id: products[i].id,
-            status: status as ProductStatus,
+            status: status,
+            displayStatus: displayStatus,
         });
     }
     return productList

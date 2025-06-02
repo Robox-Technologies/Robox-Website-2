@@ -1,184 +1,53 @@
-@use '../../root/variables';
+@use '@root/variables';
+@use '@root/title-hero';
 
-$projectIconSize: 1.2em;
-$projectIconGap: 5px;
-
-$projectCardGap: 30px;
-$projectCardWidth: 250px;
-$cardBorderRadius: 5%;
-
-#main {
-    padding: 30px;
-}
-.fa-square-binary {
-    height: $projectIconSize;
-    width: $projectIconSize;
-    background-color: white;
-    margin-right: $projectIconGap;
-}
-.fa-square-binary > path {
-    color: variables.$themeBlue;
-}
-.fa-chevron-right {
-    font-size: 12px;
-}
-
-.guide-icon-arrow {
-    height: 12px;
-    width: 12px;
-    margin-top: 1px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: $projectIconGap;
-}
-
-.assembly-card > .card-info > .card-buttons {
-    flex-direction: column;
-}
-.card-holder {
-    display: flex;
-    width: 100%;
-    align-items: stretch;
-    align-content: center;
-    gap: $projectCardGap; 
-    flex-wrap: wrap;
-}
-$hoverCardBorderSize: 3px;
-$hoverCardBorderColor: variables.$themeBlue;
-
-#create-project, .project-card {
-    width: $projectCardWidth;
-    transition: transform 0.1s ease-out;
-    transform-style: preserve-3d;
-    will-change: transform;
-    position: relative;
-    cursor: pointer;
-}
-$toolbarBorderRadius: 0.5em;
-$toolbarBorderColor: variables.$primary;
-$toolbarBorderStroke: 3px;
-$toolbarWidth: 130px;
-
-
-
-#toolbar[open] {
-    z-index: 4;
-    display: flex;
-    position: absolute;
-    flex-direction: column;
-    padding: 5px 20px 5px 5px;
-    align-items: flex-start;
-    justify-content: space-between;
-    border-radius: $toolbarBorderRadius;
-    margin: 0;
-    width: $toolbarWidth;
-}
-#toolbar > .card-button > svg {
-    margin-right: 5px;
-}
-#toolbar > .button:hover{
-    cursor: pointer;
-}
-#project-delete > svg > path{
-    color: variables.$themeRed;
-}
-.card-wrapper:hover > .project-card, .card-wrapper:hover > .lesson-card:hover {
-    border: $hoverCardBorderSize solid variables.$themeBlue;
-}
-.project-card:has(> #toolbar[open]) {
-    border: $hoverCardBorderSize solid variables.$themeGreen;
-    z-index: 1;
-}
-.project-card, .lesson-card {
-    border: $hoverCardBorderSize solid transparent;
-
-}
-
-#create-project {
-    width: $projectCardWidth;
-    border-radius: $cardBorderRadius;
+.hero-title-container {
     background-color: variables.$themeBlue;
+    padding-right: variables.$articleMargin;
+
+    & > * {
+        color: variables.$primary;
+    }
+}
+
+.productContainer {
     display: flex;
-    justify-content: center;
+    width: 100%;
     align-content: center;
-    height: 226.75px;
-    flex-direction: column;
-    
-}
-#create-project:hover {
-    cursor: pointer;
-    
-}
-#create-project > * {
-    color: white;
-    text-align: center;
-    font-size: 30px;
-    width: 100%;
-}
-#create-project > p{
-    margin-top: 10px;
-    margin-bottom: 0;
-}
-#create-project > svg > path {
-    color: white;
-}
+    gap: variables.$standardGap; 
+    flex-wrap: wrap;
 
-$heroTextWidth: 35%; 
+    .productCard {
+        min-width: 300px;
+        background-color: white;
+        transition: box-shadow 0.5s;
+        cursor: pointer;
 
-$borderLineWidth: 10px;
+        &:hover {
+            box-shadow: 0 0 10px #26363BAA;
+        }
 
+        .card-image {
+            background-color: transparent;
+        }
 
-$heroImageWidth: calc(100% - $heroTextWidth);
-$overlap: 100px;
-$borderColour: #26363b;
-$heroContainerHeight: 320px;
-#hero {
-    height: 320px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    background-color: #26363b;
-}
-#hero-image {
-    height: $heroContainerHeight;
-    width: $heroImageWidth ;
-    clip-path: polygon(calc($overlap + $borderLineWidth) 0, 100% 0, 100% 100%, $borderLineWidth 100%);
+        .card-title {
+            max-width: none;
+        }
 
-    position: absolute;
-    object-fit:cover;
-    left: $heroTextWidth
-}
-#hero-title-container {
-    height: 320px;
-    background-color: variables.$themeYellow;
-    width: calc($heroTextWidth + $overlap);
-    clip-path: polygon(0 0, calc(100% - $borderLineWidth) 0, calc(100% - $borderLineWidth - $overlap) 100%, 0 100%);
-    position: absolute;
-    z-index: 1;
-}
-$titleSidePadding: 40px;
-$titleFontsize: 49px;
-#hero-title {
-    font-size: $titleFontsize;
-    position: relative;
-    top: calc($heroContainerHeight - $titleFontsize - $titleSidePadding);
-    left: $titleSidePadding;
-    margin: 0;
-}
-.lesson-card > .card-info > .card-descriptions {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-}
-.card-button:hover {
-    cursor: pointer;
-}
-//Credits too https://stackoverflow.com/questions/62867788/text-underline-animation-in-css-the-simplest-way
+        .ctaButton {
+            @include variables.bodyFont;
+            $btnHeight: 50px;
+            
+            width: 100%;
+            height: $btnHeight;
+            padding: 0;
+            margin: 0;
+            margin-top: 8px;
 
-.assembly-card > .card-info > .card-buttons > .card-button:hover {
-    --underline-width: 100%;
-}
-.card {
-    background-color: white !important;
+            border-radius: calc($btnHeight / 2);
+            color: variables.$primary;
+            box-shadow: none;
+        }
+    }
 }

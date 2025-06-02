@@ -7,123 +7,44 @@
 </head>
 
 <body>
-    <template id="projectCardTemplate">
-        <%~ include('src/partials/card.html', {
-            class: "project-card",
-            title: '<i class="fa-solid fa-square-binary"></i><span class="card-title-text"></span>', 
-            imageSource: "https://placehold.co/1920x1080", 
-            descriptions: [
-                "2 hours ago", 
-            ],
-            topRowButton: true,
-        }) %>
-    </template>
-    <template id="lessonCardTemplate">
-        <%~ include('src/partials/card.html', {
-            class: "lesson-card",
-            title: '<span>Assembly Guide</span>', 
-            imageSource: "https://placehold.co/1920x1080", 
-            descriptions: [
-                "30-45 min",
-                "Beginner"
-            ],
-            topRowButton: false,
-        }) %>
-    </template>
-    <template id="assemblyGuideCardTemplate">
-        <%~ include('src/partials/card.html', {
-            class: "assembly-card",
-            title: '<span>Assembly Guide</span>', 
-            imageSource: "https://placehold.co/1920x1080", 
-            buttons: [
-                {
-                    content: "<span class='underline-grow'>PDF Build Instructions</span> <div class='guide-icon-arrow'><i class='fa-solid fa-chevron-right'></i></div>",
-                },
-                {
-                    content: "<span class='underline-grow'>3D Build Instructions</span> <div class='guide-icon-arrow'><i class='fa-solid fa-chevron-right'></i></div>",
-                },
-            ],
-            topRowButton: false,
-        }) %>
-    </template>
-    <%~ include('src/partials/header-workshop.html') %>
-    <dialog id="toolbar">
-        <button class="button" id="project-edit">
-            <i class="fa-solid fa-pen-to-square"></i> Edit
-        </button>
-        <button class="button" id="project-delete">
-            <i class="fa-solid fa-trash"></i> Delete
-        </button>
-    </dialog>
-    <%~ include('src/partials/modal.html', {
-        id: "delete-modal",
-        title: '<i class="fa-solid fa-trash-can"></i>', 
-        descriptions: [
-            "<span>Are you sure you want to delete `` </span>",
-            "it will be deleted forever (a very long time)"
-        ],
-        buttons: [
-            {
-                id: "cancel-confirm-button",
-                content: "Cancel",
-            },
-            {
-                id: "delete-confirm-button",
-                content: "delete",
-            },
-        ],
+    <%~ include('src/partials/header.html') %>
+
+    <!-- Hero title -->
+    <%~ include('src/partials/title-hero.html', {
+        text: "Shop",
+        subtitle: "Check out our Ro/Box product range!",
+        image: "./images/hero.jpg",
+        useAlt: true
     }) %>
-    <section id="hero">
-        <div id="hero-title-container">
-            <h1 id="hero-title">
-                Robox Hub
-            </h1>
-        </div>
-        <img id="hero-image" src="./student-hub-hero.jpg">
-    </section>
     
-    <div id="main" class="item-sections">
-        
+    <article>
+        <section>
+            <h1>Products</h1>
 
-        <!-- <section id="assembly-guides">
-            <h1>
-                Assembly Guides
-            </h1> 
-            <div class="card-holder" id="assembly-guides">
-                
+            <div class="productContainer">
+                <% products.forEach(function(product, index) { %>
+                    <a href="./product/<%= product.internalName %>.html">
+                        <%~ include('src/partials/card.html', {
+                            class: "productCard",
+                            title: product.name, 
+                            // TODO: Seb, I know you had a pretty neat way of converting these images into webp but I can't seem to replicate it here. It'd also be nice if the thumbnail was fetched from stripe.
+                            imageSource: `./product/images/${product.internalName}/thumbnail.jpg`,
+                            descriptions: [
+                                `<span class="${product.status}">${product.displayStatus}</span>`,
+                                `$${product.price}`
+                            ],
+                            buttons: [
+                                {
+                                    content: "<button class='ctaButton'>View Product</button>",
+                                },
+                            ],
+                            topRowButton: false,
+                        }) %>
+                    </a>
+                <% }) %>
             </div>
-        </section> -->
-        <section id="projects">
-            <div>
-
-            </div>
-            <h1>
-                My Projects
-            </h1>
-            <div class="card-holder" id="project-holder">
-                <div class="card-wrapper">
-                    <button id="create-project" class="button">
-                        <i class="fa-solid fa-plus"></i>
-                        <p>
-                            New Project
-                        </p>
-                    </button>
-                </div>
-                
-                
-            </div>
-            
         </section>
-        <!-- <section id="lessons">
-            <h1>
-                Explore Our Lessons
-            </h1> 
-            <div class="card-holder" id="assembly-guides">
-                
-            </div>
-        </section> -->
-        
-    </div>
+    </article>
     
     <%~ include('src/partials/footer.html') %>
 </body>

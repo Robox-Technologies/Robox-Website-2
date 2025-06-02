@@ -1,0 +1,150 @@
+@use '@root/variables';
+@use '@root/shop';
+
+#starter-info {
+    padding: 16px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+
+    gap: 10px;
+    width: 100%;
+}
+
+#important-info {
+    margin-left: variables.$standardGap;
+}
+
+.selected-carousel {
+    border: 3px var(--secondary-bg-color) solid;
+    margin: -3px;
+}
+.carousel-image {
+    cursor: pointer;
+}
+#image-carousel {
+    flex-grow: 0;
+    height: 450px;
+    padding: 3px 0;
+    min-height: 450px;
+    overflow-y: auto;
+    min-width: 120px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+#image-carousel > li {
+    width: 115px;
+    height: 65px;
+}
+
+#hero-image-container {
+    position: relative;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+    border-radius: 8px;
+}
+.active {
+    display: flex;
+}
+.carousel-image > img {
+    object-fit: cover;
+    aspect-ratio: 16/9;
+    width: 115px;
+    height: 70px;
+    border-radius: 8px;
+}
+#status {
+    color: #015f27;
+}
+
+#carousel-left-button {
+    left: 16px;
+}
+#carousel-right-button, #carousel-left-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    background-color: variables.$primary;
+    color: variables.$themeBlack;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    height: 40px;
+    font-size: 18px;
+}
+#carousel-right-button {
+    right: 16px;
+}
+.carousel-button-disabled {
+    display: none !important;
+}
+
+#product-name {
+    margin-bottom: 0;
+}
+#price {
+    font-weight: normal;
+}
+
+#add-to-cart {
+    @include variables.bodyFont;
+
+    background-color: variables.$themeRed;
+    color: variables.$primary;
+    text-align: center;
+    cursor: pointer;
+    border: 0;
+    padding: 6px;
+    width: 200px;
+    border-radius: 30px;
+    margin-top: 16px;
+}
+
+.small-element {
+    display: none;
+}
+
+#description {
+    margin-top: variables.$standardGap;
+}
+
+@media only screen and (max-width: 940px) {
+    #starter-info {
+        padding-left: 25px;
+    }
+    #starter-info > .vertical-bars {
+        display: none;
+    }
+    #image-carousel {
+        display: none;
+    }
+    #starter-info {
+        flex-direction: column;
+    }
+    .small-element {
+        display: block;
+    }
+    #hero-image-container {
+        width: 100%;
+    }
+
+}
+
+@media only screen and (max-width: 1000px) and (min-width: 940px) {
+    #starter-info {
+        width: 860px;
+    }
+}

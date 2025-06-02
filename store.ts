@@ -1,12 +1,15 @@
 import cache from 'memory-cache'
+
+// Idk how else to fix this (issue is that stripe.js is not recognised as a module)
+// @ts-ignore
 import { getProduct, getProductList, stripeAPI } from './stripe.js';
 
 
 import express from 'express'
 import { Request, Response } from 'express';
+import { StripeSuperProduct } from './types/stripe.js';
 const paymentRouter = express.Router()
 
-const DOMAIN = "http://localhost:3000";
 const PRODUCT_CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
 const verifiedProducts = await getProductList()
 
@@ -24,7 +27,7 @@ paymentRouter.post("/create", async (req: Request, res: Response): Promise<void>
     for (const productId in products) {
         if (productId === "quantity") continue
 
-        let product = verifiedProducts.filter((product) => product["item_id"] === productId)[0]
+        let product = verifiedProducts.filter((product: StripeSuperProduct) => product["item_id"] === productId)[0]
         let quantity = products[productId]["quantity"]
         if (!product) {
             res.status(400).send({

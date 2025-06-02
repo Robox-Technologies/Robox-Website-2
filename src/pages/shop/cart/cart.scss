@@ -1,0 +1,120 @@
+@use '@root/variables';
+@use '@root/shop';
+
+#cart-items {
+    background-color: var(--primary-card-color);
+    width: 80vw;
+    flex-grow: 1;
+    height: 675px;
+    flex-shrink: 1;
+    border-radius: 10px;
+}
+#order-body {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-direction: column;
+}
+.order-title {
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+section:has(> .cart-item-holder:empty) {
+    display: none;
+}
+.cart-item-holder {
+    width: 100%;
+    padding: 10px;
+    position: relative;
+    list-style:none;
+    box-sizing: border-box;
+    margin-bottom: 0px;
+}
+.cart-item {
+    height: 100px;
+    width: calc(100% - (2*22px));
+    flex-direction: row;
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    margin-left: 22px;
+    margin-right: 22px;
+}
+.cart-item-holder > .cart-item-break:last-child {
+    margin-bottom: 0;
+}
+.cart-item-photo {
+    background-color: gray;
+    height: 100px;
+    border-radius: 5px;
+    aspect-ratio: 16/9;
+}
+.cart-item-delete {
+    align-self: flex-start;
+    right: 27.5px;
+
+    position: absolute;
+}
+.cart-item-info {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    
+    align-items: center;
+}
+.cart-item-text-info {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    height: 100%;
+}
+.cart-item-text-title {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.cart-item-text-price {
+    margin-bottom: 0;
+    height: 37px;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+
+}
+
+.cart-item-delete {
+    color: variables.$themeRed;
+    cursor: pointer;
+
+    .fa-trash {
+        font-size: 25px;
+    }
+}
+
+#checkout {
+    grid-column: span 5;
+    margin: 15px;
+    background-color: var(--secondary-bg-color);
+    padding: 15px;
+    border-radius: 20px;
+}
+
+@media only screen and (max-width: 900px) {
+    #main-content {
+        flex-direction: column;
+    }
+}
+@media only screen and (max-width: 600px) {
+    #main-content {
+        flex-direction: column;
+    }
+    .cart-item {
+        flex-direction: column;
+        height: unset;
+    }
+    .cart-item-photo {
+        height: unset;
+    }
+}

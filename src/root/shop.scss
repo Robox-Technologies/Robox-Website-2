@@ -1,0 +1,113 @@
+@use '@root/variables';
+
+#main-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: start;
+    gap: 50px;
+    flex-direction: row;
+}
+
+.cart-quantity-button {
+    width: 200px;
+    height: 37px;
+    justify-content: space-between;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: variables.$standardGap;
+
+    button {
+        background-color: white;
+        width: 30px;
+        border: 2px variables.$themeBlack solid;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    .decrease-cart-button {
+        border-radius: 50% 0 0 50%;
+        cursor: pointer;
+        border-right: none !important;
+    }
+
+    .increase-cart-button {
+        border-radius: 0 50% 50% 0;
+        cursor: pointer;
+        border-left: none !important;
+    }
+
+    .cart-quantity {
+        @include variables.bodyFont;
+        
+        border: 0;
+        text-align: center;
+        height: 100%;
+        font-size: 20px;
+        padding: 0;
+        width: 140px;
+        border: 2px variables.$themeBlack solid;
+    }
+}
+
+#order-summary {
+    background-color: white;
+    height: 675px;
+    flex-grow: 0;
+    flex-direction: column;
+    border-radius: 10px;
+    display: flex;
+    flex-shrink: 0;
+    padding: variables.$standardGap;
+}
+
+#cost-breakdown {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    
+    grid-template-rows: 50px auto 10px 50px 50px;
+
+    .cart-item-break {
+        grid-column: 1 / span 5;
+        margin: 0;
+        align-self: center;
+        grid-row: 10px;
+    }
+
+    p:nth-child(2n +4 of :not(.cart-item-break)), #order-value-label  {
+        grid-column: 1 / span 3;
+    }
+
+    p:nth-child(2n +3 of :not(.cart-item-break)), #order-value-value {
+        text-align: right;
+        grid-column: span 2;
+        line-height:17px;
+    }
+}
+
+#itemised-list {
+    grid-column: span 5;
+    margin-top: 0;
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+    }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
