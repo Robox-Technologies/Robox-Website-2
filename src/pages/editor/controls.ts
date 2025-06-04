@@ -19,6 +19,11 @@ export function registerControls(workspace: WorkspaceSvg) {
         }
         // Scroll for vertical movement,
         else {
+            //Check what element is hovered over
+            //If it is a toolbox, dont scroll the workspace
+            if (event.target instanceof HTMLElement && event.target.closest('.blocklyToolboxDiv')) {
+                return;
+            }
             workspace.scrollY += dy
         }
         workspace.render()
