@@ -47,7 +47,7 @@ export function postBlocklyWSInjection() {
         connectionManagment.setAttribute("loading",  "false")
     })
     pico.addEventListener("download", (event) => {
-            connectionManagment.setAttribute("loading",  "false")
+        connectionManagment.setAttribute("loading",  "false")
 
         if (downloadingToPico) {
             connectionManagment.setAttribute("status",  "downloaded")
@@ -61,7 +61,6 @@ export function postBlocklyWSInjection() {
     })
     ws.addChangeListener((event) => {
         if (event.isUiEvent ) return; //Checking if this update changed the blocks
-        if (connectionManagment.getAttribute("status") === "downloaded") connectionManagment.setAttribute("status",  "connected") //If they are waiting to run the program then go back to download
         alreadyDownloaded = false //Saying that this workspace has changed
     });
     connectButton?.addEventListener("click", () => {
