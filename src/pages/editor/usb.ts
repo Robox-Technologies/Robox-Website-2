@@ -56,6 +56,9 @@ export function postBlocklyWSInjection() {
         
 
     })
+    pico.addEventListener("error", (event) => {
+        connectionManagment.setAttribute("loading",  "false")
+    })
     ws.addChangeListener((event) => {
         if (event.isUiEvent ) return; //Checking if this update changed the blocks
         if (connectionManagment.getAttribute("status") === "downloaded") connectionManagment.setAttribute("status",  "connected") //If they are waiting to run the program then go back to download
