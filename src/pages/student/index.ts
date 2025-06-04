@@ -1,4 +1,4 @@
-import { createProject, getProject, getProjects } from "../../root/serialization";
+import { createProject, deleteProject, getProject, getProjects } from "../../root/serialization";
 import { Project, Projects } from "../../@types/projects";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js"
@@ -63,6 +63,12 @@ function applyProjects() {
                 wrapper.setAttribute("toolbar", "")
                 toolbar.closest(".card-wrapper")?.removeAttribute("toolbar")
                 clone.appendChild(toolbaClone)
+                toolbaClone.querySelector("#project-delete")?.addEventListener("click", (event) => {
+                    let deleteModal = document.getElementById("delete-modal") as HTMLDialogElement | null
+                    if (!deleteModal) return
+                    deleteModal.showModal()
+                })
+                    
                 toolbar.remove()
                 toolbaClone.show()
                 hoverElement(clone, false)
@@ -90,25 +96,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
     applyProjects()
 
     afterProjectsSetup();
-    const deleteModal = document.getElementById("delete-modal") as HTMLDialogElement | null
+
+    let deleteModal = document.getElementById("delete-modal") as HTMLDialogElement | null
     if (!deleteModal) return
-    const deleteButton = document.getElementById("project-delete") as HTMLButtonElement | null
-    const editButton = document.getElementById("project-edit") as HTMLButtonElement | null
-    if (!deleteButton || !editButton) return
-    deleteButton.addEventListener("click", (event) => {
-        deleteModal.showModal()
-    })
-    const confirmDeleteButton = document.getElementById("delete-confirm-button") as HTMLButtonElement | null
-    if (!confirmDeleteButton) return
-    confirmDeleteButton.addEventListener("click", (event) => {
-        const projectId = document.querySelector(".card[toolbar]")?.id
+    let deleteConfirmButton = deleteModal.querySelector("#delete-confirm-button") as HTMLButtonElement | null
+    if (!deleteConfirmButton) return
+    deleteConfirmButton.addEventListener("click", (event) => {
+        let projectCard = document.querySelector(".card-wrapper[toolbar]") as HTMLElement | null
+        if (!projectCard) return
+        let projectId = projectCard.querySelector(".card")?.id
         if (!projectId) return
-        if (!deleteModal) return
+        let projects = getProjects()
+        if (!projects[projectId]) return
+        deleteProject(projectId)
+        projectCard.remove()
         deleteModal.close()
-        const projects = getProjects()
-        delete projects[projectId]
-        localStorage.setItem("projects", JSON.stringify(projects))
         applyProjects()
-        afterProjectsSetup()
     })
 })
