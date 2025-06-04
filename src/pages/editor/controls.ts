@@ -1,5 +1,6 @@
 import { Workspace, WorkspaceSvg } from "blockly";
-const scrollSpeed = 1.5; // Adjust for sensitivity
+const scrollSpeed = 1.1; // Adjust for sensitivity
+const controlScrollSpeedDown = 0.2; // Adjust for sensitivity when zooming
 const zoomSpeed = 0.5
 export function registerControls(workspace: WorkspaceSvg) {
     document.addEventListener('wheel', (event: WheelEvent) => {
@@ -14,7 +15,7 @@ export function registerControls(workspace: WorkspaceSvg) {
         }
         // Control + scroll for zoom,
         else if (event.ctrlKey) {
-            workspace.zoomCenter(dy * zoomSpeed)
+            workspace.zoomCenter(dy * controlScrollSpeedDown *  zoomSpeed)
         }
         // Scroll for vertical movement,
         else {
