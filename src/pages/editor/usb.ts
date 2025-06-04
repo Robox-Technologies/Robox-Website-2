@@ -78,6 +78,7 @@ export function postBlocklyWSInjection() {
     })
     downloadConnectionButton?.addEventListener("click", () => {
         downloadingToPico = true
+        connectionManagment.setAttribute("loading",  "true")
         sendCode(ws)
     })
     stopButton?.addEventListener("click", () => {
