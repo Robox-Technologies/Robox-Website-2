@@ -53,7 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
     //When you click the outcome button (stage 2)
     outcomeButton.addEventListener("click", () => {
         if (outcomeButton.textContent === "Retry") { // We know we are in the failed state
-
+            outcomeButton.setAttribute("calibrating", "")
+            calibrate(true) // Retry calibration
         }
         else { // We know we are in the success state!
             calibrateOutcomeModal.close()
@@ -91,13 +92,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if (outcomeButton.hasAttribute("calibrating")) outcomeButton.removeAttribute("calibrating")
         outcomeButton.innerHTML = 'Retry<i class="fa-solid fa-spinner fa-spin"></i>'
-        outcomeButton.addEventListener("click", () => {
-            outcomeButton.setAttribute("calibrating", "")
-            calibrate(true)
-        }, {once: true})
         if (calibrateModal.hasAttribute("open")) calibrateModal.close()
         if (calibrateOutcomeModal.hasAttribute("open")) calibrateOutcomeModal.close()
         outcomeTitle.textContent = "Ro/Box Failed Calibration"
+        if (calibrateOutcomeModal.hasAttribute("open")) return
         calibrateOutcomeModal?.showModal()
     }
 })
