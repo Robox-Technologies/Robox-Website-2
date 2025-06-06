@@ -311,6 +311,15 @@ $blocklyUIButtonsDropShadowMult: 2;
         display: none;
     }
 }
+.calibrate-button{
+    svg {
+        display: none;
+    }
+}
+
+.fa-spinner {
+    display: none;
+}
 #calibrate-outcome-button[calibrating], #calibrate-button[calibrating] {
     font-size: 0;
     width: 76px;

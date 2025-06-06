@@ -14,18 +14,9 @@
         title: '1. Boot the RO/BOX into BOOTSEL mode', 
         content: [
             "<p id='bootsel-outcom-text'>The RO/BOX is not currently in Bootsel mode, would you like us to try and enter it into BOOTSEL mode? </p>",
-            "<button id='bootsel-boot-confirm' class='standard-button button'>Yes!</button>",
-            "<i id='bootsel-loading' class='fa-solid fa-spinner fa-spin'></i>",
         ],
         buttons: [
-            {
-                id: "cancel-confirm-button",
-                content: "Cancel",
-            },
-            {
-                id: "next-bootsel-button",
-                content: "Next",
-            },
+            '<button id="next-bootsel-button" class="button calibrate-button standard-button">Yes<i class="fa-solid fa-spinner fa-spin"></i></button>',
         ],
     }) %>
     <%~ include('src/partials/modal.html', {
@@ -33,17 +24,9 @@
         title: '2. Flash the Ro\\Box', 
         content: [
             "<p>When you are ready, press the 'open' button below, this will open a file browser, please select the 'RPI' drive</p>",
-            "<button id='bootsel-boot-confirm' class='standard-button button'>Open!</button>",
         ],
         buttons: [
-            {
-                id: "cancel-confirm-button",
-                content: "Back",
-            },
-            {
-                id: "next-bootsel-button",
-                content: "Next",
-            },
+            '<button id="next-bootsel-button" class="button calibrate-button standard-button">Open<i class="fa-solid fa-spinner fa-spin"></i></button>',
         ],
     }) %>
     <%~ include('src/partials/modal.html', {
@@ -54,7 +37,7 @@
             "<p>Press the 'Calibrate' button when you are ready!'</p>",
         ],
         buttons: [
-            '<button id="calibrate-button" class="button standard-button">Calibrate<i class="fa-solid fa-spinner fa-spin"></i></button>',
+            '<button id="calibrate-button" class="button calibrate-button standard-button">Calibrate<i class="fa-solid fa-spinner fa-spin"></i></button>',
         ],
     }) %>
     <%~ include('src/partials/modal.html', {
