@@ -142,8 +142,23 @@ document.addEventListener("DOMContentLoaded", () => {
         if (event.isUiEvent) return;
         saveBlockly(workspaceId, workspace);
     });
+    
 
-    const settingsButton = document.getElementById("settings-button") as HTMLButtonElement | null
-
+    const calibrateButton = document.getElementById("robox-settings-calibrate") as HTMLButtonElement | null
+    const calibrateModal = document.getElementById("color-calibration-modal") as HTMLDialogElement | null
+    if (!calibrateButton) return
+    if (!calibrateModal) return
+    calibrateButton.addEventListener("click", () => {
+        if (calibrateModal.hasAttribute("open")) {
+            calibrateModal.close()
+        } else {
+            calibrateModal.showModal()
+        }
+    })
+    calibrateModal.addEventListener("close", () => {
+        if (calibrateModal.querySelector("#calibrate-button[calibrating]")) {
+            calibrateModal.querySelector("#calibrate-button")?.removeAttribute("calibrating")
+        }
+    })
 })
 
