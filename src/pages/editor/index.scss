@@ -356,9 +356,8 @@ $blocklyUIButtonsDropShadowMult: 2;
     background-color: variables.$themeBlue;
     #connect-robox-button {
         display: block;
-    }
-    #download {
-        display: block;
+        width: 100%;
+        border-right: unset;
     }
 }
 
