@@ -417,7 +417,6 @@ $settingsToolbarWidth: 200px;
 #settings-toolbar {
     width: $settingsToolbarWidth;
     position: absolute;
-    top: 0;
     bottom: 0;
     left: calc(10px - $settingsToolbarWidth );
     top: 35px;
