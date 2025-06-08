@@ -474,3 +474,12 @@ $settingsToolbarWidth: 200px;
 
 
 }
+.bootsel[loading] {
+    button.calibrate-button {
+        font-size: 0;
+    }
+    .fa-spinner {
+        display: inline;
+        font-size: 20px;
+    }
+}
