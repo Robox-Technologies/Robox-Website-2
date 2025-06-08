@@ -68,7 +68,15 @@ const config = {
                     path.join(__dirname, 'src/guides/'),
                 ],
             },
-        })
+        }),
+        new CopyPlugin({
+            patterns: [
+                { from: "src/pages/public/**/*", to: "public/[name][ext]" },
+            ],
+            options: {
+                concurrency: 100,
+            },
+        }),
     ],
     module: {
         rules: [
