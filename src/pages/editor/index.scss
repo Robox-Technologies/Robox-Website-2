@@ -312,6 +312,9 @@ $blocklyUIButtonsDropShadowMult: 2;
     }
 }
 .calibrate-button{
+    width: 100px;
+    height: 37px;
+    min-height: 37px;
     svg {
         display: none;
     }
