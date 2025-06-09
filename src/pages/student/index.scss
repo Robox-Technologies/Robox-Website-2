@@ -147,6 +147,53 @@ $toolbarWidth: 130px;
     background-color: variables.$themeYellow;
 }
 
+#cancel-confirm-button {
+    background-color: variables.$themeBlue;
+}
+#delete-confirm-button {
+    background-color: variables.$themeRed;
+}
+
+$trashcanSize: 30px;
+#delete-modal {
+    .fa-trash-can {
+        color: variables.$themeRed;
+        font-size: $trashcanSize;
+    }
+}
+$renameInputSize: 20px;
+$renameInputWidth: 70%;
+$renameInputRoundedCorners: 10px;
+$renameInputPadding: 5px;
+$renameContentPadding: 5%;
+#rename-modal {
+    .fa-pencil {
+        color: variables.$themeBlue;
+        font-size: $trashcanSize;
+    }
+    #rename-confirm-button {
+        background-color: variables.$themeGreen;
+    }
+    .modal-content {
+        justify-content: center;
+        padding: calc($renameContentPadding*2) $renameContentPadding;
+        align-items: center;
+        p {
+            text-align: center;
+            margin-top: 0;
+        }
+        #new-project-name {
+            width: $renameInputWidth;
+            color: variables.$themeBlack;
+            padding: $renameInputPadding;
+            font-size: $renameInputSize;
+            border-radius: $renameInputRoundedCorners;
+            border: variables.$strokeSize variables.$themeBlue solid
+        }
+    }
+    
+} 
+
 
 .card-wrapper:hover:not([toolbar]) {
     transform: translateY(-2px);
