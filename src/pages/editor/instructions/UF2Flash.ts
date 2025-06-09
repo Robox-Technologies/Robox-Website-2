@@ -4,6 +4,9 @@
 // 2. Choosing the UF2 (gonna be latest for now)
 // 3. Actually flashing the pico
 import { pico } from "../communication/communicate";
+
+type failures = "no-device" | "uf2-web" | "file-failure" | "write-failure" | "success";
+
 const failureText = {
     "no-device": {
         "title": "RO\\BOX not in BOOTSEL mode",
@@ -43,6 +46,7 @@ const failureText = {
     },
 
 }
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const outcomeModal = document.querySelector("dialog#bootsel-outcome") as HTMLDialogElement | null;
@@ -124,7 +128,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     outcomeButton.addEventListener("click", async () => {
-        let failure = outcomeModal.getAttribute("failure");
+        let failure = outcomeModal.getAttribute("failure") as failures | null;
+        if (!failure) {
+            console.error("No failure attribute set on outcome modal.");
+            return;
+        }
         if (failure === "no-device") { // When they cannot automatically boot into BOOTSEL mode
             // Try and request the USB device again
             try {
@@ -154,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
             outcomeModal.close();
         }
     });
-    function flashFailure(failure: string) {
+    function flashFailure(failure: failures) {
         if (!outcomeModal || !outcomeText || !outcomeButton || !outcomeTitle) return;
         outcomeModal.setAttribute("failure", failure);
         
