@@ -28,7 +28,14 @@ type firmwareOptions = {
 type picoOptions = {
     message: string
 }
-type EventPayload = { event: 'calibrated'; options: picoOptions } | { event: 'console'; options: picoOptions } | { event: 'downloaded'; options: {} } | { event: 'firmware'; options: firmwareOptions } | { event: 'confirmation'; options: picoOptions } | { event: 'error'; options: picoOptions } | { event: 'connect'; options: connectOptions } | { event: 'disconnect'; options: disconnectOptions }
+type EventPayload = { event: 'calibrated'; options: picoOptions } | 
+                    { event: 'console'; options: picoOptions } | 
+                    { event: 'downloaded'; options: {} } | 
+                    { event: 'firmware'; options: firmwareOptions } | 
+                    { event: 'confirmation'; options: picoOptions } | 
+                    { event: 'error'; options: picoOptions } | 
+                    { event: 'connect'; options: connectOptions } | 
+                    { event: 'disconnect'; options: disconnectOptions }
 
 export class Pico extends EventTarget {
     communication: USBCommunication
