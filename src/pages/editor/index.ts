@@ -22,7 +22,8 @@ import {registerFieldColour} from '@blockly/field-colour';
 import { postBlocklyWSInjection } from './usb';
 import { registerControls } from './controls';
 registerFieldColour();
-
+import "./instructions/UF2Flash"
+import "./instructions/colourCalibration"
 const blocks = require.context("./blockly/blocks", false, /\.ts$/);
 const generators = require.context("./blockly/generators", false, /\.ts$/);
 
@@ -141,6 +142,19 @@ document.addEventListener("DOMContentLoaded", () => {
         if (event.isUiEvent) return;
         saveBlockly(workspaceId, workspace);
     });
+    
 
+    const calibrateButton = document.getElementById("robox-settings-calibrate") as HTMLButtonElement | null
+    const calibrateModal = document.getElementById("color-calibration-modal") as HTMLDialogElement | null
+    if (!calibrateButton) return
+    if (!calibrateModal) return
+    calibrateButton.addEventListener("click", () => {
+        calibrateModal.showModal()
+    })
+    calibrateModal.addEventListener("close", () => {
+        if (calibrateModal.querySelector("#calibrate-button[calibrating]")) {
+            calibrateModal.querySelector("#calibrate-button")?.removeAttribute("calibrating")
+        }
+    })
 })
 

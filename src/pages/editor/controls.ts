@@ -4,6 +4,7 @@ const controlScrollSpeedDown = 0.2; // Adjust for sensitivity when zooming
 const zoomSpeed = 0.5
 export function registerControls(workspace: WorkspaceSvg) {
     document.addEventListener('wheel', (event: WheelEvent) => {
+        if (document.querySelector('dialog[open]')) return;
         event.preventDefault();
 
         const dy = event.deltaY * scrollSpeed;

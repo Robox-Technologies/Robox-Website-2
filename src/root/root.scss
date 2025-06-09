@@ -4,15 +4,10 @@
 @use 'footer';
 @use 'common';
 @use 'card';
+@use 'toolbar';
 @use 'modal';
+@use 'title-hero';
 
-// Custom Font
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
-
-html, body {
-    // overflow-x: hidden;
-    width: 100vw;
-}
 
 body {
     margin: 0;
@@ -24,6 +19,12 @@ body {
     border: 0;
 }
 
+.standard-button {
+    color: white;
+    padding: calc(variables.$standardButtonPadding/2) variables.$standardButtonPadding;
+    border-radius: variables.$standardButtonRoundedCorners;
+    font-size: variables.$standardButtonFontSize;
+}
 a {
     text-decoration: none;
     -webkit-text-decoration: none;
