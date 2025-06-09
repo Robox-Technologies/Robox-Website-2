@@ -173,11 +173,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function detectBOOTSEL() {
     let devices = await navigator.usb.getDevices()
-    if (devices.length === 0) return false
-    for (const device of devices) {
-        if (device.productName === "RP2 Boot") { //Pico is in bootsel mode
-            return true
-        }
-    }
-    return false;
+    return devices.some(device => device.productName === "RP2 Boot");
 }
