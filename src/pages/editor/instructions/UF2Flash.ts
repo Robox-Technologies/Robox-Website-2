@@ -4,6 +4,46 @@
 // 2. Choosing the UF2 (gonna be latest for now)
 // 3. Actually flashing the pico
 import { pico } from "../communication/communicate";
+const failureText = {
+    "no-device": {
+        "title": "RO\\BOX not in BOOTSEL mode",
+        "text": `Unfortunately that did not work! Please follow the following instructions to manually boot your RO\\BOX into BOOTSEL mode<br>
+                1. Disconnect the USB cable from your RO\\BOX<br>
+                2. Hold down the BOOTSEL button on your RO\\BOX<br> 
+                3. While holding the BOOTSEL button, connect the USB cable to your RO\\BOX<br>
+                4. Release the BOOTSEL button<br>
+                5. Click the 'Retry' button below to check if your RO\\BOX is now in BOOTSEL mode
+        `,
+        "button": "Retry",
+    },
+    "uf2-web": {
+        "title": "Could not flash UF2",
+        "text": "Unfortunately we could not fetch the UF2 file from our servers, please report this!.",
+        "button": "Close",
+    },
+    "file-failure": {
+        "title": "Failed to write UF2 file",
+        "text": "Unfortunately we could not write the UF2 file to your RO\\BOX. Please ensure you selected the RPI-RP2 drive and try again.",
+        "button": "Retry",
+    },
+    "write-failure": {
+        "title": "Failed to write UF2 file",
+        "text": "Unfortunately we could not write the UF2 file to your RO\\BOX. Please try again.",
+        "button": "Retry",
+    },
+    "success": {
+        "title": "RO\\BOX successfully flashed!",
+        "text": "Your RO\\BOX has been successfully flashed with the latest firmware! You can now close this dialog and start using your RO\\BOX.",
+        "button": "Close",
+    },
+    "default": {
+        "title": "RO\\BOX Flashing Error",
+        "text": "An unknown error occurred while flashing your RO\\BOX. Please try again or contact support.",
+        "button": "Close",
+    },
+
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     const outcomeModal = document.querySelector("dialog#bootsel-outcome") as HTMLDialogElement | null;
     const outcomeText = outcomeModal?.querySelector("#bootsel-outcome-text") as HTMLElement | null;
@@ -117,45 +157,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function flashFailure(failure: string) {
         if (!outcomeModal || !outcomeText || !outcomeButton || !outcomeTitle) return;
         outcomeModal.setAttribute("failure", failure);
-        switch (failure) {
-            case "no-device":
-                outcomeTitle.textContent = "RO\\BOX not in BOOTSEL mode";
-                outcomeText.innerHTML = "Unfortunately that did not work! Please follow the following instructions to manually boot your RO\\BOX into BOOTSEL mode<br>" +
-                    "1. Disconnect the USB cable from your RO\\BOX<br>" +
-                    "2. Hold down the BOOTSEL button on your RO\\BOX<br>" +
-                    "3. While holding the BOOTSEL button, connect the USB cable to your RO\\BOX<br>" +
-                    "4. Release the BOOTSEL button<br>" +
-                    "5. Click the 'Retry' button below to check if your RO\\BOX is now in BOOTSEL mode";
-                outcomeButton.textContent = "Retry"; 
-                outcomeModal.showModal();
-                break
-            case "uf2-web":
-                outcomeTitle.textContent = "Could not flash UF2";
-                outcomeText.textContent = "Unfortunately we could not fetch the UF2 file from our servers, please report this!.";
-                outcomeButton.textContent = "Close";
-                outcomeModal.showModal();
-                break;
-            case "file-failure": //When the user does not select a folder or the folder is not the RPI-RP2
-                outcomeTitle.textContent = "Failed to write UF2 file";
-                outcomeText.textContent = "Unfortunately we could not write the UF2 file to your RO\\BOX. Please ensure you selected the RPI-RP2 drive and try again.";
-                outcomeButton.textContent = "Retry";
-                outcomeModal.showModal();
-                break;
-            case "write-failure": //When the writing fails for some reason
-                outcomeTitle.textContent = "Failed to write UF2 file";
-                outcomeText.textContent = "Unfortunately we could not write the UF2 file to your RO\\BOX. Please try again.";
-                outcomeButton.textContent = "Retry";
-                outcomeModal.showModal();
-                break;
-            case "success":
-                outcomeTitle.textContent = "RO\\BOX successfully flashed!";
-                outcomeText.textContent = "Your RO\\BOX has been successfully flashed with the latest firmware! You can now close this dialog and start using your RO\\BOX.";
-                outcomeButton.textContent = "Close";
-                outcomeModal.showModal();
-                break;
-
-            default:
-        }
+        
+        const failureData = failureText[failure] || failureText["default"];
+        outcomeTitle.textContent = failureData.title;
+        outcomeText.innerHTML = failureData.text;
+        outcomeButton.textContent = failureData.button;
     }
 
     bootselFlashButton.addEventListener("click", async () => {
