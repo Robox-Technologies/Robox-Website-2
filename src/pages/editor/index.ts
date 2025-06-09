@@ -149,11 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!calibrateButton) return
     if (!calibrateModal) return
     calibrateButton.addEventListener("click", () => {
-        if (calibrateModal.hasAttribute("open")) {
-            calibrateModal.close()
-        } else {
-            calibrateModal.showModal()
-        }
+        calibrateModal.showModal()
     })
     calibrateModal.addEventListener("close", () => {
         if (calibrateModal.querySelector("#calibrate-button[calibrating]")) {
