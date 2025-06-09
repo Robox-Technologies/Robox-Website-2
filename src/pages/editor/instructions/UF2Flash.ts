@@ -74,27 +74,38 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         const uf2Buffer = await response.arrayBuffer();
+        stage2Modal.setAttribute("loading", "");
         // Open the file picker dialog
-        const dirHandle = await window.showDirectoryPicker();
+        let dirHandle: FileSystemDirectoryHandle | null = null;
+        try {
+            dirHandle = await window.showDirectoryPicker();
+        }
+        catch (error) {
+
+            flashFailure("file-failure");
+            return stage2Modal.close();
+        }
         if (!dirHandle.name.includes("RPI-RP2")) {
             flashFailure("file-failure");
-            stage2Modal.close();
-            return;
+            return stage2Modal.close();
         }
-        stage2Modal.setAttribute("loading", "");
         const fileHandle = await dirHandle.getFileHandle("robox.uf2", { create: true });
         const writable = await fileHandle.createWritable();
+        if (!writable) {
+            flashFailure("file-failure");
+            return stage2Modal.close();
+        }
         try {
             await writable.write(uf2Buffer);
             await writable.close();
             // Successfully written the UF2 file
             stage2Modal.removeAttribute("loading");
-            stage2Modal.close();
             flashFailure("success");
-            outcomeModal.showModal();
+            return stage2Modal.close();
         } catch (error) {
             console.error("Failed to write the UF2 file:", error);
-            flashFailure("file-failure");
+            flashFailure("write-failure");
+            return stage2Modal.close();
         }
     });
 
@@ -104,9 +115,9 @@ document.addEventListener("DOMContentLoaded", () => {
             await navigator.usb.requestDevice({ filters: [{ vendorId: 0x2e8a }] });
         } catch (error) {
             stage1Modal.removeAttribute("loading");
-            stage1Modal.close();
+
             flashFailure("no-device");
-            return;
+            return stage1Modal.close();
         }
         const bootselSpin = autoBootselButton.querySelector(".fa-spinner") as HTMLElement | null;
         if (!bootselSpin) return;
@@ -155,21 +166,28 @@ document.addEventListener("DOMContentLoaded", () => {
             outcomeModal.close();
         }
         else if (failure === "file-failure" || failure === "write-failure") { // When they cannot write the UF2 file
-            outcomeModal.close();
-            stage2Modal.showModal(); // Reopen the stage 2 modal to try again
+            outcomeModal.setAttribute("loading", ""); // Set the loading attribute to show the spinner
+            outcomeButton.disabled = true; // Disable the button to prevent multiple clicks
+            fileOpenButton.click(); // Trigger the file open button to try again
+
         }
         else if (failure === "success") { // When they successfully flashed the RO\\BOX
             outcomeModal.close();
         }
     });
     function flashFailure(failure: failures) {
-        if (!outcomeModal || !outcomeText || !outcomeButton || !outcomeTitle) return;
+        if (!outcomeModal || !outcomeText || !outcomeButton || !outcomeTitle || !stage1Modal || !stage2Modal) return;
+        outcomeModal.removeAttribute("loading");
+        outcomeButton.disabled = false; // Enable the button again
+        stage1Modal.removeAttribute("loading");
+        stage2Modal.removeAttribute("loading");
         outcomeModal.setAttribute("failure", failure);
         
         const failureData = failureText[failure] || failureText["default"];
         outcomeTitle.textContent = failureData.title;
         outcomeText.innerHTML = failureData.text;
-        outcomeButton.textContent = failureData.button;
+        outcomeButton.innerHTML = `${failureData.button}<i class="fa-solid fa-spinner fa-spin"></i>`;
+        outcomeModal.showModal();
     }
 
     bootselFlashButton.addEventListener("click", async () => {
