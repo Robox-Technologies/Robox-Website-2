@@ -62,7 +62,7 @@
             </div>
         </div>
         <div id="description">
-            <%~ description %>
+            <% /* <%~ description %> */ %>
         </div>
     </article>
 
