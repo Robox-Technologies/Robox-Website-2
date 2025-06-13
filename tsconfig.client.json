@@ -1,0 +1,19 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "build/client",
+        "module": "ESNext",
+        "baseUrl": ".",
+        "target": "ES2022"
+    },
+    "include": [
+        "src/**/*",
+        "types/**/*",
+    ],
+    "exclude": [
+        "node_modules",
+        "server.ts",
+        "store.ts",
+        "stripe.js"
+    ]
+}

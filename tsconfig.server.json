@@ -1,0 +1,19 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "build/server",
+        "baseUrl": ".",
+        "module": "preserve",
+        "target": "ES2022"
+    },
+    "include": [
+        "server.ts",
+        "store.ts",
+        "stripe.js",
+        "types/**/*",
+    ],
+    "exclude": [
+        "node_modules",
+        "src"
+    ]
+}

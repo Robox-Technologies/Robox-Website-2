@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+        "module": "ESNext",        // ✅ must be ESNext, ES2022, or ES6 — NOT "CommonJS"
+        "target": "ES2022",        // ✅ or ESNext
+        "moduleResolution": "bundler", // optional but preferred for ESM in bundlers
+        "outDir": "build",
+        "sourceMap": true,
+        "inlineSources": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "typeRoots": [
+            "./node_modules/@types",
+            "./@types"
+        ],
+        "paths": {
+            "@types/*": ["@types/*"] // ✅ allows importing from @types/ as if it were the root
+        }
+    },
+}
