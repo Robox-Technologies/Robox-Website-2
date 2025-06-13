@@ -11,11 +11,11 @@ import {toolbox} from "./blockly/toolbox"
 import "./blockly/toolboxStyling"
 
 import { CustomUndoControls, CustomZoomControls } from './blockly/customUI';
-import { MyWorkspace } from '../../@types/blockly';
+import { MyWorkspace } from 'types/blockly';
 
 
 
-import { Project } from '../../@types/projects';
+import { Project } from 'types/projects';
 import { getProject, loadBlockly, saveBlockly, renameProject, downloadBlocklyProject } from '../../root/serialization';
 
 import {registerFieldColour} from '@blockly/field-colour';
