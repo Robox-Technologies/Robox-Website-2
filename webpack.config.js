@@ -159,17 +159,29 @@ export default (async () => {
                     use: ['css-loader', 'sass-loader']
                 },
                 {
-                    test: /\.(jpe?g|png|svg|gif|mp3|json)$/i,
-                    type: 'asset/resource',
-                    generator: {
-                        filename: "public/images/[name].[contenthash:8][ext]"
-                    }
-                },
-                {
                     test: /\.svg$/i,
                     resourceQuery: /raw/,
                     type: 'asset/source'
-                }
+                },
+                {
+                    test: /\.svg$/i,
+                    type: 'asset/resource',
+                    generator: {
+                        filename: 'public/images/[name]-[contenthash:8].[ext]', 
+                    },
+                },
+                {
+                    test: /\.(gif|png|jpe?g|ico|webp)$/i,
+                    type: 'asset/resource',
+                    use: {
+                        loader: 'responsive-loader',
+                        options: {
+                            name: 'public/images/[name]-[contenthash:8].[ext]',
+                            format: "webp"
+                        },
+                    }
+                },  
+                
             ]
         },
         context: path.resolve(__dirname, '.'),
