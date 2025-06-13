@@ -34,14 +34,17 @@ const cacheProducts = process.env.CACHE_MODE === "true"
 
 //Getting all the pages in src/pages and keeping the structure
 const pagesDir = path.resolve(__dirname, "src/pages");
-
+const pages = findHtmlPages(pagesDir).map((file) => {
+    return {import: file, filename: file}
+})
 
 //Creating all the guide pages from markdown to html
-const markdownGuides = fs.readdirSync(path.resolve(__dirname, "src/guides"));
+// const markdownGuides = fs.readdirSync(path.resolve(__dirname, "src/guides"));
 
 
-let dynamicPages: templatePage[] = []
-createPages(markdownGuides, "src/templates/guide.html", {});
+let dynamicPages: templatePage[] = [...pages]
+
+// createPages(markdownGuides, "src/templates/guide.html", {});
 
 
 async function processProducts(cache: boolean) {
@@ -54,115 +57,140 @@ async function processProducts(cache: boolean) {
         products = JSON.parse(fs.readFileSync("products.json", "utf8"))
     }
     let storePages = products.map((product) => `./src/pages/shop/product/${product.internalName}.html`);
-    let storeData: TemplateData = storePages.map((page) => {
+    let storeData: TemplateData = storePages.reduce((acc, page) => {
         let productName = path.parse(page).name;
         let product = products.find((p) => {
             if (!p.internalName) return false
-            return p.internalName === productName
+            return acc
         });
         if (!product) {
             console.warn(`Product ${productName} not found in products list.`);
-            return {};
+            return acc;
         }
         let productData: TemplateData = {
             product: product,
             images: []
         }
-        let productImagesPath = `./src/pages/shop/product/images/${product.internalName}`;
+        let productImagesPath = `src/pages/shop/product/images/${product.internalName}`;
         if (fs.existsSync(productImagesPath)) {
             productData.images = fs.readdirSync(productImagesPath).map((file) => path.parse(file).base)
         } else {
             console.warn(`Images do not exist for ${product.name}`)
         }
-        if (!product.internalName) return
-        return { [product.internalName]: productData };
-    })
-    createPages(storePages, "src/templates/product.html", storeData);
+        if (!product.internalName) return acc
+        acc[product.internalName] = productData
+        return acc
+    }, {})
+    createPages(storePages, "./src/pages/shop/product/product.eta", storeData);
     return products
 }
-
-const products = await processProducts(cacheProducts);
-
-
-console.log(dynamicPages)
-const config = {
-    mode: 'development',
-    devtool: 'source-map',
-    resolve: {
-        alias: {
-            "@images": path.join(__dirname, 'src/images/'),
-            "@partials": path.join(__dirname, 'src/partials/'),
-            "@root": path.join(__dirname, 'src/root/'),
-            "@types": path.join(__dirname, '@types/')
+export default (async () => {
+    const products = await processProducts(cacheProducts);
+    console.log(dynamicPages)
+    const config = {
+        mode: 'development',
+        devtool: 'source-map',
+        resolve: {
+            alias: {
+                "@images": path.join(__dirname, 'src/images/'),
+                "@partials": path.join(__dirname, 'src/partials/'),
+                "@root": path.join(__dirname, 'src/root/'),
+                "@types": path.join(__dirname, '@types/')
+            },
+            extensions: ['.tsx', '.ts', '.js', ".json"],
         },
-        extensions: ['.tsx', '.ts', '.js', ".json"],
-    },
-    plugins: [
-        new HtmlBundlerPlugin({
-            entry: "src/pages/",//htmlPages,
-            js: {
-                filename: 'public/js/[name].[contenthash:8].js', // output into dist/assets/js/ directory
-            },
-            css: {
-                filename: 'public/css/[name].[contenthash:8].css', // output into dist/assets/css/ directory
-            },
-            filename: ({ filename, chunk}) => {
-                return '[name].html';
-            },
-            data: {
-                products,
-            },
-            loaderOptions: {
-                sources: [
-                    {
-                        tag: 'lottie-player',
-                        attributes: ['src'],
-                    },
-                    {
-                        tag: 'meta',
-                        attributes: ['content'],
-                        filter: (tag) => {
-                            return tag.attributes.name === 'twitter:image' || tag.attributes.property === 'og:image';
+        plugins: [
+            new HtmlBundlerPlugin({
+                entry: dynamicPages,
+                js: {
+                    filename: 'public/js/[name].[contenthash:8].js', // output into build/assets/js/ directory
+                },
+                css: {
+                    filename: 'public/css/[name].[contenthash:8].css', // output into build/assets/css/ directory
+                },
+                filename: ({ filename, chunk}) => {
+                    return '[name].html';
+                },
+                data: {
+                    products,
+                },
+                loaderOptions: {
+                    sources: [
+                        {
+                            tag: 'lottie-player',
+                            attributes: ['src'],
                         },
-                    },
-                ],
-            },
-        })
-    ],
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/,
-                use: [
-                    {
-                        loader: 'ts-loader',
-                        options: {
-                            configFile: 'tsconfig.client.json',
+                        {
+                            tag: 'meta',
+                            attributes: ['content'],
+                            filter: (tag) => {
+                                return tag.attributes.name === 'twitter:image' || tag.attributes.property === 'og:image';
+                            },
                         },
-                    },
-                ],
-            },
-            {
-                test: /\.s?css$/,
-                use: ['css-loader', 'sass-loader'],
-            },
-            {
-                test: /\.(jpe?g|png|svg|gif|mp3|json)$/i,
-                type: "asset/resource",
-            },
-            {
-                test: /\.svg$/i,
-                resourceQuery: /raw/, // *.svg?raw
-                type: 'asset/source',
-            }
+                    ],
+                },
+            })
         ],
-    },
-    output: {
-        clean: true,
-        devtoolModuleFilenameTemplate: '[absolute-resource-path]',
-        publicPath: '/'
+        module: {
+            rules: [
+                {
+                    test: /\.tsx?$/,
+                    use: [
+                        {
+                            loader: 'ts-loader',
+                            options: {
+                                configFile: 'tsconfig.client.json',
+                            },
+                        },
+                    ],
+                },
+                {
+                    test: /\.s?css$/,
+                    use: ['css-loader', 'sass-loader'],
+                },
+                {
+                    test: /\.(jpe?g|png|svg|gif|mp3|json)$/i,
+                    type: "asset/resource",
+                },
+                {
+                    test: /\.svg$/i,
+                    resourceQuery: /raw/, // *.svg?raw
+                    type: 'asset/source',
+                }
+            ],
+        },
+        output: {
+            clean: true,
+            publicPath: '/public',
+            path: path.resolve(__dirname, "build/website/"),
+        }
+    };
+    return config;
+})();
+
+function findHtmlPages(rootDir: string): string[] {
+    const result: string[] = [];
+
+    function searchDir(currentDir: string) {
+        const entries = fs.readdirSync(currentDir, { withFileTypes: true });
+
+        for (const entry of entries) {
+            const fullPath = path.join(currentDir, entry.name);
+
+            if (entry.isDirectory()) {
+                searchDir(fullPath);
+            } else if (entry.isFile() && fullPath.endsWith(".html")) {
+                result.push(fullPath);
+            }
+        }
     }
-};
+    searchDir(rootDir);
+    return result;
+}
+
+
+
+
 
 function createPages(pages: string[], template: string, data: TemplateData) {
     for (const page of pages) {
@@ -170,13 +198,14 @@ function createPages(pages: string[], template: string, data: TemplateData) {
         const relativePath = path.relative(pagesDir, page); 
         const directoryPath = path.dirname(relativePath);
         const outputPath = path.join(directoryPath, `${pageName}.html`); 
-        
+        console.log(page)
         dynamicPages.push({
             "import": template,
             "filename": outputPath,
-            "data": data[pageName] || {},
+            "data": data[pageName] || {
+                product: false,
+                images: []
+            },
         });
     }
 }
-
-export default config;
