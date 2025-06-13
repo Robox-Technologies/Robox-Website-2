@@ -15,8 +15,5 @@
             "./node_modules/@types",
             "./@types"
         ],
-        "paths": {
-            "@types/*": ["@types/*"] // ✅ allows importing from @types/ as if it were the root
-        }
     },
 }

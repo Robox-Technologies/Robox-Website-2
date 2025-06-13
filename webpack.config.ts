@@ -1,9 +1,6 @@
 import path from 'path';
 import fs from 'fs'
 import HtmlBundlerPlugin from "html-bundler-webpack-plugin"
-// @ts-ignore
-
-import MarkdownIt from 'markdown-it'
 
 import { unified } from 'unified'
 import rehypeDocument from 'rehype-document'
@@ -13,10 +10,13 @@ import rehypeStringify from 'rehype-stringify'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import sectionize from 'remark-sectionize'
-// @ts-ignore
 
-import { getProductList } from './build/stripehelper.js';
 
+import { getProductList } from './stripe-helper';
+
+import { Product } from './types/api';
+
+import { templatePage, TemplateData } from './types/webpack';
 
 const storeProcessor = unified()
     .use(remarkParse)
@@ -30,64 +30,59 @@ const storeProcessor = unified()
 
 
 const __dirname = path.resolve();
-const cacheProducts = process.env.CACHE_MODE
+const cacheProducts = process.env.CACHE_MODE === "true"
 
 //Getting all the pages in src/pages and keeping the structure
 const pagesDir = path.resolve(__dirname, "src/pages");
-const pagesHtmlFiles = getHtmlFiles("./src/pages", pagesDir);
+
 
 //Creating all the guide pages from markdown to html
 const markdownGuides = fs.readdirSync(path.resolve(__dirname, "src/guides"));
-// @ts-ignore
 
-let dynamicPages = []
+
+let dynamicPages: templatePage[] = []
 createPages(markdownGuides, "src/templates/guide.html", {});
-// @ts-ignore
 
-async function processProducts(cache) {
-    let productMap = {}
-    let products;
 
+async function processProducts(cache: boolean) {
+    let products: Product[] = [];
     if (cache) {
         products = await getProductList()
         fs.writeFileSync("products.json", JSON.stringify(products), "utf8")
-    } else {
-// @ts-ignore
-
-        products = JSON.parse(fs.readFileSync("products.json"))
+    } 
+    else {
+        products = JSON.parse(fs.readFileSync("products.json", "utf8"))
     }
-// @ts-ignore
-
     let storePages = products.map((product) => `./src/pages/shop/product/${product.internalName}.html`);
-// @ts-ignore
-
-    let storeData = storePages.map((page) => {
+    let storeData: TemplateData = storePages.map((page) => {
         let productName = path.parse(page).name;
-// @ts-ignore
-
-        let product = products.find((p) => p.internalName === productName);
-        let productData = {
+        let product = products.find((p) => {
+            if (!p.internalName) return false
+            return p.internalName === productName
+        });
+        if (!product) {
+            console.warn(`Product ${productName} not found in products list.`);
+            return {};
+        }
+        let productData: TemplateData = {
             product: product,
             images: []
         }
         let productImagesPath = `./src/pages/shop/product/images/${product.internalName}`;
         if (fs.existsSync(productImagesPath)) {
-// @ts-ignore
-
             productData.images = fs.readdirSync(productImagesPath).map((file) => path.parse(file).base)
         } else {
             console.warn(`Images do not exist for ${product.name}`)
         }
-// @ts-ignore
-
-        return {[[product.internalName]]: productData};
+        if (!product.internalName) return
+        return { [product.internalName]: productData };
     })
-    createPages(storePages, "src/templates/product.html", Object.assign({}, ...storeData));
+    createPages(storePages, "src/templates/product.html", storeData);
     return products
 }
 
 const products = await processProducts(cacheProducts);
-// @ts-ignore
+
 
 console.log(dynamicPages)
 const config = {
@@ -111,9 +106,7 @@ const config = {
             css: {
                 filename: 'public/css/[name].[contenthash:8].css', // output into dist/assets/css/ directory
             },
-// @ts-ignore
-
-            filename: ({ filename, chunk: { name } }) => {
+            filename: ({ filename, chunk}) => {
                 return '[name].html';
             },
             data: {
@@ -170,39 +163,14 @@ const config = {
         publicPath: '/'
     }
 };
-// @ts-ignore
 
-function getHtmlFiles(directory, rootDir) {
-// @ts-ignore
-
-    let files = [];
-
-    fs.readdirSync(directory, { withFileTypes: true }).forEach((dirent) => {
-        const fullPath = path.join(directory, dirent.name);
-        if (dirent.isDirectory()) {
-// @ts-ignore
-
-            files = [...files, ...getHtmlFiles(fullPath, rootDir)];
-        } 
-        else if (dirent.name.endsWith(".html")) {
-            const relativePath = path.relative(rootDir, fullPath); // Preserve structure after rootDir
-            // @ts-ignore
-            files.push({ import: fullPath, filename: relativePath });
-        }
-    });
-// @ts-ignore
-
-    return files;
-};
-// @ts-ignore
-
-function createPages(pages, template, data) {
+function createPages(pages: string[], template: string, data: TemplateData) {
     for (const page of pages) {
         const pageName = path.parse(page).name; 
         const relativePath = path.relative(pagesDir, page); 
         const directoryPath = path.dirname(relativePath);
         const outputPath = path.join(directoryPath, `${pageName}.html`); 
-        // @ts-ignore
+        
         dynamicPages.push({
             "import": template,
             "filename": outputPath,
