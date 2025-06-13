@@ -14,11 +14,10 @@ import sectionize from 'remark-sectionize';
 
 
 const storeProcessor = unified()
+    .use(sectionize)
     .use(remarkParse)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
-    .use(sectionize)
-    .use(rehypeDocument)
     .use(rehypeFormat)
     .use(rehypeStringify);
 
@@ -27,7 +26,8 @@ const cacheProducts = process.env.CACHE_MODE === 'true';
 
 const pagesDir = path.resolve(__dirname, 'src/pages');
 const pages = findHtmlPages(pagesDir).map((file) => {
-    return { import: file, filename: file };
+    const relative = path.relative(pagesDir, file);
+    return { import: file, filename: relative };
 });
 
 let dynamicPages = [...pages];
@@ -41,22 +41,25 @@ async function processProducts(cache) {
         products = JSON.parse(fs.readFileSync('products.json', 'utf8'));
     }
 
-    let storePages = products.map(
+    const storePages = products.map(
         (product) => `./src/pages/shop/product/${product.internalName}.html`
     );
 
-    let storeData = storePages.reduce((acc, page) => {
+    let storeData = {};
+
+    for (const page of storePages) {
         const productName = path.parse(page).name;
         const product = products.find((p) => p.internalName === productName);
 
         if (!product) {
             console.warn(`Product ${productName} not found in products list.`);
-            return acc;
+            continue;
         }
 
         let productData = {
             product,
-            images: []
+            images: [],
+            description: false,
         };
 
         const productImagesPath = `src/pages/shop/product/images/${product.internalName}`;
@@ -68,13 +71,23 @@ async function processProducts(cache) {
             console.warn(`Images do not exist for ${product.name}`);
         }
 
-        acc[product.internalName] = productData;
-        return acc;
-    }, {});
+        const productDescriptionPath = `src/pages/shop/product/descriptions/${product.internalName}.md`;
+        if (fs.existsSync(productDescriptionPath)) {
+            const markdownDescription = fs.readFileSync(productDescriptionPath, "utf-8");
+            const processed = await storeProcessor.process(markdownDescription);
+            productData.description = processed.toString();
+        } else {
+            console.warn(`Description does not exist for ${product.name}`);
+        }
+
+        storeData[product.internalName] = productData;
+    }
 
     createPages(storePages, './src/pages/shop/product/product.eta', storeData);
+
     return products;
 }
+
 
 export default (async () => {
     const products = await processProducts(cacheProducts);
@@ -123,9 +136,10 @@ export default (async () => {
                             }
                         }
                     ]
-                }
+                },
             })
         ],
+        
         module: {
             rules: [
                 {
@@ -146,7 +160,10 @@ export default (async () => {
                 },
                 {
                     test: /\.(jpe?g|png|svg|gif|mp3|json)$/i,
-                    type: 'asset/resource'
+                    type: 'asset/resource',
+                    generator: {
+                        filename: "public/images/[name].[contenthash:8][ext]"
+                    }
                 },
                 {
                     test: /\.svg$/i,
@@ -155,9 +172,9 @@ export default (async () => {
                 }
             ]
         },
+        context: path.resolve(__dirname, '.'),
         output: {
             clean: true,
-            publicPath: '/public',
             path: path.resolve(__dirname, 'build/website/')
         }
     };
@@ -192,8 +209,6 @@ function createPages(pages, template, data) {
         const relativePath = path.relative(pagesDir, page);
         const directoryPath = path.dirname(relativePath);
         const outputPath = path.join(directoryPath, `${pageName}.html`);
-
-        console.log(page);
         dynamicPages.push({
             import: template,
             filename: outputPath,
