@@ -1,9 +1,15 @@
 import stripe, { Stripe } from 'stripe'
-import { ProductStatus } from 'types/api'
+import { ProductStatus, Product } from 'types/api'
 import 'dotenv/config'
 
 
 export const stripeAPI = new stripe(process.env.STRIPE_KEY)
+const displayStatusMap: { [K in ProductStatus]: string } = {
+    "available": "Available for Purchase",
+    "not-available": "Out of Stock",
+    "preorder": "Pre-order Now",
+};
+
 
 export async function getAllStripe(type: "price"): Promise<Stripe.Price[]>;
 export async function getAllStripe(type: "product"): Promise<Stripe.Product[]>;
@@ -51,13 +57,12 @@ async function recursiveItemGrab(API: Stripe.PricesResource | Stripe.ProductsRes
 
 function isValidStatus(status: ProductStatus | string): status is ProductStatus {
     if (typeof status !== "string") return false;
-    status = status.toLowerCase();
     // Check if the status is one of the valid statuses
     return ["available", "not-available", "preorder"].includes(status);
 }
 
 
-export async function getProduct(id: string) {
+export async function getProduct(id: string): Promise<Product | false> {
     try {
         if (id === "quantity") return false
         let product = await stripeAPI.products.retrieve(id);
@@ -77,7 +82,7 @@ export async function getProduct(id: string) {
         }
         return {
             name: product.name,
-            description: product.description,
+            description: product.description ?? "",
             images: product.images,
             price_id: price.id,
             price: price.unit_amount / 100,
@@ -89,27 +94,18 @@ export async function getProduct(id: string) {
         return false
     }
 }
-export async function getProductList() {
+
+export async function getProductList(): Promise<Product[]> {
     let products = await getAllStripe("product");
     let prices = await getAllStripe("price");
-    let productList = [];
+    let productList: Product[] = [];
     for (let i = 0; i < products.length; i++) {
-        const status = isValidStatus(products[i].metadata.status) ? products[i].metadata.status : undefined;
-        if (!status || !products[i].active) {
+        const status = products[i].metadata.status ?? undefined;
+        if (!isValidStatus(status)) {
+            console.error(`Product ${products[i].id} does not have a valid status`);
             continue;
         }
-        
-        let displayStatus = "On Backorder";
-        switch (status) {
-            case "available":
-                displayStatus = "Available - Ready to Ship";
-                break;
-            case "preorder":
-                displayStatus = "Preorder";
-                break;
-            default:
-                break;
-        }
+        let displayStatus = displayStatusMap[status] ?? "Unknown Status";
         productList.push({
             name: products[i].name,
             internalName: products[i].name.replaceAll(" ", "-").replaceAll("/", "").toLowerCase(), // Use this for filenames
