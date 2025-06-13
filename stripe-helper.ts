@@ -1,11 +1,13 @@
-import stripe from 'stripe'
+import stripe, { Stripe } from 'stripe'
+import { ProductStatus } from 'types/api'
 import 'dotenv/config'
 
-// @ts-ignore
-export const stripeAPI = new stripe(process.env.STRIPE_KEY)
-// @ts-ignore
 
-export async function getAllStripe(type) {
+export const stripeAPI = new stripe(process.env.STRIPE_KEY)
+
+export async function getAllStripe(type: "price"): Promise<Stripe.Price[]>;
+export async function getAllStripe(type: "product"): Promise<Stripe.Product[]>;
+export async function getAllStripe(type: "price" | "product"): Promise<Stripe.Price[] | Stripe.Product[]> {
     if (type === "price") {
         return await recursiveItemGrab(stripeAPI.prices)
     }
@@ -13,36 +15,49 @@ export async function getAllStripe(type) {
         return await recursiveItemGrab(stripeAPI.products)
     }
 }
-// @ts-ignore
 
-async function recursiveItemGrab(API) {
-    let item = await API.list();
+async function recursiveItemGrab(API: Stripe.ProductsResource): Promise<Stripe.Product[]>;
+async function recursiveItemGrab(API: Stripe.PricesResource ): Promise<Stripe.Price[]>;
+async function recursiveItemGrab(API: Stripe.PricesResource | Stripe.ProductsResource ): Promise<Stripe.Price[] | Stripe.Product[]> {
+    
+    let item: Stripe.ApiList<Stripe.Price> | Stripe.ApiList<Stripe.Product> = await API.list();
     const itemArray = [...item.data];
     let has_more = item.has_more;
 
     // Continue fetching items until there are no more pages
     while (has_more) {
-        let moreItems = await API.list({
-            starting_after: item.data[item.data.length - 1].id,
-        });
+        let moreItems: Stripe.ApiList<Stripe.Price> | Stripe.ApiList<Stripe.Product>;
+        // Typescript is very dumb and does not recognise they both have starting_after,
+        // trust me remove this if statement and it will not work
+        if (API instanceof Stripe.PricesResource) {
+            moreItems = await API.list({
+                starting_after: item.data[item.data.length - 1].id,
+            });
+        }
+        else {
+            moreItems = await API.list({
+                starting_after: item.data[item.data.length - 1].id,
+            });
+        }
+           
         has_more = moreItems.has_more;
         itemArray.push(...moreItems.data);
+        item = moreItems;
     }
 
-    if (API === stripeAPI.products) {
-        return itemArray;
-    } else {
-        return itemArray; 
-    }
+    return itemArray as Stripe.Price[] | Stripe.Product[];;
 }
-// @ts-ignore
 
-function isValidStatus(status) {
+
+function isValidStatus(status: ProductStatus | string): status is ProductStatus {
+    if (typeof status !== "string") return false;
+    status = status.toLowerCase();
+    // Check if the status is one of the valid statuses
     return ["available", "not-available", "preorder"].includes(status);
 }
-// @ts-ignore
 
-export async function getProduct(id) {
+
+export async function getProduct(id: string) {
     try {
         if (id === "quantity") return false
         let product = await stripeAPI.products.retrieve(id);
@@ -56,13 +71,15 @@ export async function getProduct(id) {
             return false;
         }
         let price = await stripeAPI.prices.retrieve(product.default_price)
+        if (!price || !price.unit_amount) {
+            console.error("Product does not have a valid price")
+            return false;
+        }
         return {
             name: product.name,
             description: product.description,
             images: product.images,
             price_id: price.id,
-// @ts-ignore
-
             price: price.unit_amount / 100,
             item_id: product.id,
             status: status,
@@ -93,14 +110,13 @@ export async function getProductList() {
             default:
                 break;
         }
-
         productList.push({
             name: products[i].name,
             internalName: products[i].name.replaceAll(" ", "-").replaceAll("/", "").toLowerCase(), // Use this for filenames
             description: products[i].description ?? "",
             images: products[i].images,
             price_id: prices[i].id,
-            price: prices[i].unit_amount / 100,
+            price: prices[i].unit_amount ?? 0 / 100,
             item_id: products[i].id,
             status: status,
             displayStatus: displayStatus,
