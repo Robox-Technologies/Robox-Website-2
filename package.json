@@ -3,10 +3,10 @@
   "scripts": {
     "clean": "rimraf build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:client": "NODE_OPTIONS='--require ts-node/register' webpack --mode=production --config webpack.config.ts",
+    "build:client": "webpack --mode=production --config webpack.config.js --watch",
     "build:server": "tsc -p tsconfig.server.json",
     "build": "npm run clean && npm run build:client && npm run build:server",
-    "dev:client": "NODE_OPTIONS=' --import tsx' webpack --disable-interpret --mode=development --config webpack.config.ts --watch",
+    "dev:client": "webpack --mode=development --config webpack.config.js --watch",
     "dev:server": "tsc -w -p tsconfig.server.json",
     "dev": "concurrently \"npm:dev:client\" \"npm:dev:server\" \"nodemon build/server/server.js --watch build/server\"",
     "start": "npm run build && node build/server/server.js",
