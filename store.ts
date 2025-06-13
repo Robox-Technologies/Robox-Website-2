@@ -2,7 +2,7 @@ import cache from 'memory-cache'
 
 // Idk how else to fix this (issue is that stripe.js is not recognised as a module)
 // @ts-ignore
-import { getProduct, getProductList, stripeAPI } from './stripe.js';
+import { getProduct, getProductList, stripeAPI } from './stripe-helper.js';
 
 
 import express from 'express'
