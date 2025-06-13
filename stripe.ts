@@ -1,7 +1,9 @@
 import stripe from 'stripe'
 import 'dotenv/config'
 
+// @ts-ignore
 export const stripeAPI = new stripe(process.env.STRIPE_KEY)
+// @ts-ignore
 
 export async function getAllStripe(type) {
     if (type === "price") {
@@ -11,6 +13,8 @@ export async function getAllStripe(type) {
         return await recursiveItemGrab(stripeAPI.products)
     }
 }
+// @ts-ignore
+
 async function recursiveItemGrab(API) {
     let item = await API.list();
     const itemArray = [...item.data];
@@ -31,10 +35,13 @@ async function recursiveItemGrab(API) {
         return itemArray; 
     }
 }
+// @ts-ignore
 
 function isValidStatus(status) {
     return ["available", "not-available", "preorder"].includes(status);
 }
+// @ts-ignore
+
 export async function getProduct(id) {
     try {
         if (id === "quantity") return false
@@ -54,6 +61,8 @@ export async function getProduct(id) {
             description: product.description,
             images: product.images,
             price_id: price.id,
+// @ts-ignore
+
             price: price.unit_amount / 100,
             item_id: product.id,
             status: status,

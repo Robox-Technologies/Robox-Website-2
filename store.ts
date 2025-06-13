@@ -7,7 +7,7 @@ import { getProduct, getProductList, stripeAPI } from './stripe.js';
 
 import express from 'express'
 import { Request, Response } from 'express';
-import { StripeSuperProduct } from './types/stripe.js';
+import { StripeSuperProduct } from './types/stripe';
 const paymentRouter = express.Router()
 
 const PRODUCT_CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
