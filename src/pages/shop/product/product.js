@@ -4,22 +4,22 @@ import { addCartItem, refreshCart } from "@root/payment.ts"
 const productId = currentProduct["item_id"]
 
 
+const carouselImageContainer = document.getElementById("image-carousel")
 const carouselImages = document.querySelectorAll(".carousel-image")
 const heroImages = document.querySelectorAll(".hero-image")
 
 
 
-const heroNumber = document.getElementById("carousel-number")
 const rightCarouselButton = document.getElementById("carousel-right-button")
 const leftCarouselButton = document.getElementById("carousel-left-button")
 
 rightCarouselButton.addEventListener("click", (e) => {
     if (rightCarouselButton.classList.contains("carousel-button-disabled")) return
-    changeHeroImage(currentIndex+1)
+    changeHeroImage(currentIndex+1, true)
 })
 leftCarouselButton.addEventListener("click", (e) => {
     if (leftCarouselButton.classList.contains("carousel-button-disabled")) return
-    changeHeroImage(currentIndex-1)
+    changeHeroImage(currentIndex-1, true)
 })
 let quantity = 1
 
@@ -51,31 +51,55 @@ addToCartButton.addEventListener("click", (e) => {
     updateInputQuantity(1)
 })
 document.addEventListener("DOMContentLoaded", (event) => {
-
-    
     for (const carouselImage of carouselImages) {
         carouselImage.addEventListener("click", (e) => {
-            let liElement = e.target.closest("li")
-            changeHeroImage(Array.prototype.indexOf.call(liElement.parentNode.children, liElement))
+            let divElement = e.target.closest("div")
+            changeHeroImage(Array.prototype.indexOf.call(divElement.parentNode.children, divElement))
         })
     }
 });
 
 let currentIndex = 0
 
-function changeHeroImage(number) {
+function changeHeroImage(number, autoscroll) {
+    if (number === 0) {
+        leftCarouselButton.classList.add("carousel-button-disabled")
+    } else if (leftCarouselButton.classList.contains("carousel-button-disabled")) {
+        leftCarouselButton.classList.remove("carousel-button-disabled")
+    }
 
-    if (number === 0) leftCarouselButton.classList.add("carousel-button-disabled")
-    else if (leftCarouselButton.classList.contains("carousel-button-disabled")) leftCarouselButton.classList.remove("carousel-button-disabled")
-    if (number === carouselImages.length-1) rightCarouselButton.classList.add("carousel-button-disabled")
-    else if (rightCarouselButton.classList.contains("carousel-button-disabled")) rightCarouselButton.classList.remove("carousel-button-disabled")
-    heroNumber.textContent = `${number+1}/${carouselImages.length}`
-    carouselImages[currentIndex].querySelector("img").classList.remove("selected-carousel")
+    if (number === carouselImages.length-1) {
+        rightCarouselButton.classList.add("carousel-button-disabled")
+    } else if (rightCarouselButton.classList.contains("carousel-button-disabled")) {
+        rightCarouselButton.classList.remove("carousel-button-disabled")
+    }
+
+    let carouselThumb = carouselImages[currentIndex];
+    carouselThumb.querySelector("img").classList.remove("selected-carousel")
+
     document.querySelector(".active")?.classList.remove("active")
     const heroImage = heroImages[number]
     heroImage.classList.add("active")
     carouselImages[number].querySelector("img").classList.add("selected-carousel")
     currentIndex = number
+
+    // Scroll if out of bounds
+    if (autoscroll) {
+        let thumbTop = carouselThumb.offsetTop - carouselThumb.clientHeight*2 - 15;
+        let thumbBottom = carouselThumb.offsetTop + carouselThumb.clientHeight;
+    
+        if (thumbTop < carouselImageContainer.scrollTop) {
+            carouselImageContainer.scrollTo({
+                top: thumbTop,
+                behavior: "smooth",
+            });
+        } else if (thumbBottom > carouselImageContainer.clientHeight + carouselImageContainer.scrollTop) {
+            carouselImageContainer.scrollTo({
+                top: thumbBottom - carouselImageContainer.clientHeight,
+                behavior: "smooth",
+            });
+        }
+    }
 }
 
 const modals = document.querySelectorAll("dialog")
@@ -85,8 +109,7 @@ for (const modal of modals) {
         if (rect.left > event.clientX ||
             rect.right < event.clientX ||
             rect.top > event.clientY ||
-            rect.bottom < event.clientY
-        ) {
+            rect.bottom < event.clientY) {
             modal.close();
         }
     })

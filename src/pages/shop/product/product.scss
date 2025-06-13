@@ -1,46 +1,39 @@
 @use '@root/variables';
 @use '@root/shop';
 
+$carouselThumbnailSize: 115px;
+
 #starter-info {
-    padding: 16px;
-    border-radius: 10px;
     display: flex;
     flex-direction: row;
 
-    gap: 10px;
+    gap: variables.$standardGap;
     width: 100%;
+    margin-bottom: calc(variables.$standardGap * 4);
 }
 
-#important-info {
-    margin-left: variables.$standardGap;
+.carousel-container {
+    display: flex;
+    gap: 10px;
+    min-height: 500px;
+    height: 60vh;
 }
 
 .selected-carousel {
-    border: 3px var(--secondary-bg-color) solid;
-    margin: -3px;
+    filter: brightness(60%);
 }
 .carousel-image {
     cursor: pointer;
 }
 #image-carousel {
-    flex-grow: 0;
-    height: 450px;
-    padding: 3px 0;
-    min-height: 450px;
-    overflow-y: auto;
-    min-width: 120px;
-    list-style-type: none;
     display: flex;
+    flex-shrink: 0;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 4px;
     margin: 0;
     overflow-y: auto;
     overflow-x: hidden;
-}
-#image-carousel > li {
-    width: 115px;
-    height: 65px;
 }
 
 #hero-image-container {
@@ -57,13 +50,20 @@
 .active {
     display: flex;
 }
-.carousel-image > img {
-    object-fit: cover;
-    aspect-ratio: 16/9;
-    width: 115px;
-    height: 70px;
+.carousel-image {
+    width: $carouselThumbnailSize;
+    height: $carouselThumbnailSize;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     border-radius: 8px;
+    border-radius: 8px;
+        border-radius: 8px;
+    }
 }
+
 #status {
     color: #015f27;
 }
@@ -122,9 +122,6 @@
 }
 
 @media only screen and (max-width: 940px) {
-    #starter-info {
-        padding-left: 25px;
-    }
     #starter-info > .vertical-bars {
         display: none;
     }
@@ -141,10 +138,4 @@
         width: 100%;
     }
 
-}
-
-@media only screen and (max-width: 1000px) and (min-width: 940px) {
-    #starter-info {
-        width: 860px;
-    }
 }

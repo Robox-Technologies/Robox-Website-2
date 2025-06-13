@@ -1,7 +1,6 @@
-
 import { getCart } from "@root/payment.ts";
 import {loadStripe} from '@stripe/stripe-js';
-
+import "@root/shop.ts";
 
 
 
@@ -52,7 +51,7 @@ paymentPromises.then((values) => {
         const {error} = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: '/',
+                return_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 receipt_email: email,
             },
         });
@@ -63,66 +62,6 @@ paymentPromises.then((values) => {
         } 
     });
 })
-
-
-
-
-
-getItemData().then(serverProducts => {
-    let reload = false
-    for (const serverProductId in serverProducts) {
-        if (JSON.stringify(serverProducts[serverProductId]) !== JSON.stringify(products[serverProductId]["data"])) {
-            reload = true
-            addCartItem(serverProductId, 0, serverProducts[serverProductId])
-        }
-    }
-    if (reload) window.location.reload()
-})
-
-
-
-
-
-
-
-
-const orderValueLabel = document.querySelector("#order-value-label")
-const orderValue = document.querySelector("#order-value-value")
-const itemisedList = document.querySelector("#itemised-list")
-const totalValue = document.querySelector("#total-value")
-
-const shippingCost = 10
-
-//Calc is short for calculator chat
-function renderCart() {
-
-    orderValueLabel.textContent = `Total ${cart["quantity"]} items:`
-    
-    let cost = 0
-    itemisedList.replaceChildren();
-    let productItemisationNode = document.createElement("li")
-    productItemisationNode.appendChild(document.createElement("p"))
-    productItemisationNode.appendChild(document.createElement("p"))
-    for (const productId in products) {
-        let product = products[productId]["data"]
-        if (!product) continue;
-        let price = product.price
-        let quantity = products[productId]["quantity"]
-        let cloneProductNode = productItemisationNode.cloneNode(true)
-        cloneProductNode.firstChild.textContent = `${quantity} x ${product["name"].toUpperCase()}`
-        cloneProductNode.lastChild.textContent = `$${price*quantity}`
-        if (quantity === 0) {
-            continue;
-        }
-        itemisedList.appendChild(cloneProductNode)
-        cost += price*quantity
-    }
-    orderValue.textContent = `$${cost}`
-    totalValue.textContent = `$${cost+shippingCost}`
-}
-renderCart()
-
-
   
 
 async function getPaymentIntent() {
@@ -142,14 +81,6 @@ async function getPaymentIntent() {
         console.log(err)
     }
    
-}
-async function getItemData() {
-    const promises = Object.keys(products).map((productId) =>
-        fetch(`${window.location.origin}/api/store/products?id=${productId}`).then(async (response) => [productId, await response.json()])
-    );
-
-    const data = await Promise.all(promises);
-    return Object.fromEntries(data)
 }
 
 

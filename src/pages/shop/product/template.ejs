@@ -19,26 +19,28 @@
 
     <article>
         <div id="starter-info">
-            <ul id="image-carousel">
-                <% images.forEach(function(image, index){ %>
-                    <li class="carousel-image" >
-                        <!-- TODO: This should use a lowres thumbnail image -->
-                        <img class="<%= index === 0 ? 'selected-carousel' : ''  %>" loading="<%= index > 6 ? 'lazy' : 'eager'  %>" src="<%= `./images/${product.internalName}/${image}` %>">
-                    </li>
-                <% }) %>
-            </ul>
+            <div class="carousel-container">
+                <div id="image-carousel">
+                    <% images.forEach(function(image, index){ %>
+                        <div class="carousel-image" >
+                            <!-- TODO: This should use a lowres thumbnail image -->
+                            <img class="<%= index === 0 ? 'selected-carousel' : ''  %>" loading="<%= index > 6 ? 'lazy' : 'eager'  %>" src="<%= `./images/${product.internalName}/${image}` %>">
+                        </div>
+                    <% }) %>
+                </div>
 
-            <div id="hero-image-container">
-                <% images.forEach(function(image, index){ %>
-                    <img class="<%= index === 0 ? 'active' : ''  %> hero-image"src="<%= `./images/${product.internalName}/${image}` %>">
-                <% }) %>
-                
-                <button id="carousel-left-button" class="button carousel-button-disabled">
-                    <i class="fa-solid fa-angle-left"></i>
-                </button>
-                <button id="carousel-right-button" class="button <%= images.length === 1 ? 'carousel-button-disabled' : ''  %>">
-                    <i class="fa-solid fa-angle-right"></i>
-                </button>
+                <div id="hero-image-container">
+                    <% images.forEach(function(image, index){ %>
+                        <img class="<%= index === 0 ? 'active' : ''  %> hero-image"src="<%= `./images/${product.internalName}/${image}` %>">
+                    <% }) %>
+                    
+                    <button id="carousel-left-button" class="button carousel-button-disabled">
+                        <i class="fa-solid fa-angle-left"></i>
+                    </button>
+                    <button id="carousel-right-button" class="button <%= images.length === 1 ? 'carousel-button-disabled' : ''  %>">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </button>
+                </div>
             </div>
 
             <div id="important-info">

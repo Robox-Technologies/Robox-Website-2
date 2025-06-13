@@ -1,0 +1,53 @@
+import { addCartItem, getCart } from "./payment";
+
+const orderValue = document.getElementById("order-value") as HTMLParagraphElement
+const totalValue = document.getElementById("total-value") as HTMLParagraphElement
+const shippingValue = document.getElementById("shipping-cost") as HTMLParagraphElement
+
+// MARK: SHIPPING COST
+const shippingCost = 10
+
+export function renderCart() {
+    let products = getCart().products;
+    let cost = 0
+    
+    for (const productId in products) {
+        let product = products[productId]["data"]
+        if (!product) continue;
+        let price = product.price
+        let quantity = products[productId]["quantity"]
+
+        if (quantity < 1) continue;
+
+        cost += price*quantity
+    }
+    orderValue.textContent = `$${cost}`
+    totalValue.textContent = `$${cost+shippingCost}`
+    shippingValue.textContent = `$${shippingCost}`
+}
+
+async function getItemData() {
+    let products = getCart().products;
+
+    const promises = Object.keys(products).map((productId) =>
+        fetch(`${window.location.origin}/api/store/products?id=${productId}`).then(async (response) => [productId, await response.json()])
+    );
+
+    const data = await Promise.all(promises);
+    return Object.fromEntries(data)
+}
+
+
+renderCart();
+
+getItemData().then(serverProducts => {
+    let products = getCart().products;
+    let reload = false
+    for (const serverProductId in serverProducts) {
+        if (JSON.stringify(serverProducts[serverProductId]) !== JSON.stringify(products[serverProductId]["data"])) {
+            reload = true
+            addCartItem(serverProductId, 0, serverProducts[serverProductId])
+        }
+    }
+    if (reload) window.location.reload()
+})

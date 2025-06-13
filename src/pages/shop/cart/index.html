@@ -4,7 +4,7 @@
 
 <head>
     <%~ include('src/partials/metadata.html') %>
-    <script src="cart.js" defer="defer"></script>
+    <script src="cart.js" defer></script>
     <link href="cart.scss" rel="stylesheet" />
     <title>Robox Store</title>
 </head>
@@ -13,93 +13,56 @@
     <%~ include('src/partials/header.html') %>
 
     <article class="content">
-        <h1>
-            My Cart
-        </h1>
+        <h1>My Cart</h1>
+
         <div id="main-content">
         
             <div id="cart-items">
                 <section id="available-section">
-                    <h2 class="cart-section-title">
-                        Available Now
-                    </h2>
-                    <ul class="cart-item-holder"></ul>
+                    <h2 class="cart-section-title">Available Now</h2>
+                    <div class="cart-item-holder"></div>
                 </section>
                 <section id="preorder-section">
-                    <h2 class="cart-section-title">
-                        Preorder Now
-                    </h2>
-                    <ul class="cart-item-holder"></ul>
+                    <h2 class="cart-section-title">Preorder Now</h2>
+                    <div class="cart-item-holder"></div>
                 </section>
             </div>
-            <div id="order-summary">
-                <h2 class="cart-section-title order-title">
-                    Order Summary
-                </h2>
-                <div id="order-body">
-                    <div id="cost-breakdown">
-                        <p id="order-value-label">
-                            Order value () item/s:
-                        </p>
-                        <p id="order-value-value">
-    
-                        </p>
-                        <ul id="itemised-list"></ul>
-                        <hr class="cart-item-break">
-                        <p>
-                            Shipping cost
-                        </p>
-                        <p id="shipping-cost">
-                            $100
-                        </p>
-                        <p>Order Total</p>
-                        <p id="total-value">
-                            ads<br><span style="font-size: x-small; color: grey;"></span>
-                        </p>
-                       
-                    </div>
-
-                    <a id="checkout" class="button" href="/shop/checkout">
-                        Checkout
-                    </a>
-                </div>
-                
-            </div>
+            <%~ include('src/partials/shopSummary.html', { checkoutButton: true }) %>
         </div>
     </article>
     
     <%~ include('src/partials/footer.html') %>
 </body>
 <template id="cart-item">
-    <li class="cart-item">
+    <div class="cart-item">
         <img class="cart-item-photo">
         <div class="cart-item-info">
             <div class="cart-item-text-info">
-                <h4 class="cart-item-text-title">ROBOX 1.0 KIT</h4>
-                <div class="cart-item-text-price">
-                    <p>$99.99</p>
+                <p class="cart-item-text-title"></p>
+                <p class="cart-item-text-subtotal"></p>
+                <p class="cart-item-text-price"></p>
+            </div>
+            
+            <div class="cart-item-actions">
+                <button class="cart-item-delete button">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+
+                <div class="cart-quantity-button">
+                    <button class="button decrease-cart-button">
+                        <i class="fa-solid fa-minus"></i>
+                    </button>
+                    <input type="number" min="0" value="0" placeholder="0" oninput="this.value = Math.abs(this.value)" class="cart-quantity">
+                        
+                    </input>
+                    <button class="button increase-cart-button">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
                 </div>
             </div>
-            
-            <div class="cart-quantity-button">
-                <button class="button decrease-cart-button">
-                    <i class="fa-solid fa-minus"></i>
-                </button>
-                <input type="number" min="0" value="0" placeholder="0" oninput="this.value = Math.abs(this.value)" class="cart-quantity">
-                    
-                </input>
-                <button class="button increase-cart-button">
-                    <i class="fa-solid fa-plus"></i>
-                </button>
-                
-            </div>
-            <button class="cart-item-delete button">
-                <i class="fa-solid fa-trash"></i>
-            </button>
-            
         </div>
         
-    </li>
+    </div>
     <hr class="cart-item-break">
 
 </template>

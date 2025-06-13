@@ -12,7 +12,6 @@
     width: 200px;
     height: 37px;
     justify-content: space-between;
-    border-radius: 5px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -26,6 +25,11 @@
         justify-content: center;
         align-items: center;
         height: 100%;
+
+        i, svg {
+            font-size: 14px;
+            color: variables.$themeBlack;
+        }
     }
 
     .decrease-cart-button {
@@ -54,51 +58,51 @@
 }
 
 #order-summary {
-    background-color: white;
-    height: 675px;
-    flex-grow: 0;
-    flex-direction: column;
-    border-radius: 10px;
-    display: flex;
-    flex-shrink: 0;
-    padding: variables.$standardGap;
-}
+    height: 100%;
 
-#cost-breakdown {
-    flex-grow: 1;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    
-    grid-template-rows: 50px auto 10px 50px 50px;
-
-    .cart-item-break {
-        grid-column: 1 / span 5;
-        margin: 0;
-        align-self: center;
-        grid-row: 10px;
-    }
-
-    p:nth-child(2n +4 of :not(.cart-item-break)), #order-value-label  {
-        grid-column: 1 / span 3;
-    }
-
-    p:nth-child(2n +3 of :not(.cart-item-break)), #order-value-value {
-        text-align: right;
-        grid-column: span 2;
-        line-height:17px;
-    }
-}
-
-#itemised-list {
-    grid-column: span 5;
-    margin-top: 0;
-
-    li {
+    #order-body {
+        background-color: white;
+        flex-direction: column;
+        border-radius: variables.$borderRadius;
         display: flex;
-        justify-content: space-between;
-        flex-direction: row;
+        padding: variables.$standardGap;
+        position: sticky;
+    }
+
+    #cost-breakdown {
+        width: 20vw;
+        min-width: 200px;
+    
+        div.breakdown-row {
+            display: flex;
+            justify-content: space-between;
+    
+            p {
+                white-space: nowrap;
+                margin: 16px 0;
+            }
+    
+            .label {
+                text-align: left;
+                flex-grow: 1;
+            }
+    
+            .value {
+                text-align: right;
+            }
+
+            .total-row {
+                font-weight: 800;
+            }
+        }
+    }
+
+    #checkout {
+        text-align: center;
+        line-height: 46px;
     }
 }
+
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -110,4 +114,14 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+@media only screen and (max-width: 900px) {
+    #main-content {
+        flex-direction: column;
+    }
+
+    #order-summary, #order-body, #order-summary #cost-breakdown {
+        width: 100%;
+    }
 }

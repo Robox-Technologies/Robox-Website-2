@@ -11,6 +11,10 @@ body {
     background-image: none !important;
 }
 
+label {
+    @include variables.bodyFont;
+}
+
 #email-label {
     @include variables.bodyFont;
 
@@ -20,7 +24,7 @@ body {
 #email {
     background-color: #f1f1f1;
     border: #f1f1f1;
-    margin: 0;
+    margin-bottom: 12px;
     padding: 16px;
     font-weight: 400;
     color: #30313d;;
@@ -38,17 +42,13 @@ body {
     border-radius: 10px;
 }
 #payment-form {
-    padding: 10px;
     height: auto;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }   
 #submit {
-    margin-top: auto;
-    background-color: var(--secondary-bg-color);
-    padding: 15px;
-    border-radius: 20px;
+    margin-top: variables.$standardGap;
 }
 #spinner {
     font-size: 40px;
@@ -95,6 +95,10 @@ body {
 
 @media only screen and (max-width: 900px) {
     #main-content {
-        flex-direction: column;
+        flex-direction: column-reverse;
+    }
+
+    #payment-card {
+        width: 100%;
     }
 }

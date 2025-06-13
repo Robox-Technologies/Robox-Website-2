@@ -111,15 +111,17 @@ header {
 
 .btn.store {
     background: variables.$themeRed;
+    color: variables.$primary;
     border: none;
     border-radius: 6px;
-    padding: 8px 24px;
+    padding: 4px 24px;
 }
 
 
 #cart {
     position: relative;
     text-decoration: none;
+    transform: translateY(6px);
 
     i, svg {
         color: variables.$primary;
@@ -159,6 +161,15 @@ header {
         .ctaButtons > a {
             display: none;
         }
+
+        #cart {
+            display: block;
+        }
+    }
+
+    .btn.store {
+        padding: 8px;
+        text-align: center;
     }
 }
 
