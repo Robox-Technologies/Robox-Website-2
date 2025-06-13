@@ -8,7 +8,7 @@
         "inlineSources": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
-        "strict": true,
+        "strict": false,
         "forceConsistentCasingInFileNames": true,
         "skipLibCheck": true,
         "typeRoots": [

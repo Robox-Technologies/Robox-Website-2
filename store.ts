@@ -14,7 +14,7 @@ const PRODUCT_CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
 const verifiedProducts = await getProductList()
 
 
-// paymentRouter.use(express.static('./dist'))
+
 
 paymentRouter.post("/create", async (req: Request, res: Response): Promise<void> => {
     let products = req.body.products

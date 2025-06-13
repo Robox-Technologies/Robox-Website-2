@@ -12,10 +12,10 @@ app.use(express.json());
 
 app.use("/api/store", paymentRouter);
 
-app.use("/", express.static("./dist"));
+app.use("/", express.static("./build/website"));
 
 // 404
-const path404 = path.join(__dirname + '/dist/404.html');
+const path404 = path.join(__dirname + '/build/website/404.html');
 
 app.get('*', (_, res) => {
     res.sendFile(path404);
