@@ -1,5 +1,5 @@
 {
-  "compilerOptions": {
+    "compilerOptions": {
         "module": "ESNext",        // ✅ must be ESNext, ES2022, or ES6 — NOT "CommonJS"
         "target": "ES2022",        // ✅ or ESNext
         "moduleResolution": "bundler", // optional but preferred for ESM in bundlers

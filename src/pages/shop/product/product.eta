@@ -16,7 +16,6 @@
 
 <body>
     <%~ include('src/partials/header.html') %>
-
     <article>
         <div id="starter-info">
             <div class="carousel-container">
@@ -62,7 +61,7 @@
             </div>
         </div>
         <div id="description">
-            <% /* <%~ description %> */ %>
+            <%~ description %>
         </div>
     </article>
 
