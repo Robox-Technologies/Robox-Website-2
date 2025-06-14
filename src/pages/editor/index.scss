@@ -387,9 +387,8 @@ button[calibrating]:hover {
     background-color: variables.$themeBlue;
     #connect-robox-button {
         display: block;
-    }
-    #download {
-        display: block;
+        width: 100%;
+        border-right: unset;
     }
 }
 
@@ -426,6 +425,8 @@ $settingsToolbarWidth: 200px;
 }
 #connection-managment[status="no-serial"] {
     background-color: variables.$themeYellow;
+    width: 100%;
+    border-right: unset;
     #code-download-robox-button {
         display: block;
     }

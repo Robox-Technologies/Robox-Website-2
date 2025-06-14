@@ -19,6 +19,7 @@ motor_speed = 60
 `
 
 let alreadyDownloaded = false
+let downloadingToPico = false
 
 
 export function postBlocklyWSInjection() {
@@ -48,14 +49,20 @@ export function postBlocklyWSInjection() {
         connectionManagment.setAttribute("loading",  "false")
     })
     pico.addEventListener("download", (event) => {
-        pico.runCode()
-        connectionManagment.setAttribute("status",  "downloaded")
         connectionManagment.setAttribute("loading",  "false")
 
+        if (downloadingToPico) {
+            connectionManagment.setAttribute("status",  "downloaded")
+        }
+        pico.runCode()
+        
+
+    })
+    pico.addEventListener("error", (event) => {
+        connectionManagment.setAttribute("loading",  "false")
     })
     ws.addChangeListener((event) => {
         if (event.isUiEvent ) return; //Checking if this update changed the blocks
-        if (connectionManagment.getAttribute("status") === "downloaded") connectionManagment.setAttribute("status",  "connected") //If they are waiting to run the program then go back to download
         alreadyDownloaded = false //Saying that this workspace has changed
     });
     connectButton?.addEventListener("click", () => {
@@ -71,6 +78,8 @@ export function postBlocklyWSInjection() {
 
     })
     downloadConnectionButton?.addEventListener("click", () => {
+        downloadingToPico = true
+        connectionManagment.setAttribute("loading",  "true")
         sendCode(ws)
     })
     stopButton?.addEventListener("click", () => {

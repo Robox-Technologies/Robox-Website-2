@@ -310,9 +310,7 @@ class USBCommunication {
             this.parent.connect(port)
         })
         .catch((error) => { //User did not select a port (or error connecting) show toolbar?
-            if (error.name === "NotFoundError") return
             this.parent.emit({event: "error", options: {message: "Could not connect to the pico! Try resetting it?"}})
-            console.warn("Could not connect to the port")
             return
         })
     }
