@@ -75,51 +75,19 @@ class RoboxToolboxSeperator extends Blockly.ToolboxSeparator {
 
 
 class RoboxFlyout extends ContinuousFlyout {
-  /** @override */
-  getFlyoutScale(): number {
-    return 0.8;
-  }
-
-  private enforceFixedScale(): void {
-    const fixedScale = this.getFlyoutScale();
-    (this as any).scale = fixedScale;
-
-    if (this.workspace_) {
-      (this.workspace_ as any).scale = fixedScale;
+    /** @override */
+    getFlyoutScale(): number {
+        return 0.8;
     }
-  }
 
-  /** @override */
-  protected reflowInternal_(): void {
-    this.width_ = 300;
-    this.enforceFixedScale();
+    /** @override */
+    protected reflowInternal_(): void {
+        this.width_ = 300;
+        (this as any).scale = this.getFlyoutScale();
+        (this.workspace_ as any).scale = this.getFlyoutScale();
+        // this.targetWorkspace.recordDragTargets()
 
-    requestAnimationFrame(() => {
-      if (this.targetWorkspace) {
-        Blockly.svgResize(this.targetWorkspace);
-      }
-    });
-  }
-
-  /** @override */
-  setMetrics_(xyRatio: any) {
-    this.enforceFixedScale();
-    return super.setMetrics_(xyRatio);
-  }
-
-  /** @override */
-  position() {
-    this.enforceFixedScale();
-    super.position();
-  }
-
-  /** @override */
-  createBlock(blockInfo: any): Blockly.BlockSvg {
-    const block = super.createBlock(blockInfo);
-    // Just in case, forcibly override scale here too
-    this.enforceFixedScale();
-    return block;
-  }
+    }
 }
 
 

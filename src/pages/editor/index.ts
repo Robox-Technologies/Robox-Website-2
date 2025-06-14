@@ -38,7 +38,6 @@ generators.keys().forEach(modulePath => {
     // use generator
 });
 
-
 document.addEventListener("DOMContentLoaded", () => {
     const workspace = Blockly.inject('blocklyDiv', {
         toolbox: toolbox,
@@ -46,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
         plugins: {
             'flyoutsVerticalToolbox': "RoboxFlyout",
             'toolbox': ContinuousToolbox,
+            "MetricsManager": ContinuousMetrics
         },
         zoom: {
             controls: false,
@@ -157,72 +157,6 @@ document.addEventListener("DOMContentLoaded", () => {
             calibrateModal.querySelector("#calibrate-button")?.removeAttribute("calibrating")
         }
     })
-    setupFlyoutHoverPreview(workspace);
 })  
 
 
-
-let previewBlock: Blockly.BlockSvg | null = null;
-
-export function setupFlyoutHoverPreview(workspace: Blockly.WorkspaceSvg): void {
-  const flyout = workspace.getFlyout();
-  const flyoutWs = flyout?.getWorkspace();
-
-  if (!flyoutWs) return;
-
-  flyoutWs.addChangeListener((e: Blockly.Events.Abstract) => {
-    // ✔ FIX 1: Type guard for UI events
-    if (
-      e.isUiEvent &&
-      (e as Blockly.Events.UiBase & { element?: string }).element === 'commentOpen'
-    ) {
-      return;
-    }
-
-    const flyoutBlocks = flyoutWs.getAllBlocks(false);
-
-    for (const block of flyoutBlocks) {
-      const svgRoot = (block as Blockly.BlockSvg).getSvgRoot?.();
-      if (!svgRoot) continue;
-
-      // ✔ FIX 2: Avoid re-attaching events
-      if ((svgRoot as any).__hoverPreviewBound) continue;
-      (svgRoot as any).__hoverPreviewBound = true;
-
-      svgRoot.addEventListener('mouseenter', () => {
-        if (previewBlock) {
-          previewBlock.dispose(false);
-          previewBlock = null;
-        }
-
-        // ✔ FIX 3: Ensure blockToDom returns an Element
-        const xml = Blockly.Xml.blockToDom(block, true) as Element;
-        const newBlock = Blockly.Xml.domToBlock(xml, workspace);
-
-        if (!(newBlock instanceof Blockly.BlockSvg)) return;
-        previewBlock = newBlock;
-
-        previewBlock.setMovable(false);
-        previewBlock.setDeletable(false);
-        previewBlock.setEditable(false);
-        previewBlock.getSvgRoot()?.setAttribute('opacity', '0.5');
-
-        // ✔ FIX 4: Use correct svgGroup_ with a cast
-        const svgGroup = (block as any).svgGroup_;
-        if (!svgGroup) return;
-
-        const flyoutPos = Blockly.utils.svgMath.getRelativeXY(svgGroup);
-        const offset = 40;
-
-        previewBlock.moveBy(flyoutPos.x + offset, flyoutPos.y);
-      });
-
-      svgRoot.addEventListener('mouseleave', () => {
-        if (previewBlock) {
-          previewBlock.dispose(false);
-          previewBlock = null;
-        }
-      });
-    }
-  });
-}
