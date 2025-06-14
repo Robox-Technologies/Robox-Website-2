@@ -12,7 +12,7 @@ import "./blockly/toolboxStyling"
 
 
 
-import { CustomUndoControls, CustomZoomControls } from './blockly/customUI';
+import { CustomUndoControls } from './blockly/customUI';
 import { MyWorkspace } from '../../@types/blockly';
 
 
@@ -92,14 +92,10 @@ document.addEventListener("DOMContentLoaded", () => {
             downloadBlocklyProject(workspaceId)
         })
     }
-    workspace.customZoomControls = new CustomZoomControls(workspace);
-    workspace.customZoomControls.init();
-    
     workspace.undoControls = new CustomUndoControls(workspace)
     workspace.undoControls.init()
     
     Blockly.browserEvents.conditionalBind(window, 'resize', null, () => { //On workspace resize, resize our custom UI
-            if (workspace.customZoomControls) workspace.customZoomControls.position()
             if (workspace.undoControls) workspace.undoControls.position()
         }
     );
@@ -157,6 +153,21 @@ document.addEventListener("DOMContentLoaded", () => {
             calibrateModal.querySelector("#calibrate-button")?.removeAttribute("calibrating")
         }
     })
+
+    workspace.addChangeListener(function (event) {
+    if (event.type === Blockly.Events.TOOLBOX_ITEM_SELECT) {
+        const toolboxEvent = event as Blockly.Events.ToolboxItemSelect;
+
+        if (!toolboxEvent.newItem && toolboxEvent.oldItem) {
+        const toolbox = workspace.getToolbox() as Blockly.Toolbox;
+        const allItems = toolbox.getToolboxItems();
+        const item = allItems.find(i => (i as any).name_ === toolboxEvent.oldItem);
+        if (item) {
+            toolbox.setSelectedItem(item);
+        }
+        }
+    }
+    });
 })  
 
 

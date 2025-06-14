@@ -76,18 +76,11 @@ class RoboxToolboxSeperator extends Blockly.ToolboxSeparator {
 
 
 class RoboxFlyout extends ContinuousFlyout {
-    /** @override */
-    getFlyoutScale(): number {
-        return 0.8;
-    }
 
     /** @override */
     protected reflowInternal_(): void {
         this.width_ = 300;
-        (this as any).scale = this.getFlyoutScale();
-        (this.workspace_ as any).scale = this.getFlyoutScale();
         this.targetWorkspace.recordDragTargets()
-
     }
 }
 

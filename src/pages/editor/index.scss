@@ -285,17 +285,11 @@ $zoomButtonsGap: 10px;
     display: flex;
     gap: $zoomButtonsGap;
 }
-#blocklyCustomZoom {
-    flex-direction: column;
-}
 #blocklyCustomTimeControls {
     flex-direction: row;
     gap: 0;
 }
 $blocklyUIButtonsDropShadowMult: 2;
-#blocklyCustomZoom > .uiButtons{
-    border-radius: 50%;
-}
 
 #blocklyCustomTimeControls > .uiButtons:first-child {
     border-radius: 7px 0 0 7px;
