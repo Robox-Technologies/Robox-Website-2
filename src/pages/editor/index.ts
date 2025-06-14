@@ -1,14 +1,17 @@
 
 import * as Blockly from 'blockly';
 
-
-import { ContinuousToolbox, ContinuousMetrics, ContinuousFlyout } from '@blockly/continuous-toolbox';
+import { ContinuousToolbox, ContinuousMetrics, registerContinuousToolbox } from '@blockly/continuous-toolbox';
 
 
 import theme from "./blockly/theme"
 
 import {toolbox} from "./blockly/toolbox"
 import "./blockly/toolboxStyling"
+registerContinuousToolbox()
+
+
+
 
 import { CustomUndoControls, CustomZoomControls } from './blockly/customUI';
 import { MyWorkspace } from '../../@types/blockly';

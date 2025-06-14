@@ -9,10 +9,10 @@
     "deploy": "npx tsc && nodemon --ignore ./dist/ -e html,css,js,ts,ejs,md,scss --exec npm run prod"
   },
   "dependencies": {
-    "@blockly/continuous-toolbox": "^6.0.12",
-    "@blockly/field-colour": "^5.0.12",
-    "@blockly/theme-modern": "^6.0.10",
-    "blockly": "^11.2.2",
+    "@blockly/continuous-toolbox": "^7.0.0",
+    "@blockly/field-colour": "^6.0.0",
+    "@blockly/theme-modern": "^7.0.0",
+    "blockly": "^12.1.0",
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
@@ -28,6 +28,7 @@
     "webpack": "^5.98.0"
   },
   "devDependencies": {
+    "@blockly/dev-tools": "^9.0.1",
     "@types/express": "^5.0.1",
     "@types/memory-cache": "^0.2.6",
     "@types/node": "^22.13.14",
