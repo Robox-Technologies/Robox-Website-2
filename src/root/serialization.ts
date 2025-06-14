@@ -37,7 +37,7 @@ export async function loadBlockly(uuid: string, workspace: Workspace) {
     let workspaceData = project.workspace
     if (!workspaceData) return;
     blockly.Events.disable();
-    blockly.serialization.workspaces.load(workspaceData, workspace, undefined);
+    blockly.serialization.workspaces.load(workspaceData, workspace, {recordUndo: true});
     blockly.Events.enable();
 }
 export function downloadBlocklyProject(uuid: string) {
