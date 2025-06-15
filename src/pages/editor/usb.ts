@@ -92,6 +92,7 @@ export function postBlocklyWSInjection() {
         connectionManagment.setAttribute("loading",  "false")
         sendCode(ws)
         pico.runCode()
+
     })
     settingsButton?.addEventListener("click", (event) => {
         //Rotate the cog as an animation
