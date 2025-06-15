@@ -9,7 +9,8 @@
     "include": [
         "server.ts",
         "store.ts",
-        "stripe.js",
+        "stripe-helper.ts",
+        "yumaSection.ts",
         "types/**/*",
     ],
     "exclude": [

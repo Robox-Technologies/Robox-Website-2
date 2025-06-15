@@ -9,12 +9,12 @@ import rehypeRaw from 'rehype-raw';
 import rehypeStringify from 'rehype-stringify';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
-import sectionize from 'remark-sectionize';
+import yumaSection from "./build/server/yumaSection.js"
 
 
 
 const storeProcessor = unified()
-    .use(sectionize)
+    .use(yumaSection)
     .use(remarkParse)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
