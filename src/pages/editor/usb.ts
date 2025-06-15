@@ -54,7 +54,6 @@ export function postBlocklyWSInjection() {
         if (downloadingToPico) {
             connectionManagment.setAttribute("status",  "downloaded")
         }
-        pico.runCode()
         
 
     })
