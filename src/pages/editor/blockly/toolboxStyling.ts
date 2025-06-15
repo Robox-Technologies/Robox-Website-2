@@ -2,7 +2,7 @@ import * as Blockly from 'blockly';
 
 import archSVG from "./Arch.svg?raw"
 
-import { ContinuousFlyout, ContinuousMetrics } from '@blockly/continuous-toolbox';
+import { ContinuousFlyout, ContinuousMetrics, ContinuousToolbox, RecyclableBlockFlyoutInflater } from '@blockly/continuous-toolbox';
 
 type HexColor = `#${string}`;
 
@@ -71,27 +71,34 @@ class RoboxToolboxSeperator extends Blockly.ToolboxSeparator {
     }
 }
 
+
 //Overriding the flyoutscale value (to prevent it scaliing with the workspace)
 
 
 class RoboxFlyout extends ContinuousFlyout {
 
-    //Fixing the flyout scale (to prevent it scaling with zoom buttons)
     /** @override */
-    getFlyoutScale(): number {
-        return 0.8
-    }
-    /** @override */
-    reflowInternal_() {
-        this.width_ = 300
+    protected reflowInternal_(): void {
+        this.width_ = 300;
+        this.targetWorkspace.recordDragTargets()
     }
 }
+
+
+
+
 
 
 Blockly.registry.register(
     Blockly.registry.Type.TOOLBOX_ITEM,
     Blockly.ToolboxCategory.registrationName,
     RoboxToolboxCategories, true
+);
+Blockly.registry.register(
+    Blockly.registry.Type.FLYOUT_INFLATER,
+    'block',
+    RecyclableBlockFlyoutInflater,
+    true,
 );
 Blockly.registry.register(
     Blockly.registry.Type.TOOLBOX_ITEM,

@@ -89,7 +89,7 @@ $downloadButtonSize: 60px;
 .customIcon {
     color: white;
 }
-.blocklyToolboxDiv {
+.blocklyToolbox {
     background-color: white;
     padding: 0;
     width: $toolboxWidth;
@@ -97,8 +97,7 @@ $downloadButtonSize: 60px;
 }
 
 .injectionDiv > .blocklyFlyout { 
-    transform: translate(calc($toolboxWidth - $seperatorStrokeSize * 2), -$seperatorStrokeSize) !important;
-    border: $seperatorStrokeSize solid $navEdges;
+    border-right: $seperatorStrokeSize solid $navEdges;
     background-color: rgb(245, 245, 245);;
 }
 .blocklyMutatorBackground {
@@ -114,7 +113,7 @@ $downloadButtonSize: 60px;
 .blocklyTreeRowContentContainer >svg >path {
     fill: white;
 }
-.blocklyTreeRow {
+.blocklyToolboxCategory {
     height: initial;
 }
 .side-arch {
@@ -286,17 +285,11 @@ $zoomButtonsGap: 10px;
     display: flex;
     gap: $zoomButtonsGap;
 }
-#blocklyCustomZoom {
-    flex-direction: column;
-}
 #blocklyCustomTimeControls {
     flex-direction: row;
     gap: 0;
 }
 $blocklyUIButtonsDropShadowMult: 2;
-#blocklyCustomZoom > .uiButtons{
-    border-radius: 50%;
-}
 
 #blocklyCustomTimeControls > .uiButtons:first-child {
     border-radius: 7px 0 0 7px;

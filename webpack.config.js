@@ -71,12 +71,16 @@ const config = {
         }),
         new CopyPlugin({
             patterns: [
-                { from: "src/pages/public/**/*", to: "public/[name][ext]" },
-            ],
+  {
+    from: "**/*",
+    to: "public/[path][name][ext]",
+    context: "src/pages/public",
+  },
+],
             options: {
                 concurrency: 100,
             },
-        }),
+        })
     ],
     module: {
         rules: [
