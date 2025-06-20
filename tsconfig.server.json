@@ -10,7 +10,7 @@
         "server.ts",
         "store.ts",
         "stripe-helper.ts",
-        "yumaSection.ts",
+        "yumaSection.js",
         "types/**/*",
     ],
     "exclude": [
