@@ -82,6 +82,18 @@ class RoboxFlyout extends ContinuousFlyout {
         this.width_ = 300;
         this.targetWorkspace.recordDragTargets()
     }
+    override scrollTo(position: number) {
+        const OFFSET = 5; // pixels
+        const adjustedPosition = position + OFFSET;
+
+        const metrics = this.getWorkspace().getMetrics();
+        const scrollTarget = Math.min(
+            adjustedPosition,
+            metrics.scrollHeight - metrics.viewHeight,
+        );
+
+        this.getWorkspace().scrollbar?.setY(scrollTarget);
+    }
 }
 
 
