@@ -9,7 +9,7 @@ import rehypeRaw from 'rehype-raw';
 import rehypeStringify from 'rehype-stringify';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
-import yumaSection from "./build/server/yumaSection.js"
+import yumaSection from "./yumaSection.js"
 
 
 
