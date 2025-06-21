@@ -141,18 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
 
-    const calibrateButton = document.getElementById("robox-settings-calibrate") as HTMLButtonElement | null
-    const calibrateModal = document.getElementById("color-calibration-modal") as HTMLDialogElement | null
-    if (!calibrateButton) return
-    if (!calibrateModal) return
-    calibrateButton.addEventListener("click", () => {
-        calibrateModal.showModal()
-    })
-    calibrateModal.addEventListener("close", () => {
-        if (calibrateModal.querySelector("#calibrate-button[calibrating]")) {
-            calibrateModal.querySelector("#calibrate-button")?.removeAttribute("calibrating")
-        }
-    })
+    
     //Prevents the flyout from closing (the category being deselected)
     workspace.addChangeListener(function (event) {
         if (event.type === Blockly.Events.TOOLBOX_ITEM_SELECT) {
