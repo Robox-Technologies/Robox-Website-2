@@ -153,21 +153,22 @@ document.addEventListener("DOMContentLoaded", () => {
             calibrateModal.querySelector("#calibrate-button")?.removeAttribute("calibrating")
         }
     })
-
+    //Prevents the flyout from closing (the category being deselected)
     workspace.addChangeListener(function (event) {
-    if (event.type === Blockly.Events.TOOLBOX_ITEM_SELECT) {
-        const toolboxEvent = event as Blockly.Events.ToolboxItemSelect;
+        if (event.type === Blockly.Events.TOOLBOX_ITEM_SELECT) {
+            const toolboxEvent = event as Blockly.Events.ToolboxItemSelect;
 
-        if (!toolboxEvent.newItem && toolboxEvent.oldItem) {
-        const toolbox = workspace.getToolbox() as Blockly.Toolbox;
-        const allItems = toolbox.getToolboxItems();
-        const item = allItems.find(i => (i as any).name_ === toolboxEvent.oldItem);
-        if (item) {
-            toolbox.setSelectedItem(item);
+            if (!toolboxEvent.newItem && toolboxEvent.oldItem) {
+                const toolbox = workspace.getToolbox() as Blockly.Toolbox;
+                const allItems = toolbox.getToolboxItems();
+                const item = allItems.find(i => (i as any).name_ === toolboxEvent.oldItem);
+                if (item) {
+                    toolbox.setSelectedItem(item);
+                }
+            }
         }
-        }
-    }
     });
-})  
+
+}) 
 
 
