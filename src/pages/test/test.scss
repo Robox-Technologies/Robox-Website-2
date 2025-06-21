@@ -1,0 +1,51 @@
+.anchor {
+  font-size: 1.8rem;
+  color: white;
+  text-shadow: 1px 1px 1px black;
+  background-color: hsl(240 100% 75%);
+  width: fit-content;
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 3px;
+}
+
+.anchor {
+  anchor-name: --myAnchor;
+}
+
+body {
+  width: 50%;
+  margin: 0 auto;
+}
+
+form {
+  background: white;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+select {
+  display: block;
+  margin-top: 5px;
+}
+
+form {
+  position: fixed;
+  top: 0;
+  right: 2px;
+}
+
+.infobox {
+  color: darkblue;
+  background-color: azure;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.infobox {
+  position: fixed;
+  position-anchor: --myAnchor;
+  position-area: top;
+}
