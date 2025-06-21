@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!stage2Modal || !fileOpenButton) return;
     fileOpenButton.addEventListener("click", async () => {
         // Get the UF2 file from /public/uf2/latest.uf2
-        const response = await fetch("/uf2/latest.uf2");
+        const response = await fetch("/public/latest.uf2");
         if (!response.ok) {
             console.error("Failed to fetch the UF2 file.");
             return;
