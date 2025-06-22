@@ -208,7 +208,7 @@ async function detectBOOTSEL() {
     let devices = await navigator.usb.getDevices()
     return devices.some(device => device.productName === "RP2 Boot");
 }
-async function detectPicoFolder(dirHandle: FileSystemDirectoryHandle): boolean {
+async function detectPicoFolder(dirHandle: FileSystemDirectoryHandle): Promise<boolean> {
     for await (const [name] of dirHandle.entries()) {
         if (name === "INFO_UF2.TXT") {
             // This file is always present on RPI-RP2
