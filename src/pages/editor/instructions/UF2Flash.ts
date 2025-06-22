@@ -85,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
             flashFailure("file-failure");
             return stage2Modal.close();
         }
+        console.log(dirHandle.name)
         if (!dirHandle.name.includes("RPI-RP2")) {
             flashFailure("file-failure");
             return stage2Modal.close();
