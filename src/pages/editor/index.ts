@@ -157,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
+    workspace.addChangeListener(Blockly.Events.disableOrphans);
 
 }) 
 
