@@ -10,7 +10,7 @@
         "server.ts",
         "store.ts",
         "stripe-helper.ts",
-        "yumaSection.js",
+        "robox-sectionize.js",
         "types/**/*",
     ],
     "exclude": [
