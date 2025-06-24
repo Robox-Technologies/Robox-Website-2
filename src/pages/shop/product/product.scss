@@ -8,8 +8,8 @@ $carouselThumbnailSize: 115px;
     flex-direction: row;
 
     gap: variables.$standardGap;
-    width: 100%;
-    margin-bottom: calc(variables.$standardGap * 4);
+    margin: variables.$articleMargin;
+    margin-bottom: 0;
 }
 
 .carousel-container {
@@ -117,10 +117,6 @@ $carouselThumbnailSize: 115px;
     display: none;
 }
 
-#description {
-    margin-top: variables.$standardGap;
-}
-
 @media only screen and (max-width: 940px) {
     #starter-info > .vertical-bars {
         display: none;
@@ -137,5 +133,4 @@ $carouselThumbnailSize: 115px;
     #hero-image-container {
         width: 100%;
     }
-
 }

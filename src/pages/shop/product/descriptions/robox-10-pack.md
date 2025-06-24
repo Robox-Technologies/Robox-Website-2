@@ -1,21 +1,46 @@
-## This product contains 10 fully built Robox kits
-# Robox 1.0 Robot Kit: The Perfect Starter for Young Engineers  
-Introducing Robox, the affordable, beginner-friendly robot kit designed to make learning robotics fun and accessible for everyone! Whether you're a teacher, a parent, or a student, Robox provides everything you need to build, code, and run your very own robot.<br>
-## These kits are all premade kits
-This means that the kits comes built for you! Perfect for people who just want a working Robox straight out of the box. In order to ensure the Robox does not come apart during transport hot glue will be used. Furthermore the Robox will be fully tested before being shipped in order to ensure that all components are correctly wired and working.
-## Whats Inside the Kit
-- **Raspberry Pi Pico**: A powerful yet compact microcontroller that powers your Robox's brain. With its simple interface, the Pico allows programming with both drag-and-drop software and python for the more confident engineers! 
-- **AA Battery Pack**: A safe, easy to use, and cheaper alternative to a lithium ion battery powered robots **This kit includes AA batteries**.
-- **Line Sensors**: An easy to calibrate and intuituve line sensors that detect black or white surfaces.
-- **Colour Sensor**: A presoldered colour sensor perfect for a range of activities with your Robox.
-- **Wooden Chassis**: A sturdy, eco-friendly plywood frame that forms the case of your Robox.
-- **Motors and Wheels**: A powerful pair of motors that drive the Robox
-- **Motor Controller**: A small motor controller to drive those strong motors
-- **Breadboard**: A breadboard to easily route power to the components that need it.
-- **Ultrasonic Sensor**: An accurate ultrasonic distance sensor for when you want an exact distance for your Robox.
-- **Zipties and Wires**: Perfectly sized zipties and wires to ensure that the Robox kit is clean and robust
-- **Wooden Chassis**: A sturdy, eco-friendly plywood frame that forms the case of your robot. It’s pre-cut and ready to assemble with slot fitting and zip ties!
-## Easy-to-Use Drag-and-Drop Software
-Robox comes with an intuitive drag-and-drop programming platform that makes coding simple and engaging. This visual programming environment allows students to create programs by connecting blocks rather than typing out code. Ideal for beginners, but for our more intermediate users there is also a prepackaged python library that they can use if they want to jump into text based programming! 
-## Cost Effective Parts 
-The Robox kit was made with repairability in mind, all the parts that are used in this kit can be easily and cheaply replaced or upgraded! This means that if a colour sensor breaks you don't need to scour the internet for replacement parts (looking at you Lego Mindstorm). This allows for robotics to not just be a private school activity but one that everyone can enjoy! 
+## Unlock the world of robotics
+
+**Ro/Box** is a compact, hands-on kit designed for education, experimentation, and innovation. Whether you're a beginner or an advanced maker, this kit provides all the essential components needed to bring your robotic creations to life.
+
+## Compact & Sturdy Design
+
+Ro/Box measures **110mm (wide) x 125mm (long) x 68mm (tall)**, or 88mm tall with wheels. The frame is crafted from 3mm plywood.
+
+## What's in the Ro/Box:
+
+- 3mm Plywood Panels (x1 Kit)
+- Dual-Shaft DC 200RPM Gearbox TT Motor (x2)
+- 66mm Plastic Tire Wheel (x2)
+- TCRT5000 Infrared (IR) Sensor (x2)
+- RCWL-1601 Ultrasonic Sensor (x1)
+- TCS34725 Colour Sensor (x1)
+- L9110 DC Motor Driver (x1)
+- Raspberry Pi Pico (x1)
+- 170-Pin Breadboard (x1)
+- 3xAA Battery Case (x1)
+- M2 Nut + Bolt (x4)
+- Zip Tie (x35)
+- 10cm Male-Female Dupont Wire (x12)
+- 10cm Female-Female Dupont Wire (x11)
+- 10cm Male-Male Dupont Wire (x1)
+- Wire Lever Connector (x1)
+- Jumper Wire (x2)
+
+<img src="./descriptions/images/components.jpg">
+
+## Easy Assembly & Secure Mounting
+
+The kit includes zip ties, screws, and bolts to securely mount components. No soldering required—simply connect, fasten, and start coding!
+
+<img src="./descriptions/images/assembly.jpg">
+
+## Testimonial
+
+*“We recently had the Ro/Box Robotics Kit demonstrated to us in a Year 8 Digital Technologies classroom and it was an instant hit with the students. It's designed for beginners and offers a perfect hands-on introduction to robotics and coding. The students loved watching their robot draw lines on paper around the classroom. The block-based coding interface made it easy for everyone to get involved.*
+*What stood out most was that the kit sparked curiosity and problem solving. It's affordable, easy to use and a great way to bring robotics to life in the classroom.”*
+
+- 8th grade DT teacher, St. Michaels Grammar School, Victoria
+
+[Read Story »](https://www.stmichaels.vic.edu.au/community/news/tech-for-everyone-yuma-soeriantos-story-of-purpose-accessibility-and-entrepreneurial-drive/)
+
+<img src="./descriptions/images/testimonial.jpg">

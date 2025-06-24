@@ -20,24 +20,59 @@ function transform(tree) {
 
   while (i < children.length) {
     const start = children[i];
-
     const isHeading = start.type === 'heading';
-    const isImageLike = isImageNode(start);
+
+    if (!isHeading || start.depth < 2) {
+      // Ignore and append child
+      newChildren.append(start);
+      i = i+1;
+      continue;
+    }
 
     // Find end of current section
-    let endIndex = children.length;
+    let startDepth = start.depth;
+    let endIndex = children.length-1;
+    let endIsImage = false;
     for (let j = i + 1; j < children.length; j++) {
       const next = children[j];
-      if (
-        (isHeading && isImageNode(next)) ||
-        (isImageLike && next.type === 'heading')
-      ) {
+      
+      if (isImageNode(next)) {
         endIndex = j;
+        endIsImage = true;
+        break;
+      } else if (next.type === 'heading') {
+        endIndex = j-1;
         break;
       }
     }
 
-    const slice = children.slice(i, endIndex);
+    // Slice text and contain in div
+    let sectionChildren = [];
+    const textSlice = children.slice(i, endIsImage ? endIndex : endIndex+1);
+
+    // Text div
+    /** @type {Parent} */
+    const textDiv = {
+      type: 'div',
+      data: {
+        hName: 'div',
+        hProperties: {
+          className: 'text'
+        }
+      },
+      children: textSlice
+    };
+    sectionChildren.push(textDiv);
+
+    // Add media class to image and push
+    if (endIsImage) {
+      let image = children[endIndex];
+      image.value = image.value.replace("<img", `<img class="media"`);
+      sectionChildren.push(image);
+    }
+
+    // Alternate between LTR and RTL sections
+    const direction = !endIsImage || sectionCount % 2 === 0 ? 'LTR' : 'RTL';
 
     /** @type {Parent} */
     const section = {
@@ -45,16 +80,16 @@ function transform(tree) {
       data: {
         hName: 'section',
         hProperties: {
-          className: sectionCount % 2 === 0 ? 'LTR' : 'RTL'
+          className: `articleSection ${direction}${endIsImage ? " equalWidth" : ""}`
         }
       },
-      children: slice
+      children: sectionChildren
     };
 
     newChildren.push(/** @type {Content} */ (section));
     sectionCount++;
 
-    i = endIndex;
+    i = endIndex+1;
   }
 
   tree.children = newChildren;
