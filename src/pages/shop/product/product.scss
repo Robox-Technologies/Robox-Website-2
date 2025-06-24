@@ -41,14 +41,16 @@ $carouselThumbnailSize: 115px;
 }
 
 .hero-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    background-color: variables.$primary;
+    min-height: 500px;
+    height: 60vh;
+    aspect-ratio: 5/4;
+    object-fit: contain;
     display: none;
     border-radius: 8px;
 }
 .active {
-    display: flex;
+    display: block;
 }
 .carousel-image {
     width: $carouselThumbnailSize;
@@ -76,7 +78,7 @@ $carouselThumbnailSize: 115px;
     top: 50%;
     transform: translateY(-50%);
     width: 40px;
-    background-color: variables.$primary;
+    background-color: #f8f8f86e;
     color: variables.$themeBlack;
     display: flex;
     align-items: center;
@@ -117,6 +119,12 @@ $carouselThumbnailSize: 115px;
     display: none;
 }
 
+@media only screen and (max-width: 1200px) {
+    #starter-info {
+        flex-direction: column;
+    }
+}
+
 @media only screen and (max-width: 940px) {
     #starter-info > .vertical-bars {
         display: none;
@@ -124,13 +132,21 @@ $carouselThumbnailSize: 115px;
     #image-carousel {
         display: none;
     }
-    #starter-info {
-        flex-direction: column;
+    .hero-image {
+        min-height: initial;
+        height: initial;
+        max-height: 60vh;
+        width: 100%;
     }
     .small-element {
         display: block;
     }
     #hero-image-container {
         width: 100%;
+        height: fit-content;
+    }
+    .carousel-container {
+        min-height: initial;
+        height: initial;
     }
 }

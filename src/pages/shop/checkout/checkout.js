@@ -28,12 +28,21 @@ const paymentPromises = Promise.all([stripePromise, clientSecretPromise])
 
 paymentPromises.then((values) => {
     const [stripe, clientSecret] = values
+
+    if (!clientSecret) {
+        checkoutErrored();
+        return;
+    }
+
     const options = {
         clientSecret: clientSecret,
         appearance: appearance
     };
     const elements = stripe.elements(options)
-    const addressElement = elements.create('address', {mode: "shipping"});
+    const addressElement = elements.create('address', {
+        mode: "shipping",
+        allowedCountries: ['AU']
+    });
     addressElement.mount('#address-element');
     const paymentElement = elements.create('payment');
     paymentElement.mount('#payment-element');
@@ -51,7 +60,7 @@ paymentPromises.then((values) => {
         const {error} = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                return_url: './confirmation',
                 receipt_email: email,
             },
         });
@@ -61,27 +70,27 @@ paymentPromises.then((values) => {
             messageContainer.textContent = error.message;
         } 
     });
-})
+}).catch((error) => {
+    console.warn(error);
+    checkoutErrored();
+});
   
 
 async function getPaymentIntent() {
-    try {
-        const clientSecret = await fetch("/api/store/create", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                products: products,
-                expected_price: totalCost
-            })
-        });
-        return (await clientSecret.json()).client_secret;
-    }
-    catch(err) {
-        //do something with the error
-        console.log(err)
-    }
-   
+    const clientSecret = await fetch("/api/store/create", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            products: products,
+            expected_price: totalCost
+        })
+    });
+
+    return (await clientSecret.json()).client_secret;
 }
 
-
-
+function checkoutErrored() {
+    // Error fetching secret. Handle and show appropriate error
+    document.getElementById("checkout-error").style.display = "block";
+    document.getElementById("payment-form").style.display = "none";
+}

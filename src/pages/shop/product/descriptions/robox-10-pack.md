@@ -34,12 +34,9 @@ The kit includes zip ties, screws, and bolts to securely mount components. No so
 
 <img src="./descriptions/images/assembly.jpg">
 
-## Testimonial
+## *“We recently had the Ro/Box Robotics Kit demonstrated to us in a Year 8 Digital Technologies classroom and it was an instant hit with the students. It's designed for beginners and offers a perfect hands-on introduction to robotics and coding. The students loved watching their robot draw lines on paper around the classroom. The block-based coding interface made it easy for everyone to get involved. What stood out most was that the kit sparked curiosity and problem solving. It's affordable, easy to use and a great way to bring robotics to life in the classroom.”*
 
-*“We recently had the Ro/Box Robotics Kit demonstrated to us in a Year 8 Digital Technologies classroom and it was an instant hit with the students. It's designed for beginners and offers a perfect hands-on introduction to robotics and coding. The students loved watching their robot draw lines on paper around the classroom. The block-based coding interface made it easy for everyone to get involved.*
-*What stood out most was that the kit sparked curiosity and problem solving. It's affordable, easy to use and a great way to bring robotics to life in the classroom.”*
-
-- 8th grade DT teacher, St. Michaels Grammar School, Victoria
+8th grade DT teacher, St. Michaels Grammar School, Victoria
 
 [Read Story »](https://www.stmichaels.vic.edu.au/community/news/tech-for-everyone-yuma-soeriantos-story-of-purpose-accessibility-and-entrepreneurial-drive/)
 

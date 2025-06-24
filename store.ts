@@ -38,13 +38,14 @@ paymentRouter.post("/create", async (req: Request, res: Response): Promise<void>
         let itemCost = product["price"] * quantity
         verifiedServerCost += itemCost
     }
-    verifiedServerCost *= 100
+
     if (expected_price !== verifiedServerCost) {
         res.status(400).send({
             error: "Server prices do not match the client prices"    
         })
         return 
     }
+
     try {
         Object.keys(products).map((productId) => {
             products[productId] = products[productId]["quantity"]
@@ -60,8 +61,7 @@ paymentRouter.post("/create", async (req: Request, res: Response): Promise<void>
             }
         });
         res.json({client_secret: paymentIntent.client_secret});
-    }
-    catch (err) {
+    } catch (err) {
         console.log(err)
         res.status(500).send({error: err})
     }

@@ -1,31 +1,37 @@
 import { getCart, refreshCart, setCartItem, getItem, removeCartItem} from "@root/payment.ts"
 import { renderCart } from "@root/shop.ts"
 
-let cart = getCart()
-let products = cart["products"]
-
 const availableHolder = document.querySelector("#available-section")
 const preorderHolder = document.querySelector("#preorder-section")
 
 const cartItemElement = document.querySelector("#cart-item")
 
 function renderItemSubtotal(itemId) {
-    let updatedProducts = getCart()["products"];
-    let updatedProduct = updatedProducts[itemId]["data"];
-    let updatedQuantity = updatedProducts[itemId]["quantity"]
+    let products = getCart()["products"];
     let subtotalElement = document.getElementById(itemId).querySelector(".cart-item-text-subtotal");
 
-    subtotalElement.textContent = `$${updatedProduct.price * updatedQuantity}`;
+    if (!subtotalElement) return;
+
+    if (!(itemId in products)) {
+        subtotalElement.textContent = "$0";
+        return;
+    }
+
+    let updatedProduct = products[itemId];
+    let updatedProductData = updatedProduct["data"];
+    let updatedQuantity = updatedProduct["quantity"]
+
+    subtotalElement.textContent = `$${updatedProductData.price * updatedQuantity}`;
 }
 
 function renderPreview() {
-    availableHolder.querySelector(".cart-item-holder").replaceChildren()
-    preorderHolder.querySelector(".cart-item-holder").replaceChildren()
-    for (const productId in products) {
+    document.querySelectorAll(".cart-item-holder").forEach((e) => e.replaceChildren());
+    let products = getCart()["products"]
+    let cartEmpty = true;
 
+    for (const productId in products) {
         const product = products[productId]["data"]
         if (!product || productId == "") continue
-        let clone = cartItemElement.content.cloneNode(true)
     
         let price = product["price"]
         let name = product["name"]
@@ -36,9 +42,8 @@ function renderPreview() {
             removeCartItem(productId)
             continue
         }
-
-        console.log(product);
     
+        let clone = cartItemElement.content.cloneNode(true)
         let titleElement = clone.querySelector(".cart-item-text-title")
         let priceElement = clone.querySelector(".cart-item-text-price")
         let quantityInput = clone.querySelector(".cart-quantity")
@@ -62,6 +67,12 @@ function renderPreview() {
         }
 
         renderItemSubtotal(product["item_id"]);
+        cartEmpty = false;
+    }
+
+    if (cartEmpty) {
+        document.getElementById("empty-cart").style.display = "flex";
+        document.getElementById("main-content").style.display = "none";
     }
 }
 renderPreview()
@@ -88,7 +99,6 @@ for (const deleteButton of deleteButtons) {
     let productId = deleteButton.closest(".cart-item").id
     deleteButton.addEventListener("click", (event) => {
         removeCartItem(productId)
-        //TODO: add toast
         renderCart()
         renderPreview()
     })
@@ -97,6 +107,7 @@ function updateCart(product, quantity) {
     if (quantity > 100000000) return
     let productElement = document.getElementById(product)
     let quantityInput = productElement.querySelector(".cart-quantity")
+    let products = getCart()["products"]
     quantityInput.value = Number(quantity)
     setCartItem(product, Number(quantity), products[product]["data"])
     renderCart()

@@ -14,26 +14,30 @@
             <h1>Checkout</h1>
             <div id="main-content">
                 <div id="payment-card">
-                    <h2 class="section-title">
-                        Payment
-                    </h2>
+                    <div id="checkout-error">
+                        <h2>Checkout Error</h2>
+                        <p>
+                            An error occured while preparing your checkout.<br>
+                            Please review your cart items and try again.
+                        </p>
+                        <a class="ctaButton" href="/shop/cart">Back to Cart</a>
+                    </div>
+
                     <form id="payment-form">
-                        
+                        <h2 class="section-title">
+                            Payment
+                        </h2>
+
                         <div id="stripe-content">
                             <label style="display: none;"for="email" id="email-label">Email</label>
                             <input style="display: none;"type="email" id="email" name="email" required />
                             <div id="spinner" class="lds-dual-ring"></div>
-                            <div id="address-element">
-                            </div>
+                            <div id="address-element"></div>
+
                             <br>
     
-                            <div id="payment-element">
-                
-                            </div>
-                            
-                            <div id="error-message">
-                
-                            </div>
+                            <div id="payment-element"></div>
+                            <div id="error-message"></div>
                         </div>
                         
                         <button id="submit" class="ctaButton pill">Pay</button>

@@ -1,6 +1,11 @@
 @use '@root/variables';
 @use '@root/shop';
 
+#checkout-error {
+    display: none;
+    text-align: center;
+}
+
 #stripe-content {
     flex-grow: 1;
     display: flex;

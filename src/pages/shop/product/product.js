@@ -46,9 +46,9 @@ function updateInputQuantity(amount) {
 
 const addToCartButton = document.getElementById("add-to-cart") 
 addToCartButton.addEventListener("click", (e) => {
+    //TODO: add toast
     addCartItem(productId, quantity, currentProduct)
     refreshCart()
-    updateInputQuantity(1)
 })
 document.addEventListener("DOMContentLoaded", (event) => {
     for (const carouselImage of carouselImages) {
@@ -114,7 +114,3 @@ for (const modal of modals) {
         }
     })
 }
-
-window.matchMedia("(max-width: 900px)").addEventListener("change", (e) => {
-    sidebarElement.close()
-})

@@ -101,6 +101,15 @@
         text-align: center;
         line-height: 46px;
     }
+
+    .bulkCallout {
+        font-size: 12px;
+
+        a {
+            font-size: inherit;
+            text-decoration: underline;
+        }
+    }
 }
 
 
