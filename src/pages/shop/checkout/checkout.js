@@ -60,7 +60,7 @@ paymentPromises.then((values) => {
         const {error} = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: './confirmation',
+                return_url: `${window.location.origin}/shop/checkout/confirmation`,
                 receipt_email: email,
             },
         });

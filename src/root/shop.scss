@@ -8,6 +8,22 @@
     flex-direction: row;
 }
 
+.navigation {
+    &.productNav {
+        font-size: 16px;
+    }
+
+    &:not(.productNav) {
+        line-height: calc(variables.$standardGap * 2);
+    }
+
+    a {
+        font-size: inherit;
+        opacity: 0.8;
+        text-decoration: underline;
+    }
+}
+
 .cart-quantity-button {
     width: 200px;
     height: 37px;
@@ -97,9 +113,13 @@
         }
     }
 
-    #checkout {
+    .ctaButton.pill {
         text-align: center;
         line-height: 46px;
+
+        &.continue {
+            background-color: variables.$themeBlue;
+        }
     }
 
     .bulkCallout {
