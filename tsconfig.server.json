@@ -3,19 +3,24 @@
     "compilerOptions": {
         "outDir": "build/server",
         "baseUrl": ".",
-        "module": "preserve",
+        "moduleResolution": "node",
+        "module": "esnext",
         "target": "ES2022"
     },
     "include": [
         "server.ts",
         "store.ts",
         "stripe-helper.ts",
-        "robox-sectionize.js",
-        "types/**/*",
+        "robox-sectionize.ts",
+        "webpack.config.ts",
+    ],
+    "typeRoots": [
+        "./node_modules/@types",
+        "./types"
     ],
     "exclude": [
+        
         "node_modules",
         "src",
-        "webpack.*.ts"
     ]
 }

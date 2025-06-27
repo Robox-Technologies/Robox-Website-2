@@ -1,7 +1,6 @@
 import path from 'path';
 import fs from 'fs';
 import HtmlBundlerPlugin from 'html-bundler-webpack-plugin';
-
 import { unified } from 'unified';
 import rehypeDocument from 'rehype-document';
 import rehypeFormat from 'rehype-format';
@@ -9,9 +8,28 @@ import rehypeRaw from 'rehype-raw';
 import rehypeStringify from 'rehype-stringify';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
-import roboxSectionize from "./robox-sectionize.js";
+import roboxSectionize from "./robox-sectionize.js"; // <-- .ts import
 
+import { getAllStripe, isValidStatus, displayStatusMap } from './stripe-helper.js';
+interface Product {
+    internalName: string;
+    name: string;
+    description: string;
+    images: string[];
+    price_id: string;
+    price: number;
+    item_id: string;
+    status: string;
+    displayStatus: string;
+}
 
+interface ProductData {
+    product: Product | false;
+    images: string[];
+    description: string | false;
+}
+
+type StoreData = Record<string, ProductData>;
 
 const storeProcessor = unified()
     .use(roboxSectionize)
@@ -27,7 +45,7 @@ const cacheProducts = process.env.CACHE_MODE === 'true';
 const pagesDir = path.resolve(__dirname, 'src/pages');
 const pages = findHtmlPages(pagesDir).map((file) => {
     const relative = path.relative(pagesDir, file);
-    return { import: file, filename: relative };
+    return { import: file, filename: relative, data: {} };
 });
 
 let dynamicPages = [...pages];
@@ -59,7 +77,7 @@ async function processProducts(cache) {
         let productData = {
             product,
             images: [],
-            description: false,
+            description: "",
         };
 
         const productImagesPath = `src/pages/shop/product/images/${product.internalName}`;
@@ -226,7 +244,7 @@ function createPages(pages, template, data) {
             filename: outputPath,
             data: data[pageName] || {
                 product: false,
-                images: []
+                images: [],
             }
         });
     }

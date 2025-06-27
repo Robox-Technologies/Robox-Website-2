@@ -3,6 +3,7 @@
     "compilerOptions": {
         "outDir": "build/client",
         "module": "ESNext",
+        "moduleResolution": "node",
         "baseUrl": ".",
         "target": "ES2022"
     },

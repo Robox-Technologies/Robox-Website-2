@@ -1,10 +1,11 @@
 import stripe, { Stripe } from 'stripe'
-import { ProductStatus, Product } from 'types/api'
+
 import 'dotenv/config'
+import { Product, ProductStatus } from 'types/api';
 
 
 export const stripeAPI = new stripe(process.env.STRIPE_KEY)
-const displayStatusMap: { [K in ProductStatus]: string } = {
+export const displayStatusMap: { [K in ProductStatus]: string } = {
     "available": "Available for Purchase",
     "not-available": "Out of Stock",
     "preorder": "Pre-order Now",
@@ -55,7 +56,7 @@ async function recursiveItemGrab(API: Stripe.PricesResource | Stripe.ProductsRes
 }
 
 
-function isValidStatus(status: ProductStatus | string): status is ProductStatus {
+export function isValidStatus(status: ProductStatus | string): status is ProductStatus {
     if (typeof status !== "string") return false;
     // Check if the status is one of the valid statuses
     return ["available", "not-available", "preorder"].includes(status);
