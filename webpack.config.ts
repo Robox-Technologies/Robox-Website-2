@@ -96,10 +96,7 @@ async function processProducts() {
         const productDescriptionPath = `src/pages/shop/product/descriptions/${product.internalName}.md`;
         if (fs.existsSync(productDescriptionPath)) {
             try {
-                const mdModule = await import(`src/pages/shop/product/descriptions/${product.internalName}.md`);
-                // if raw-loader: mdModule.default is raw markdown string
-                // if processed: mdModule.default might be HTML string or component
-                productData.description = mdModule.default;
+                productData.description = productDescriptionPath;
             } catch (err) {
                 console.warn(`Description import failed for ${product.name}:`, err);
             continue;
