@@ -41,5 +41,3 @@ The kit includes zip ties, screws, and bolts to securely mount components. No so
 [Read Story »](https://www.stmichaels.vic.edu.au/community/news/tech-for-everyone-yuma-soeriantos-story-of-purpose-accessibility-and-entrepreneurial-drive/)
 
 <img src="@images/product/testimonial.jpg">
-
-adsd

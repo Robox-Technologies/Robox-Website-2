@@ -93,7 +93,7 @@ async function processProducts() {
             continue;
         }
         //Searching for description file
-        const productDescriptionPath = `src/pages/shop/product/descriptions/${product.internalName}.md`;
+        const productDescriptionPath = `src/templates/views/product/descriptions/${product.internalName}.md`;
         if (fs.existsSync(productDescriptionPath)) {
             try {
                 productData.description = productDescriptionPath;
@@ -146,7 +146,6 @@ export default (async () => {
                 },
                 verbose: true,
                 watchFiles: {
-                    paths: ['src'],                // ensure the src directory is watched
                     includes: [/\.md$/],           // watch all .md files
                     excludes: []                   // (optional) exclude files if needed
                 },
