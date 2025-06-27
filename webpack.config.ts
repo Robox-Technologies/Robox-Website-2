@@ -207,18 +207,34 @@ export default (async () => {
                         filename: 'public/images/[name]-[contenthash:8].[ext]', 
                     },
                 },
-                {
-                    test: /\.(gif|png|jpe?g|ico|webp)$/i,
-                    type: 'asset/resource',
-                    use: {
+               {
+                test: /\.(png|jpe?g|gif|webp|ico)$/i,
+                oneOf: [
+                    // JS/TS imports — use responsive-loader
+                    {
+                    issuer: /\.[jt]sx?$/, // imported from JS/TS files
+                    type: 'javascript/auto',
+                    use: [
+                        {
                         loader: 'responsive-loader',
                         options: {
-                            name: 'public/images/[name]-[contenthash:8].[ext]',
-                            format: "webp"
+                            format: 'webp',
+                            name: '/public/images[name]-[contenthash:8].[ext]',
+                            publicPath: '/',
                         },
-                    }
-                },  
-                
+                        },
+                    ],
+                    },
+                    // HTML/images in templates — use Webpack's asset modules
+                    {
+                    type: 'asset/resource',
+                    generator: {
+                        filename: 'public/images/[name]-[contenthash:8][ext]',
+                        publicPath: '/public/images',
+                    },
+                    },
+                ],
+                },
             ]
         },
         context: path.resolve(__dirname, '.'),
