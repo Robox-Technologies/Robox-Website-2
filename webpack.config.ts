@@ -201,6 +201,10 @@ export default (async () => {
                     type: 'asset/source'
                 },
                 {
+                    test: /\.json$/i,
+                    type: 'asset/source'
+                },
+                {
                     test: /\.svg$/i,
                     type: 'asset/resource',
                     generator: {

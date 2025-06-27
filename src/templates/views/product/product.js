@@ -85,7 +85,7 @@ function changeHeroImage(number, autoscroll) {
 
     // Scroll if out of bounds
     if (autoscroll) {
-        let thumbTop = carouselThumb.offsetTop - carouselThumb.clientHeight*2 - 15;
+        let thumbTop = carouselThumb.offsetTop - carouselThumb.clientHeight*3 - 15;
         let thumbBottom = carouselThumb.offsetTop + carouselThumb.clientHeight;
     
         if (thumbTop < carouselImageContainer.scrollTop) {
