@@ -1,16 +1,11 @@
 import path from 'path';
 import fs from 'fs';
 import HtmlBundlerPlugin from 'html-bundler-webpack-plugin';
-import { unified } from 'unified';
-import rehypeDocument from 'rehype-document';
-import rehypeFormat from 'rehype-format';
-import rehypeRaw from 'rehype-raw';
-import rehypeStringify from 'rehype-stringify';
-import remarkParse from 'remark-parse';
-import remarkRehype from 'remark-rehype';
-import roboxSectionize from "./robox-sectionize.js"; // <-- .ts import
+import { getProductList } from './stripe-helper.js';
 
 import { getAllStripe, isValidStatus, displayStatusMap } from './stripe-helper.js';
+
+
 interface Product {
     internalName: string;
     name: string;
@@ -31,16 +26,25 @@ interface ProductData {
 
 type StoreData = Record<string, ProductData>;
 
-const storeProcessor = unified()
-    .use(roboxSectionize)
-    .use(remarkParse)
-    .use(remarkRehype, { allowDangerousHtml: true })
-    .use(rehypeRaw)
-    .use(rehypeFormat)
-    .use(rehypeStringify);
 
+
+
+import { RoboxProcessor } from './roboxProcessor.js';
 const __dirname = path.resolve();
-const cacheProducts = process.env.CACHE_MODE === 'true';
+const eta = new RoboxProcessor({
+    defaultExtension: '.html',
+});
+// const eta = new RoboxProcessor({
+//     defaultExtension: '.html',
+//     views: path.join(__dirname, 'src/'),
+//     debug: true,
+//     useWith: true,
+// })
+
+
+
+
+
 
 const pagesDir = path.resolve(__dirname, 'src/pages');
 const pages = findHtmlPages(pagesDir).map((file) => {
@@ -50,14 +54,16 @@ const pages = findHtmlPages(pagesDir).map((file) => {
 
 let dynamicPages = [...pages];
 
-async function processProducts(cache) {
-    let products = [];
-    if (cache) {
-        products = await getProductList();
-        fs.writeFileSync('products.json', JSON.stringify(products), 'utf8');
-    } else {
-        products = JSON.parse(fs.readFileSync('products.json', 'utf8'));
+async function cacheProducts(): Promise<Product[]> {
+    const cache = process.env.CACHE_MODE === 'true';
+    if (cache || !fs.existsSync('products.json')) {
+        let newProducts = await getProductList();
+        fs.writeFileSync('products.json', JSON.stringify(newProducts), 'utf8');
     }
+    return JSON.parse(fs.readFileSync('products.json', 'utf8'));
+}
+async function processProducts() {
+    let products = await cacheProducts();
 
     const storePages = products.map(
         (product) => `./src/pages/shop/product/${product.internalName}.html`
@@ -68,7 +74,6 @@ async function processProducts(cache) {
     for (const page of storePages) {
         const productName = path.parse(page).name;
         const product = products.find((p) => p.internalName === productName);
-
         if (!product) {
             console.warn(`Product ${productName} not found in products list.`);
             continue;
@@ -76,51 +81,56 @@ async function processProducts(cache) {
 
         let productData = {
             product,
-            images: [],
+            images: [""],
             description: "",
         };
-
-        const productImagesPath = `src/pages/shop/product/images/${product.internalName}`;
-        if (fs.existsSync(productImagesPath)) {
-            productData.images = fs.readdirSync(productImagesPath).map((file) =>
-                path.parse(file).base
-            );
-        } else {
+        //Searching for images that are in the product folder
+        const productImagesPath = `src/images/product/${product.internalName}`;
+        console.log(`Searching for images in: ${productImagesPath}`);
+        if (fs.existsSync(productImagesPath)) productData.images = fs.readdirSync(productImagesPath).map((file) => path.parse(file).base);
+        else {
             console.warn(`Images do not exist for ${product.name}`);
+            continue;
         }
-
+        //Searching for description file
         const productDescriptionPath = `src/pages/shop/product/descriptions/${product.internalName}.md`;
         if (fs.existsSync(productDescriptionPath)) {
-            const markdownDescription = fs.readFileSync(productDescriptionPath, "utf-8");
-            const processed = await storeProcessor.process(markdownDescription);
-            productData.description = processed.toString();
-        } else {
+            try {
+                const mdModule = await import(`src/pages/shop/product/descriptions/${product.internalName}.md`);
+                // if raw-loader: mdModule.default is raw markdown string
+                // if processed: mdModule.default might be HTML string or component
+                productData.description = mdModule.default;
+            } catch (err) {
+                console.warn(`Description import failed for ${product.name}:`, err);
+            continue;
+            }
+        }
+        else {
             console.warn(`Description does not exist for ${product.name}`);
+            continue
         }
 
         storeData[product.internalName] = productData;
     }
 
-    createPages(storePages, './src/pages/shop/product/product.eta', storeData);
+    createPages(storePages, 'src/templates/views/product/product.html', storeData);
 
     return products;
 }
 
 
 export default (async () => {
-    const products = await processProducts(cacheProducts);
-
+    const products = await processProducts();
     const config = {
         mode: 'development',
         devtool: 'source-map',
         resolve: {
             alias: {
                 '@images': path.join(__dirname, 'src/images/'),
-                '@partials': path.join(__dirname, 'src/partials/'),
+                '@partials': path.join(__dirname, 'templates/partials/'),
                 '@root': path.join(__dirname, 'src/root/'),
-                '@types': path.join(__dirname, '@types/')
             },
-            extensions: ['.tsx', '.ts', '.js', '.json']
+            extensions: ['.tsx', '.ts', '.js', '.json'],
         },
         plugins: [
             new HtmlBundlerPlugin({
@@ -137,6 +147,13 @@ export default (async () => {
                 data: {
                     products
                 },
+                verbose: true,
+                watchFiles: {
+                    paths: ['src'],                // ensure the src directory is watched
+                    includes: [/\.md$/],           // watch all .md files
+                    excludes: []                   // (optional) exclude files if needed
+                },
+
                 loaderOptions: {
                     sources: [
                         {
@@ -152,7 +169,12 @@ export default (async () => {
                                     tag.attributes.property === 'og:image'
                                 );
                             }
-                        }
+                        },
+                        {
+                            tag: 'script',
+                            attributes: ['src'], // Handle <script src="...">
+                        },
+                                    
                     ]
                 },
             })
@@ -170,7 +192,8 @@ export default (async () => {
                                 transpileOnly: true
                             }
                         }
-                    ]
+                    ],
+                    exclude: /node_modules/, // Exclude node_modules
                 },
                 {
                     test: /\.s?css$/,
@@ -205,8 +228,12 @@ export default (async () => {
         context: path.resolve(__dirname, '.'),
         output: {
             clean: true,
-            path: path.resolve(__dirname, 'build/website/')
-        }
+            path: path.resolve(__dirname, 'build/website/'),
+            publicPath: '/',
+        },
+        watchOptions: {
+            ignored: ['**/node_modules'],
+        },
     };
 
     return config;
@@ -236,6 +263,7 @@ function findHtmlPages(rootDir) {
 function createPages(pages, template, data) {
     for (const page of pages) {
         const pageName = path.parse(page).name;
+
         const relativePath = path.relative(pagesDir, page);
         const directoryPath = path.dirname(relativePath);
         const outputPath = path.join(directoryPath, `${pageName}.html`);
@@ -248,29 +276,4 @@ function createPages(pages, template, data) {
             }
         });
     }
-}
-async function getProductList() {
-    let products = await getAllStripe("product");
-    let prices = await getAllStripe("price");
-    let productList = [];
-    for (let i = 0; i < products.length; i++) {
-        const status = products[i].metadata.status ?? undefined;
-        if (!isValidStatus(status)) {
-            console.error(`Product ${products[i].id} does not have a valid status`);
-            continue;
-        }
-        let displayStatus = displayStatusMap[status] ?? "Unknown Status";
-        productList.push({
-            name: products[i].name,
-            internalName: products[i].name.replaceAll(" ", "-").replaceAll("/", "").toLowerCase(), // Use this for filenames
-            description: products[i].description ?? "",
-            images: products[i].images,
-            price_id: prices[i].id,
-            price: prices[i].unit_amount ?? 0 / 100,
-            item_id: products[i].id,
-            status: status,
-            displayStatus: displayStatus,
-        });
-    }
-    return productList
 }

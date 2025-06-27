@@ -11,7 +11,7 @@
         "server.ts",
         "store.ts",
         "stripe-helper.ts",
-        "robox-sectionize.ts",
+        "roboxSectionize.ts",
         "webpack.config.ts",
     ],
     "typeRoots": [
