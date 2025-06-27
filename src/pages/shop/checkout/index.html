@@ -2,13 +2,13 @@
 
 <html lang="en">
     <head>
-        <%~ include('src/partials/metadata.html') %>
-        <script src="checkout.js" defer></script>
-        <link href="checkout.scss" rel="stylesheet" />
+        <%~ include('src/templates/partials/metadata.html') %>
+        <script src="./checkout.js" defer></script>
+        <link href="./checkout.scss" rel="stylesheet" />
         <title>Robox - Robotics for Everyone</title>
     </head>
     <body>
-        <%~ include('src/partials/header.html') %>
+        <%~ include('src/templates/partials/header.html') %>
         
         <article class="content">
             <a class="navigation" href="/shop/cart"><i class="fa-solid fa-chevron-left"></i> Cart</a>
@@ -45,10 +45,10 @@
                     </form>
                 </div>
                 
-                <%~ include('src/partials/shopSummary.html', { checkoutButton: false }) %>
+                <%~ include('src/templates/partials/shopSummary.html', { checkoutButton: false }) %>
             </div>
         </article>
         
-        <%~ include('src/partials/footer.html') %>
+        <%~ include('src/templates/partials/footer.html') %>
     </body>
 </html>

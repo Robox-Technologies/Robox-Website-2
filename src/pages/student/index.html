@@ -3,12 +3,12 @@
     <script src="./index.ts"></script>
     <link href="./index.scss" rel="stylesheet" />
     <link href="@root/root.scss" rel="stylesheet" />
-    <%~ include('src/partials/metadata.html') %>
+    <%~ include('src/templates/partials/metadata.html') %>
 </head>
 
 <body>
     <template id="projectCardTemplate">
-        <%~ include('src/partials/card.html', {
+        <%~ include('src/templates/partials/card.html', {
             class: "project-card",
             title: '<i class="fa-solid fa-square-binary"></i><span class="card-title-text"></span>', 
             imageSource: "https://placehold.co/1920x1080", 
@@ -19,7 +19,7 @@
         }) %>
     </template>
     <template id="lessonCardTemplate">
-        <%~ include('src/partials/card.html', {
+        <%~ include('src/templates/partials/card.html', {
             class: "lesson-card",
             title: '<span>Assembly Guide</span>', 
             imageSource: "https://placehold.co/1920x1080", 
@@ -31,7 +31,7 @@
         }) %>
     </template>
     <template id="assemblyGuideCardTemplate">
-        <%~ include('src/partials/card.html', {
+        <%~ include('src/templates/partials/card.html', {
             class: "assembly-card",
             title: '<span>Assembly Guide</span>', 
             imageSource: "https://placehold.co/1920x1080", 
@@ -46,7 +46,7 @@
             topRowButton: false,
         }) %>
     </template>
-    <%~ include('src/partials/header-workshop.html') %>
+    <%~ include('src/templates/partials/header-workshop.html') %>
     <dialog id="toolbar">
         <button class="button" id="project-edit">
             <i class="fa-solid fa-pen-to-square"></i> Edit
@@ -55,7 +55,7 @@
             <i class="fa-solid fa-trash"></i> Delete
         </button>
     </dialog>
-    <%~ include('src/partials/modal.html', {
+    <%~ include('src/templates/partials/modal.html', {
         id: "delete-modal",
         title: '<i class="fa-solid fa-trash-can"></i>', 
         descriptions: [
@@ -74,7 +74,7 @@
         ],
     }) %>
     <!-- Hero title -->
-    <%~ include('src/partials/title-hero.html', {
+    <%~ include('src/templates/partials/title-hero.html', {
         text: "Robox Hub",
         image: "./student-hub-hero.jpg"
     }) %>
@@ -122,5 +122,5 @@
         
     </div>
     
-    <%~ include('src/partials/footer.html') %>
+    <%~ include('src/templates/partials/footer.html') %>
 </body>

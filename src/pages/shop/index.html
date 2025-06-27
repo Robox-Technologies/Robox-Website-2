@@ -1,19 +1,19 @@
 
 <head>
-    <%~ include('src/partials/metadata.html') %>
-    <script src="./index.ts"></script>
-    <link href="./index.scss" rel="stylesheet" />
+    <%~ include('src/templates/partials/metadata.html') %>
+    <script src="index.ts"></script>
+    <link href="index.scss" rel="stylesheet" />
     <link href="@root/root.scss" rel="stylesheet" />
 </head>
 
 <body>
-    <%~ include('src/partials/header.html') %>
+    <%~ include('src/templates/partials/header.html') %>
 
     <!-- Hero title -->
-    <%~ include('src/partials/title-hero.html', {
+    <%~ include('src/templates/partials/title-hero.html', {
         text: "Shop",
         subtitle: "Check out our Ro/Box product range!",
-        image: "./images/hero.jpg",
+        image: "@images/shop/hero.jpg",
         useAlt: true
     }) %>
     
@@ -24,11 +24,11 @@
             <div class="productContainer">
                 <% products.forEach(function(product, index) { %>
                     <a href="./product/<%= product.internalName %>.html">
-                        <%~ include('src/partials/card.html', {
+                        <%~ include('src/templates/partials/card.html', {
                             class: "productCard",
                             title: product.name, 
                             // TODO: Seb, I know you had a pretty neat way of converting these images into webp but I can't seem to replicate it here. It'd also be nice if the thumbnail was fetched from stripe.
-                            imageSource: `./product/images/${product.internalName}/thumbnail.jpg`,
+                            imageSource: `@images/product/${product.internalName}/thumbnail.jpg`,
                             descriptions: [
                                 `<span class="${product.status}">${product.displayStatus}</span>`,
                                 `$${product.price}`
@@ -46,5 +46,5 @@
         </section>
     </article>
     
-    <%~ include('src/partials/footer.html') %>
+    <%~ include('src/templates/partials/footer.html') %>
 </body>
