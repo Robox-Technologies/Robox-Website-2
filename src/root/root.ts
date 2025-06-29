@@ -1,2 +1,2 @@
-import { refreshCart } from "./payment";
+import { refreshCart } from "./cart";
 refreshCart()

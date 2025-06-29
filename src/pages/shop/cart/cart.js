@@ -1,4 +1,4 @@
-import { getCart, refreshCart, setCartItem, getItem, removeCartItem} from "@root/payment.ts"
+import { getCart, refreshCart, setCartItem, getItem, removeCartItem} from "@root/cart.ts"
 import { renderCart } from "@root/shop.ts"
 
 const availableHolder = document.querySelector("#available-section")

@@ -1,4 +1,4 @@
-import { getCart } from "@root/payment.ts";
+import { getCart } from "@root/cart.ts";
 import {loadStripe} from '@stripe/stripe-js';
 import "@root/shop.ts";
 

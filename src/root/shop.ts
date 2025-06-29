@@ -1,4 +1,4 @@
-import { addCartItem, getCart } from "./payment";
+import { addCartItem, getCart } from "./cart";
 
 const orderValue = document.getElementById("order-value") as HTMLParagraphElement
 const totalValue = document.getElementById("total-value") as HTMLParagraphElement
