@@ -4,6 +4,7 @@ import HtmlBundlerPlugin from 'html-bundler-webpack-plugin';
 import { getProductList } from './stripe-helper.js';
 
 import { getAllStripe, isValidStatus, displayStatusMap } from './stripe-helper.js';
+import { TemplateData, TemplatePage } from './types/webpack.js';
 
 
 interface Product {
@@ -30,6 +31,7 @@ type StoreData = Record<string, ProductData>;
 
 
 import { RoboxProcessor } from './roboxProcessor.js';
+
 const __dirname = path.resolve();
 const eta = new RoboxProcessor({
     defaultExtension: '.html',
@@ -52,9 +54,9 @@ const pages = findHtmlPages(pagesDir).map((file) => {
     return { import: file, filename: relative, data: {} };
 });
 
-let dynamicPages = [...pages];
+let dynamicPages: TemplatePage[] = [...pages];
 
-async function cacheProducts(): Promise<Product[]> {
+async function cacheProducts(): Promise<Record<string, Product>> {
     const cache = process.env.CACHE_MODE === 'true';
     if (cache || !fs.existsSync('products.json')) {
         let newProducts = await getProductList();
@@ -65,15 +67,14 @@ async function cacheProducts(): Promise<Product[]> {
 async function processProducts() {
     let products = await cacheProducts();
 
-    const storePages = products.map(
+    const storePages = Object.values(products).map(
         (product) => `./src/pages/shop/product/${product.internalName}.html`
     );
 
     let storeData = {};
-
     for (const page of storePages) {
         const productName = path.parse(page).name;
-        const product = products.find((p) => p.internalName === productName);
+        const product = Object.values(products).find((p) => p.internalName === productName);
         if (!product) {
             console.warn(`Product ${productName} not found in products list.`);
             continue;
@@ -94,12 +95,13 @@ async function processProducts() {
         }
         //Searching for description file
         const productDescriptionPath = `src/templates/views/product/descriptions/${product.internalName}.md`;
+        console.log(`Searching for description in: ${productDescriptionPath}`);
         if (fs.existsSync(productDescriptionPath)) {
             try {
                 productData.description = productDescriptionPath;
             } catch (err) {
                 console.warn(`Description import failed for ${product.name}:`, err);
-            continue;
+                continue;
             }
         }
         else {
@@ -109,7 +111,6 @@ async function processProducts() {
 
         storeData[product.internalName] = productData;
     }
-
     createPages(storePages, 'src/templates/views/product/product.html', storeData);
 
     return products;
@@ -123,9 +124,10 @@ export default (async () => {
         devtool: 'source-map',
         resolve: {
             alias: {
-                '@images': path.join(__dirname, 'src/images/'),
-                '@partials': path.join(__dirname, 'templates/partials/'),
-                '@root': path.join(__dirname, 'src/root/'),
+                '@images': path.join(__dirname, 'src/images'),
+                '@partials': path.join(__dirname, 'templates/partials'),
+                '@root': path.join(__dirname, 'src/root'),
+                '@types': path.join(__dirname, 'types'),
             },
             extensions: ['.tsx', '.ts', '.js', '.json'],
         },
@@ -144,12 +146,10 @@ export default (async () => {
                 data: {
                     products
                 },
-                verbose: true,
                 watchFiles: {
                     includes: [/\.md$/],           // watch all .md files
                     excludes: []                   // (optional) exclude files if needed
                 },
-
                 loaderOptions: {
                     sources: [
                         {
@@ -255,7 +255,7 @@ export default (async () => {
     return config;
 })();
 
-function findHtmlPages(rootDir) {
+function findHtmlPages(rootDir: string): string[] {
     const result = [];
 
     function searchDir(currentDir) {
@@ -276,7 +276,7 @@ function findHtmlPages(rootDir) {
     return result;
 }
 
-function createPages(pages, template, data) {
+function createPages(pages: string[], template: string, data: Record<string, TemplateData>) {
     for (const page of pages) {
         const pageName = path.parse(page).name;
 
@@ -289,6 +289,7 @@ function createPages(pages, template, data) {
             data: data[pageName] || {
                 product: false,
                 images: [],
+                description: "",
             }
         });
     }

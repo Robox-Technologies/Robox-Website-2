@@ -1,13 +1,18 @@
 //TODO: Remake this system (cache the product cost and get rid of weird funky quantity key)
 
+import { Product } from "types/api"
+
+interface Cart {
+    quantity: number;
+    products: Record<string, { quantity: number; data: Product }>;
+}
+
 export const stripePublishableKey = "pk_test_51PhrZEKQ7f0SWVUxH1XgKKNh9FCSnLZpAre95yUs2ip95ktaarscGhTfiw4JQVTyCLrsCaW0xTeXIwcVbOUHFDba00b6ZWj5AT";
 
-
-
-export async function getProducts() {
+export async function getProducts(): Promise<Record<string, Product>> {
     return await (await fetch("/api/store/products")).json()
 }
-export function getCart() {
+export function getCart(): Cart {
     let cart = sessionStorage.getItem("cart")
     if (!cart) {
         cart = JSON.stringify({quantity: 0, products: {}})
@@ -15,7 +20,7 @@ export function getCart() {
     }
     return JSON.parse(cart)
 }
-export function getItem(product: string) {
+export function getItem(product: string): { quantity: number; data: Product } | undefined {
     let cart = getCart()
     return cart["products"][product]
 }
@@ -57,19 +62,19 @@ export function wipeCart() {
     sessionStorage.setItem("cart", JSON.stringify({quantity: 0, products: {}}))
     refreshCart()
 }
-export function addCartItem(product: string, quantity: number, cache: object) {
+export function addCartItem(product: string, quantity: number, cache: Product) {
     let cart = getCart();
     let item = cart["products"][product]
     if (item) item["quantity"] += quantity
     else {
-        cart["products"][product] = {"quantity": quantity, "data": {}}
+        cart["products"][product] = {"quantity": quantity, "data": cache}
     }
     cart["products"][product]["data"] = cache
     cart["quantity"] += quantity
     sessionStorage.setItem("cart", JSON.stringify(cart))
     refreshCart()
 }
-export function setCartItem(product: string, quantity: number, cache: object) {
+export function setCartItem(product: string, quantity: number, cache: Product) {
     let cart = getCart()
     let item = cart["products"][product]
     if (!item) {

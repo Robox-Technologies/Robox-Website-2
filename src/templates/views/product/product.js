@@ -1,4 +1,4 @@
-import { addCartItem, refreshCart } from "@root/payment.ts"
+import { addCartItem, refreshCart } from "@root/cart.ts"
 
 
 const productId = currentProduct["item_id"]

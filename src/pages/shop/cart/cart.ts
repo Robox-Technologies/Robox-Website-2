@@ -1,12 +1,12 @@
-import { getCart, refreshCart, setCartItem, getItem, removeCartItem} from "@root/payment.ts"
-import { renderCart } from "@root/shop.ts"
+import { getCart, refreshCart, setCartItem, getItem, removeCartItem} from "@root/cart"
+import { renderCart } from "@root/shop"
 
 const availableHolder = document.querySelector("#available-section")
 const preorderHolder = document.querySelector("#preorder-section")
 
-const cartItemElement = document.querySelector("#cart-item")
+const cartItemElement: HTMLTemplateElement = document.querySelector("#cart-item")
 
-function renderItemSubtotal(itemId) {
+function renderItemSubtotal(itemId: string) {
     let products = getCart()["products"];
     let subtotalElement = document.getElementById(itemId).querySelector(".cart-item-text-subtotal");
 
@@ -28,7 +28,6 @@ function renderPreview() {
     document.querySelectorAll(".cart-item-holder").forEach((e) => e.replaceChildren());
     let products = getCart()["products"]
     let cartEmpty = true;
-
     for (const productId in products) {
         const product = products[productId]["data"]
         if (!product || productId == "") continue
@@ -42,19 +41,18 @@ function renderPreview() {
             removeCartItem(productId)
             continue
         }
-    
-        let clone = cartItemElement.content.cloneNode(true)
-        let titleElement = clone.querySelector(".cart-item-text-title")
-        let priceElement = clone.querySelector(".cart-item-text-price")
-        let quantityInput = clone.querySelector(".cart-quantity")
-        let imageElement = clone.querySelector(".cart-item-photo")
+        let clone = cartItemElement.content.cloneNode(true) as HTMLElement;
+        let titleElement = clone.querySelector(".cart-item-text-title") as HTMLSpanElement
+        let priceElement = clone.querySelector(".cart-item-text-price") as HTMLSpanElement
+        let quantityInput = clone.querySelector(".cart-quantity") as HTMLInputElement
+        let imageElement = clone.querySelector(".cart-item-photo") as HTMLImageElement
         
         imageElement.src = image
         
         titleElement.textContent = name
         priceElement.textContent = `$${price}/each`
         
-        quantityInput.value = Number(quantity)
+        quantityInput.value = quantity.toString()
     
         let productElement = clone.querySelector(".cart-item")
         productElement.id = product["item_id"]
@@ -79,10 +77,10 @@ renderPreview()
 
 const quantityButtons = document.querySelectorAll(".cart-quantity-button")
 for (const quantityButton of quantityButtons) {
-    let increaseButton = quantityButton.querySelector(".increase-cart-button")
-    let decreaseButton = quantityButton.querySelector(".decrease-cart-button")
+    let increaseButton = quantityButton.querySelector(".increase-cart-button") as HTMLButtonElement
+    let decreaseButton = quantityButton.querySelector(".decrease-cart-button") as HTMLButtonElement
     let productId = quantityButton.closest(".cart-item").id
-    let quantityElement = quantityButton.querySelector(".cart-quantity")
+    let quantityElement = quantityButton.querySelector(".cart-quantity") as HTMLInputElement
     quantityElement.addEventListener("input", (e) => {
         updateCart(productId, Number(quantityElement.value))
     })
@@ -103,13 +101,13 @@ for (const deleteButton of deleteButtons) {
         renderPreview()
     })
 }
-function updateCart(product, quantity) {
+function updateCart(productId: string, quantity: number) {
     if (quantity > 100000000) return
-    let productElement = document.getElementById(product)
-    let quantityInput = productElement.querySelector(".cart-quantity")
+    let productElement = document.getElementById(productId)
+    let quantityInput = productElement.querySelector(".cart-quantity") as HTMLInputElement
     let products = getCart()["products"]
-    quantityInput.value = Number(quantity)
-    setCartItem(product, Number(quantity), products[product]["data"])
+    quantityInput.value = quantity.toString()
+    setCartItem(productId, Number(quantity), products[productId]["data"])
     renderCart()
-    renderItemSubtotal(product);
+    renderItemSubtotal(productId);
 }

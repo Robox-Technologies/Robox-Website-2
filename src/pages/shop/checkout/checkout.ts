@@ -1,21 +1,22 @@
-import { getCart, stripePublishableKey } from "@root/payment.ts";
-import { loadStripe } from '@stripe/stripe-js';
+import { getCart, stripePublishableKey } from "@root/cart";
+import { Appearance, loadStripe } from '@stripe/stripe-js';
+import { Product } from "types/api";
 import "@root/shop.ts";
+import { calculateTotalCost, cartToDictionary } from "@root/stripe-helper";
 
 
 
 
-const cart = getCart()
-const products = cart["products"]
-let totalCost = 0
-for (const productId in products) {
-    let product = products[productId]["data"]
-    let cost = products[productId]["quantity"] * product["price"]
-    totalCost += cost
-}
-totalCost *= 100
+const cart = getCart();
+let products = Object.keys(cart["products"]).reduce((acc: Record<string, Product>, product: string) => {
+    let productData = cart["products"][product]["data"];
+    acc[product] = productData;
+    return acc;
+}, {});
 
-const appearance = {
+let totalCost = calculateTotalCost(cartToDictionary(), products);
+
+const appearance: Appearance = {
     theme: "flat",
     variables: {
         spacingUnit: '4px',
@@ -48,7 +49,7 @@ paymentPromises.then((values) => {
     paymentElement.mount('#payment-element');
     paymentElement.on("loaderstart", (event) => {
         document.getElementById("spinner").style.display = "none"
-        document.getElementById("email").style.display = "block"
+        document.getElementById("email").style.display = "block" 
         document.getElementById("email-label").style.display = "block"
         document.getElementById("stripe-content").style.justifyContent = "flex-start"
     })
@@ -56,7 +57,7 @@ paymentPromises.then((values) => {
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
-        const email = document.getElementById("email").value;
+        const email = (document.getElementById("email") as HTMLInputElement).value;
         const {error} = await stripe.confirmPayment({
             elements,
             confirmParams: {
@@ -81,7 +82,7 @@ async function getPaymentIntent() {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-            products: products,
+            products: cartToDictionary(),
             expected_price: totalCost
         })
     });
