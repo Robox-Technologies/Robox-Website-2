@@ -10,7 +10,6 @@
 
         <script>
             const images = <%~ JSON.stringify(images) %>;
-            const currentProduct = <%~ JSON.stringify(product) %>;
         </script>
     </head>
 
@@ -23,9 +22,9 @@
             <div id="starter-info">
                 <div class="carousel-container">
                     <div id="image-carousel">
+                        <!-- TODO: Should be using lowres thumbnail images -->
                         <% images.forEach(function(image, index){ %>
                             <div class="carousel-image" >
-                                <!-- TODO: This should use a lowres thumbnail image -->
                                 <img class="<%= index === 0 ? 'selected-carousel' : ''  %>" loading="<%= index > 6 ? 'lazy' : 'eager'  %>" src="<%= `@images/product/${product.internalName}/${image}` %>">
                             </div>
                         <% }) %>
@@ -70,5 +69,24 @@
         </article>
 
         <%~ include('src/templates/partials/footer.html') %>
+
+        <%~ include('src/templates/partials/modal.html', {
+            id: "cart-modal",
+            title: '<i class="fa-solid fa-cart-plus"></i>',
+            content: `
+                <h2>Added to cart</h2>
+            `,
+            buttons: [
+                {
+                    id: "cancel-confirm-button",
+                    content: "Continue Shopping",
+                },
+                {
+                    id: "delete-confirm-button",
+                    link: "/shop/cart",
+                    content: "View Cart",
+                },
+            ],
+        }) %>
     </body>
 </html>
