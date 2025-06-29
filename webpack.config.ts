@@ -124,9 +124,10 @@ export default (async () => {
         devtool: 'source-map',
         resolve: {
             alias: {
-                '@images': path.join(__dirname, 'src/images/'),
-                '@partials': path.join(__dirname, 'templates/partials/'),
-                '@root': path.join(__dirname, 'src/root/'),
+                '@images': path.join(__dirname, 'src/images'),
+                '@partials': path.join(__dirname, 'templates/partials'),
+                '@root': path.join(__dirname, 'src/root'),
+                '@types': path.join(__dirname, 'types'),
             },
             extensions: ['.tsx', '.ts', '.js', '.json'],
         },

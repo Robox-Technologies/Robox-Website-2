@@ -1,28 +1,23 @@
+import { Product } from "types/api";
 import { addCartItem, getCart } from "./cart";
+import { calculateTotalCost, cartToDictionary, shippingCost } from "./stripe-helper";
 
 const orderValue = document.getElementById("order-value") as HTMLParagraphElement
 const totalValue = document.getElementById("total-value") as HTMLParagraphElement
 const shippingValue = document.getElementById("shipping-cost") as HTMLParagraphElement
 
-// MARK: SHIPPING COST
-const shippingCost = 10
+
 
 export function renderCart() {
-    let products = getCart().products;
-    let cost = 0
-    
-    for (const productId in products) {
-        let product = products[productId]["data"]
-        if (!product) continue;
-        let price = product.price
-        let quantity = products[productId]["quantity"]
+    //Get rid of the quantity stuff
+    let cart = getCart();
+    let products = Object.keys(cart["products"]).reduce((acc: Record<string, Product>, product: string) => {
+        let productData = cart["products"][product]["data"];
+        acc[product] = productData;
+        return acc;
+    }, {});
 
-        if (quantity < 1) continue;
-
-        cost += price*quantity
-    }
-
-    let shipping = cost <= 0 ? 0 : shippingCost;
+    let cost = calculateTotalCost(cartToDictionary(), products);
 
     // Hide checkout button if cost is 0
     let checkoutButton = document.getElementById("checkout");
@@ -33,17 +28,26 @@ export function renderCart() {
             checkoutButton.style.display = "block";
         }
     }
-
-    orderValue.textContent = `$${cost}`
-    totalValue.textContent = `$${cost+shipping}`
-    shippingValue.textContent = `$${shipping}`
+    if (totalValue && orderValue && shippingValue) {
+        orderValue.textContent = `$${cost}`
+        totalValue.textContent = `$${cost+shippingCost}`
+        shippingValue.textContent = `$${shippingCost}`
+    }
 }
 
-async function getItemData() {
+async function getItemData(): Promise<Record<string, Product>> {
     let products = getCart().products;
 
+    // const promises = Object.keys(products).map((productId) =>
+    //     fetch(`${window.location.origin}/api/store/products?id=${productId}`).then(async (response) => [productId, await response.json()])
+    // );
     const promises = Object.keys(products).map((productId) =>
-        fetch(`${window.location.origin}/api/store/products?id=${productId}`).then(async (response) => [productId, await response.json()])
+        fetch(`/api/store/products?id=${productId}`).then(async (response) => {
+            if (!response.ok) {
+                throw new Error(`Failed to fetch product ${productId}: ${response.statusText}`);
+            }
+            return [productId, await response.json()];
+        })
     );
 
     const data = await Promise.all(promises);
