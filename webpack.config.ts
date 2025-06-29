@@ -31,10 +31,14 @@ type StoreData = Record<string, ProductData>;
 
 
 import { RoboxProcessor } from './roboxProcessor.js';
+import { Eta } from 'eta';
 
 const __dirname = path.resolve();
 const eta = new RoboxProcessor({
     defaultExtension: '.html',
+    views: path.join(__dirname, ''),
+    debug: true,
+    useWith: true,
 });
 // const eta = new RoboxProcessor({
 //     defaultExtension: '.html',
@@ -146,10 +150,7 @@ export default (async () => {
                 data: {
                     products
                 },
-                watchFiles: {
-                    includes: [/\.md$/],           // watch all .md files
-                    excludes: []                   // (optional) exclude files if needed
-                },
+                preprocessor: (content, { data }) => eta.renderString(content, data),
                 loaderOptions: {
                     sources: [
                         {

@@ -11,6 +11,7 @@ import remarkRehype from 'remark-rehype';
 import roboxSectionize from "./roboxSectionize.js"; // <-- .ts import
 import path from 'path';
 import fs from "fs";
+
 const storeProcessor = unified()
     .use(roboxSectionize)
     .use(remarkParse)
@@ -30,6 +31,13 @@ interface ResolveOptions extends Partial<Options> {
 }
 
 export class RoboxProcessor extends Eta {
-    private mdCache = new Map<string, { mtimeMs: number; result: string }>();
-
+    // Override readFile to process .md files
+    readFile = (filename: string): string => {
+        if (filename.endsWith('.md')) {
+            const content = fs.readFileSync(filename, 'utf-8');
+            const processed = storeProcessor.processSync(content);
+            return processed.toString();
+        }
+        return fs.readFileSync(filename, 'utf-8');
+    }
 }
