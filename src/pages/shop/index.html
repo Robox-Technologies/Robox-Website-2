@@ -22,7 +22,7 @@
             <h1>Products</h1>
 
             <div class="productContainer">
-                <% products.forEach(function(product, index) { %>
+                <% Object.values(products).forEach(function(product, index) { %>
                     <a href="./product/<%= product.internalName %>.html">
                         <%~ include('src/templates/partials/card.html', {
                             class: "productCard",

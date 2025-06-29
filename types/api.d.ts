@@ -10,5 +10,18 @@ export type Product = {
     item_id: string,
     status: ProductStatus
 }
-
 export type ProductStatus = "available" | "not-available" | "preorder"
+
+export interface PaymentIntentCreationBody {
+    products: Record<string, number>;
+    expected_price: number;
+}
+export interface ProductsRequestQuery {
+    id?: string; // Product ID to fetch specific product, or "quantity" for quantity product
+}
+export interface ProductsRequestQuery {
+    id?: string; // Product ID to fetch specific product, or "quantity" for quantity product
+}
+export interface PaymentIntentCreationResponse {
+    client_secret: string;
+}

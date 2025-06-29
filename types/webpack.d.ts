@@ -1,4 +1,4 @@
-export type templatePage = {
+export type TemplatePage = {
     import: string; // Path to the template file
     filename: string; // Output filename
     data?: TemplateData; // Data to be passed to the template

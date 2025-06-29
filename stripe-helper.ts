@@ -12,9 +12,9 @@ export const displayStatusMap: { [K in ProductStatus]: string } = {
 };
 
 
-export async function getAllStripe(type: "price"): Promise<Stripe.Price[]>;
-export async function getAllStripe(type: "product"): Promise<Stripe.Product[]>;
-export async function getAllStripe(type: "price" | "product"): Promise<Stripe.Price[] | Stripe.Product[]> {
+export async function getAllStripe(type: "price"): Promise<Record<string, Stripe.Price>>;
+export async function getAllStripe(type: "product"): Promise<Record<string, Stripe.Product>>;
+export async function getAllStripe(type: "price" | "product"): Promise<Record<string, Stripe.Product | Stripe.Price>> {
     if (type === "price") {
         return await recursiveItemGrab(stripeAPI.prices)
     }
@@ -23,9 +23,9 @@ export async function getAllStripe(type: "price" | "product"): Promise<Stripe.Pr
     }
 }
 
-async function recursiveItemGrab(API: Stripe.ProductsResource): Promise<Stripe.Product[]>;
-async function recursiveItemGrab(API: Stripe.PricesResource ): Promise<Stripe.Price[]>;
-async function recursiveItemGrab(API: Stripe.PricesResource | Stripe.ProductsResource ): Promise<Stripe.Price[] | Stripe.Product[]> {
+async function recursiveItemGrab(API: Stripe.ProductsResource): Promise<Record<string, Stripe.Product>>;
+async function recursiveItemGrab(API: Stripe.PricesResource ): Promise<Record<string, Stripe.Price>>;
+async function recursiveItemGrab(API: Stripe.PricesResource | Stripe.ProductsResource ): Promise<Record<string, Stripe.Price | Stripe.Product>> {
     
     let item: Stripe.ApiList<Stripe.Price> | Stripe.ApiList<Stripe.Product> = await API.list();
     const itemArray = [...item.data];
@@ -51,8 +51,17 @@ async function recursiveItemGrab(API: Stripe.PricesResource | Stripe.ProductsRes
         itemArray.push(...moreItems.data);
         item = moreItems;
     }
+    let itemObject: Record<string, Stripe.Price | Stripe.Product> = {};
 
-    return itemArray as Stripe.Price[] | Stripe.Product[];;
+
+    itemObject = itemArray.reduce((acc, item) => {
+            let id: string = "product" in item && typeof item.product === "string" ? item.product : item.id;
+            acc[id] = item;
+            return acc;
+        }, {} as Record<string, Stripe.Price | Stripe.Product>);
+    // Convert the array to an object with item IDs as keys
+    
+    return itemObject;
 }
 
 
@@ -61,7 +70,9 @@ export function isValidStatus(status: ProductStatus | string): status is Product
     // Check if the status is one of the valid statuses
     return ["available", "not-available", "preorder"].includes(status);
 }
-
+function isPricesResource(api: Stripe.PricesResource | Stripe.ProductsResource): api is Stripe.PricesResource {
+    return 'list' in api && 'retrieve' in api && 'create' in api && 'update' in api && 'search' in api; // crude but works
+}
 
 export async function getProduct(id: string): Promise<Product | false> {
     try {
@@ -96,28 +107,30 @@ export async function getProduct(id: string): Promise<Product | false> {
     }
 }
 
-export async function getProductList(): Promise<Product[]> {
+export async function getProductList(): Promise<Record<string, Product>> {
     let products = await getAllStripe("product");
     let prices = await getAllStripe("price");
-    let productList: Product[] = [];
-    for (let i = 0; i < products.length; i++) {
-        const status = products[i].metadata.status ?? undefined;
+    let combined: Record<string, Product> = {};
+    for (const productId in products) {
+        const product = products[productId];
+        const price = prices[productId];
+        const status = product.metadata.status ?? undefined;
         if (!isValidStatus(status)) {
-            console.error(`Product ${products[i].id} does not have a valid status`);
+            console.error(`Product ${product.id} does not have a valid status`);
             continue;
         }
         let displayStatus = displayStatusMap[status] ?? "Unknown Status";
-        productList.push({
-            name: products[i].name,
-            internalName: products[i].name.replaceAll(" ", "-").replaceAll("/", "").toLowerCase(), // Use this for filenames
-            description: products[i].description ?? "",
-            images: products[i].images,
-            price_id: prices[i].id,
-            price: prices[i].unit_amount ?? 0 / 100,
-            item_id: products[i].id,
+        combined[productId] = {
+            name: product.name,
+            internalName: product.name.replaceAll(" ", "-").replaceAll("/", "").toLowerCase(), // Use this for filenames
+            description: product.description ?? "",
+            images: product.images,
+            price_id: price.id,
+            price: price.unit_amount ? price.unit_amount / 100 : 0, // Convert cents to dollars
+            item_id: product.id,
             status: status,
             displayStatus: displayStatus,
-        });
+        };
     }
-    return productList
+    return combined
 }
