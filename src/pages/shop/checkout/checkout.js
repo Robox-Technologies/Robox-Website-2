@@ -1,5 +1,5 @@
-import { getCart } from "@root/payment.ts";
-import {loadStripe} from '@stripe/stripe-js';
+import { getCart, stripePublishableKey } from "@root/payment.ts";
+import { loadStripe } from '@stripe/stripe-js';
 import "@root/shop.ts";
 
 
@@ -22,7 +22,7 @@ const appearance = {
 
     }
 }
-const stripePromise = loadStripe('pk_test_51PhrZEKQ7f0SWVUxH1XgKKNh9FCSnLZpAre95yUs2ip95ktaarscGhTfiw4JQVTyCLrsCaW0xTeXIwcVbOUHFDba00b6ZWj5AT');
+const stripePromise = loadStripe(stripePublishableKey);
 const clientSecretPromise = getPaymentIntent()
 const paymentPromises = Promise.all([stripePromise, clientSecretPromise])
 

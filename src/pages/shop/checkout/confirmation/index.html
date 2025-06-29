@@ -12,24 +12,47 @@
 
         <div class="container">
             <div class="resultCard">
-                <i class="fa-solid fa-bag-shopping statusIcon"></i>
+                <div id="loading">
+                    <div class="loader"></div>
 
-                <h1>Thank you!</h1>
+                    <h1>Processing payment...</h1>
+    
+                    <h2>
+                        Sit tight! We're just processing your payment.<br>
+                        This may take a moment.
+                    </h2>
+                </div>
 
-                <h2>
-                    Thank you for your purchase!
-                    We'll get started on your order right away,
-                    and you will receive a confirmation email shortly
-                    at <strong>aperson@email.com</strong>.
-                </h2>
+                <div id="failure">
+                    <i class="fa-solid fa-exclamation-circle statusIcon"></i>
 
-                <div class="socials">
-                    <p>Stay up to date with us!</p>
-                    <hr>
-                    <div class="socialButtons">
-                        <a href="https://www.instagram.com/robox.kit" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="https://x.com/robox_kit" target="_blank"><i class="fab fa-x-twitter"></i></a>
-                        <a href="https://www.linkedin.com/company/roboxeducation" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <h1>Payment failed</h1>
+    
+                    <h2>
+                        Something went wrong with your payment. Don't worry—you can try again or update your payment info.
+                    </h2>
+
+                    <a class="ctaButton" href="/shop/cart/">Back to cart</a>
+                </div>
+
+                <div id="success">
+                    <h1>Thank you!</h1>
+    
+                    <h2>
+                        Thank you for your purchase!
+                        We'll get started on your order right away.
+                        You will receive a confirmation email shortly at
+                        <strong><span id="email"></span></strong>.
+                    </h2>
+
+                    <div class="socials">
+                        <p>Stay up to date with us!</p>
+                        <hr>
+                        <div class="socialButtons">
+                            <a href="https://www.instagram.com/robox.kit" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="https://x.com/robox_kit" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                            <a href="https://www.linkedin.com/company/roboxeducation" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>

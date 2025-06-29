@@ -1,6 +1,6 @@
 //TODO: Remake this system (cache the product cost and get rid of weird funky quantity key)
 
-
+export const stripePublishableKey = "pk_test_51PhrZEKQ7f0SWVUxH1XgKKNh9FCSnLZpAre95yUs2ip95ktaarscGhTfiw4JQVTyCLrsCaW0xTeXIwcVbOUHFDba00b6ZWj5AT";
 
 
 
