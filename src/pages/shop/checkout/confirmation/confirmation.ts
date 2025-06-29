@@ -1,4 +1,4 @@
-import { wipeCart, stripePublishableKey } from "@root/payment";
+import { wipeCart, stripePublishableKey } from "@root/cart";
 import { loadStripe } from '@stripe/stripe-js';
 
 const urlParams = new URLSearchParams(window.location.search);
