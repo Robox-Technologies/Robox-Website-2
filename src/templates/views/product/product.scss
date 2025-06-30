@@ -124,8 +124,16 @@ $carouselThumbnailSize: 115px;
     margin-top: 16px;
 }
 
-.small-element {
-    display: none;
+#cart-modal > .modal-bottom-bar {
+    a {
+        font-size: 16px;
+        box-shadow: none;
+        padding: 6px 16px;
+    }
+
+    #dismiss-modal {
+        background-color: variables.$themeBlue;
+    }
 }
 
 @media only screen and (max-width: 1200px) {

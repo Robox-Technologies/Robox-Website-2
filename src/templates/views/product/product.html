@@ -4,8 +4,9 @@
 
     <head>
         <%~ include('src/templates/partials/metadata.html') %>
-        <script src="./product.js" defer></script>
+        <script src="./product.ts" defer></script>
         <link href="./product.scss" rel="stylesheet" />
+        <link href="@root/shop.scss" rel="stylesheet" />
         <title>Robox Store</title>
 
         <script>
@@ -75,18 +76,20 @@
             id: "cart-modal",
             title: '<i class="fa-solid fa-cart-plus"></i> Added to Cart',
             content: [
-                `<h2>Added to cart</h2>`
+                `<div class="cart-item">
+                    <img class="cart-item-photo" src="@images/product/${product.internalName}/${images[0]}">
+                    <div class="cart-item-info">
+                        <div class="cart-item-text-info">
+                            <p class="cart-item-text-title">${product.name} (Qty: <span id="modal-quantity"></span>)</p>
+                            <p class="cart-item-text-subtotal">$${product.price}/each</p>
+                            <p class="cart-item-text-price">Total: $<span id="modal-total-price"></span></p>
+                        </div>
+                    </div>
+                </div>`
             ],
             buttons: [
-                {
-                    id: "cancel-confirm-button",
-                    content: "Continue Shopping",
-                },
-                {
-                    id: "delete-confirm-button",
-                    link: "/shop/cart",
-                    content: "View Cart",
-                },
+                "<a class='ctaButton' id='dismiss-modal'>Continue Shopping</a>",
+                "<a href='/shop/cart' class='ctaButton' id='view-cart'>View Cart</a>"
             ],
         }) %>
     </body>

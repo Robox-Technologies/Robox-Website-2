@@ -82,7 +82,9 @@ for (const quantityButton of quantityButtons) {
     let productId = quantityButton.closest(".cart-item").id
     let quantityElement = quantityButton.querySelector(".cart-quantity") as HTMLInputElement
     quantityElement.addEventListener("input", (e) => {
-        updateCart(productId, Number(quantityElement.value))
+        quantityElement.value = quantityElement.value.slice(0, 2);
+        let numberValue = Number(quantityElement.value) ?? 0;
+        updateCart(productId, numberValue);
     })
     increaseButton.addEventListener("click", (e) => {
         updateCart(productId, Number(quantityElement.value)+1)
@@ -102,7 +104,7 @@ for (const deleteButton of deleteButtons) {
     })
 }
 function updateCart(productId: string, quantity: number) {
-    if (quantity > 100000000) return
+    quantity = Math.min(Math.max(quantity, 0), 99);
     let productElement = document.getElementById(productId)
     let quantityInput = productElement.querySelector(".cart-quantity") as HTMLInputElement
     let products = getCart()["products"]

@@ -98,6 +98,10 @@ label {
     flex-direction: column;
 }
 
+#error-message {
+    color: variables.$themeRed;
+}
+
 @media only screen and (max-width: 900px) {
     #main-content {
         flex-direction: column-reverse;

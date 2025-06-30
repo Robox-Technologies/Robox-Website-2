@@ -6,6 +6,10 @@ on:
   push:
     branches:
       - develop
+env:
+  STRIPE_KEY: ${{ secrets.STRIPE_KEY }}
+  CACHE_MODE: false
+  STORE_TESTING: true
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
