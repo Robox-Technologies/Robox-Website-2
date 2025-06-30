@@ -19,7 +19,8 @@ motor_speed = 60
 `
 
 let alreadyDownloaded = false
-let skipDownloadStep = true
+let downloadingToPico = false
+
 
 export function postBlocklyWSInjection() {
     const ws = Blockly.getMainWorkspace()
@@ -27,8 +28,11 @@ export function postBlocklyWSInjection() {
 
     const connectButton = document.getElementById("connect-robox-button")
     const downloadButton = document.getElementById("download-robox-button")
+    const downloadConnectionButton = document.getElementById("download")
     const stopButton = document.getElementById("stop-robox-button")
     const runButton = document.getElementById("run-robox-button")
+
+    const settingsButton = document.getElementById("robox-settings-button")
 
     if (!connectionManagment) return
     
@@ -41,28 +45,23 @@ export function postBlocklyWSInjection() {
         }
     })
     pico.addEventListener("connect", (event) => {
-        if (skipDownloadStep || alreadyDownloaded) {
-            connectionManagment.setAttribute("status",  "downloaded")
-        }
-        else {
-            connectionManagment.setAttribute("status",  "connected")
-        }
+        connectionManagment.setAttribute("status",  "downloaded")
         connectionManagment.setAttribute("loading",  "false")
     })
     pico.addEventListener("download", (event) => {
-        if (skipDownloadStep) {
-            pico.runCode()
-            connectionManagment.setAttribute("status",  "running")
-            connectionManagment.setAttribute("loading",  "false")
-            return
-        }
-        connectionManagment.setAttribute("status",  "downloaded")
         connectionManagment.setAttribute("loading",  "false")
 
+        if (downloadingToPico) {
+            connectionManagment.setAttribute("status",  "downloaded")
+        }
+        
+
+    })
+    pico.addEventListener("error", (event) => {
+        connectionManagment.setAttribute("loading",  "false")
     })
     ws.addChangeListener((event) => {
         if (event.isUiEvent ) return; //Checking if this update changed the blocks
-        if (connectionManagment.getAttribute("status") === "downloaded") connectionManagment.setAttribute("status",  "connected") //If they are waiting to run the program then go back to download
         alreadyDownloaded = false //Saying that this workspace has changed
     });
     connectButton?.addEventListener("click", () => {
@@ -77,6 +76,12 @@ export function postBlocklyWSInjection() {
         connectionManagment.setAttribute("loading",  "true")
 
     })
+    downloadConnectionButton?.addEventListener("click", () => {
+        if (connectionManagment.getAttribute("loading") === "true") return
+        downloadingToPico = true
+        connectionManagment.setAttribute("loading",  "true")
+        sendCode(ws)
+    })
     stopButton?.addEventListener("click", () => {
         if (connectionManagment.getAttribute("loading") === "true") return
         pico.restart()
@@ -84,11 +89,21 @@ export function postBlocklyWSInjection() {
     })
     runButton?.addEventListener("click", () => {
         if (connectionManagment.getAttribute("loading") === "true") return
-        if (skipDownloadStep) {
-            sendCode(ws)
-        }
         connectionManagment.setAttribute("status",  "running")
         connectionManagment.setAttribute("loading",  "false")
+        sendCode(ws)
+        pico.runCode()
+
+    })
+    settingsButton?.addEventListener("click", (event) => {
+        //Rotate the cog as an animation
+        const cog = document.querySelector('#robox-settings-button svg') as HTMLElement | null;
+        if (!cog) return
+        rotateOneTooth(cog);
+        let dialog = document.getElementById("settings-toolbar") as HTMLDialogElement | null
+        if (!dialog || dialog.open ) return
+        dialog.show()
+        event.stopPropagation()
     })
     pico.startupConnect()
 
@@ -98,4 +113,10 @@ function sendCode(ws: Blockly.Workspace) {
     let finalCode = `${scriptDependency}\n${code}\nevent_begin()`
     pico.sendCode(finalCode)
 }
-
+let rotation = 0;
+const degreesPerTooth = 60; // Adjust this value to match one gear tooth visually
+function rotateOneTooth(cog: HTMLElement) {
+    rotation += degreesPerTooth;
+    cog.style.transition = 'transform 0.5s ease-out';
+    cog.style.transform = `rotate(${rotation}deg)`;
+}

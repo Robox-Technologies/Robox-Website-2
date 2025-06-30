@@ -139,3 +139,6 @@ build
 .vscode
 
 **/.DS_Store
+
+TEMPLATE_*.html
+GUIDE_*.html

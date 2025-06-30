@@ -33,7 +33,8 @@ const config = {
         alias: {
             "@images": path.join(__dirname, 'src/images/'),
             "@partials": path.join(__dirname, 'src/partials/'),
-            "@root": path.join(__dirname, 'src/root/')
+            "@root": path.join(__dirname, 'src/root/'),
+            "@types": path.join(__dirname, 'src/types/')
         },
         extensions: ['.tsx', '.ts', '.js', ".json"],
     },
@@ -66,6 +67,18 @@ const config = {
                     // path to the directory where *.md files will be searched
                     path.join(__dirname, 'src/guides/'),
                 ],
+            },
+        }),
+        new CopyPlugin({
+            patterns: [
+  {
+    from: "**/*",
+    to: "public/[path][name][ext]",
+    context: "src/pages/public",
+  },
+],
+            options: {
+                concurrency: 100,
             },
         })
     ],

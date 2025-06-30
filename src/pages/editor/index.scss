@@ -89,29 +89,31 @@ $downloadButtonSize: 60px;
 .customIcon {
     color: white;
 }
-.blocklyToolboxDiv {
+.blocklyToolbox {
     background-color: white;
     padding: 0;
     width: $toolboxWidth;
     border-right: $seperatorStrokeSize solid $navEdges;
 }
 
-.blocklyFlyout { 
-    transform: translate(calc($toolboxWidth - $seperatorStrokeSize * 2), -$seperatorStrokeSize) !important;
-    border: $seperatorStrokeSize solid $navEdges;
-    width: 430px;
+.injectionDiv > .blocklyFlyout { 
+    border-right: $seperatorStrokeSize solid $navEdges;
     background-color: rgb(245, 245, 245);;
+}
+.blocklyMutatorBackground {
+    fill: #fff !important;
 }
 /* Stacks the icon on top of the label. */
 .blocklyTreeRowContentContainer {
     display: flex;
     position: relative;
     align-items: center;
+    flex-direction: row;
 }
 .blocklyTreeRowContentContainer >svg >path {
     fill: white;
 }
-.blocklyTreeRow {
+.blocklyToolboxCategory {
     height: initial;
 }
 .side-arch {
@@ -174,6 +176,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     gap: $topBarButtonGap;
 }
 #project-name-input {
@@ -282,17 +285,11 @@ $zoomButtonsGap: 10px;
     display: flex;
     gap: $zoomButtonsGap;
 }
-#blocklyCustomZoom {
-    flex-direction: column;
-}
 #blocklyCustomTimeControls {
     flex-direction: row;
     gap: 0;
 }
 $blocklyUIButtonsDropShadowMult: 2;
-#blocklyCustomZoom > .uiButtons{
-    border-radius: 50%;
-}
 
 #blocklyCustomTimeControls > .uiButtons:first-child {
     border-radius: 7px 0 0 7px;
@@ -300,6 +297,33 @@ $blocklyUIButtonsDropShadowMult: 2;
 }
 #blocklyCustomTimeControls > .uiButtons:last-child {
     border-radius: 0 7px 7px 0;
+}
+
+#calibrate-button, #calibrate-outcome-button {
+    svg {
+        display: none;
+    }
+}
+.calibrate-button{
+    width: 100px;
+    height: 37px;
+    min-height: 37px;
+    svg {
+        display: none;
+    }
+}
+
+#calibrate-outcome-button[calibrating], #calibrate-button[calibrating] {
+    font-size: 0;
+    width: 76px;
+    max-height: 37px !important;
+    svg {
+        font-size: 20px;
+        display: inline;
+    }
+}
+button[calibrating]:hover {
+    cursor: not-allowed;
 }
 .uiButtons {
     background-color: white;
@@ -315,97 +339,90 @@ $blocklyUIButtonsDropShadowMult: 2;
     padding: 20px;
     cursor: pointer;
 }
+#connection-managment {
+    #download-robox-button {
+        display: none;
+    }
+    #connect-robox-button {
+        display: none;
+    }
+    #stop-robox-button {
+        display: none;
+    }
+    #code-download-robox-button {
+        display: none;
+    }
+    #run-robox-button {
+        display: none;
+    }
+
+    #loading {
+        display: none;
+    }
+
+    #options {
+        display: none;
+    }
+    #disconnect {
+        display: none;
+    }
+    #console {
+        display: none;
+    }
+    #download {
+        display: none;
+    }
+}
 #connection-managment[status="disconnected"] {
     background-color: variables.$themeBlue;
-    #download-robox-button {
-        display: none;
-    }
     #connect-robox-button {
         display: block;
-    }
-    #stop-robox-button {
-        display: none;
-    }
-    #run-robox-button {
-        display: none;
-    }
-
-    #loading {
-        display: none;
-    }
-
-    #options {
-        display: block;
-    }
-    #disconnect {
-        display: none;
-    }
-    #console {
-        display: none;
+        width: 100%;
+        border-right: unset;
     }
 }
 
-#connection-managment[status="connected"] {
-    background-color: variables.$themeYellow;
-    #download-robox-button {
-        display: block;
-    }
-    #connect-robox-button {
-        display: none;
-    }
-    #stop-robox-button {
-        display: none;
-    }
-    #run-robox-button {
-        display: none;
-    }
-    
-    #loading {
-        display: none;
-    }
-    
-    #options {
-        display: none;
-    }
-    #disconnect {
-        display: block;
-    }
-    #console {
-        display: none;
-    }
-}
 #connection-managment[status="downloaded"] {
     background-color: variables.$themeGreen;
-    #download-robox-button {
-        display: none;
-    }
-    #connect-robox-button {
-        display: none;
-    }
-    #stop-robox-button {
-        display: none;
-    }
     #run-robox-button {
         display: block;
     }
-
-    #loading {
-        display: none;
-    }
     
-    #options {
-        display: none;
-    }
-    #disconnect {
+    #download {
         display: block;
-    }
-    #console {
-        display: none;
     }
 }
 
 #connection-managment[status="running"] {
     background-color: variables.$themeRed;
+    #stop-robox-button {
+        display: block;
+    }
+    #console {
+        display: block;
+    }
+}
+$settingsToolbarWidth: 200px;
+#settings-toolbar {
+    width: $settingsToolbarWidth;
+    position: absolute;
+    bottom: 0;
+    left: calc(10px - $settingsToolbarWidth );
+    top: 35px;
+}
+#robox-settings-calibrate > svg {
+    color: variables.$themeBlue;
+}
+#connection-managment[status="no-serial"] {
+    background-color: variables.$themeYellow;
+    width: 100%;
+    border-right: unset;
+    #code-download-robox-button {
+        display: block;
+    }
+}
+
+#connection-managment[loading="true"] {
     #download-robox-button {
         display: none;
     }
@@ -413,16 +430,15 @@ $blocklyUIButtonsDropShadowMult: 2;
         display: none;
     }
     #stop-robox-button {
-        display: block;
+        display: none;
+    }
+    #code-download-robox-button {
+        display: none;
     }
     #run-robox-button {
         display: none;
     }
 
-    #loading {
-        display: none;
-    }
-    
     #options {
         display: none;
     }
@@ -430,26 +446,37 @@ $blocklyUIButtonsDropShadowMult: 2;
         display: none;
     }
     #console {
-        display: block;
+        display: none;
     }
-}
-#connection-managment[loading="true"] {
+    #download {
+        display: none;
+    }
     
-    #download-robox-button {
-        display: none;
-    }
-    #connect-robox-button {
-        display: none;
-    }
-    #stop-robox-button {
-        display: none;
-    }
-    #run-robox-button {
-        display: none;
-    }
-
     #loading {
         display: block;
+        width: 100%;
+        font-size: 20px;
+        border-right: unset;
     }
 
+}
+#connection-managment[status="no-serial"] {
+    background-color: variables.$themeYellow;
+    #code-download-robox-button {
+        display: block;
+    }
+
+
+}
+#robox-settings-button {
+    font-size: 20px;
+}
+.bootsel[loading] {
+    button.calibrate-button {
+        font-size: 0;
+    }
+    .fa-spinner {
+        display: inline;
+        font-size: 20px;
+    }
 }
