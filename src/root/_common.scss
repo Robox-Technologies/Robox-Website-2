@@ -62,6 +62,11 @@ article {
     * {
         margin-right: 8px;
     }
+
+    &:disabled {
+        background-color: variables.$tone3;
+        cursor: not-allowed;
+    }
 }
 
 .ctaButton.pill {

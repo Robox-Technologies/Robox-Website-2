@@ -23,9 +23,12 @@ const appearance: Appearance = {
 
     }
 }
+
 const stripePromise = loadStripe(stripePublishableKey);
 const clientSecretPromise = getPaymentIntent()
 const paymentPromises = Promise.all([stripePromise, clientSecretPromise])
+
+const submitButton = document.getElementById("submit") as HTMLButtonElement;
 
 paymentPromises.then((values) => {
     const [stripe, clientSecret] = values
@@ -53,7 +56,16 @@ paymentPromises.then((values) => {
         document.getElementById("email-label").style.display = "block"
         document.getElementById("stripe-content").style.justifyContent = "flex-start"
     })
-    const form = document.getElementById('payment-form');
+
+    const form = document.getElementById('payment-form') as HTMLFormElement;
+
+    document.getElementById("termsConsent").addEventListener("click", () => {
+        submitButton.disabled = !form.checkValidity();
+    });
+
+    form.addEventListener("change", () => {
+        submitButton.disabled = !form.checkValidity();
+    });
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();

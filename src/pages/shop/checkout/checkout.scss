@@ -102,6 +102,12 @@ label {
     color: variables.$themeRed;
 }
 
+#termsConsent {
+    $checkboxSize: 18px;
+    width: $checkboxSize;
+    height: $checkboxSize;
+}
+
 @media only screen and (max-width: 900px) {
     #main-content {
         flex-direction: column-reverse;

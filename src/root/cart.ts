@@ -13,10 +13,10 @@ export async function getProducts(): Promise<Record<string, Product>> {
     return await (await fetch("/api/store/products")).json()
 }
 export function getCart(): Cart {
-    let cart = sessionStorage.getItem("cart")
+    let cart = localStorage.getItem("cart")
     if (!cart) {
         cart = JSON.stringify({quantity: 0, products: {}})
-        sessionStorage.setItem("cart", cart)
+        localStorage.setItem("cart", cart)
     }
     return JSON.parse(cart)
 }
@@ -55,11 +55,11 @@ export function removeCartItem(product: string) {
     let cart = getCart()
     cart["quantity"] -= cart["products"][product]["quantity"]
     delete cart["products"][product]
-    sessionStorage.setItem("cart", JSON.stringify(cart))
+    localStorage.setItem("cart", JSON.stringify(cart))
     refreshCart()
 }
 export function wipeCart() {
-    sessionStorage.setItem("cart", JSON.stringify({quantity: 0, products: {}}))
+    localStorage.setItem("cart", JSON.stringify({quantity: 0, products: {}}))
     refreshCart()
 }
 export function addCartItem(product: string, quantity: number, cache: Product) {
@@ -71,7 +71,7 @@ export function addCartItem(product: string, quantity: number, cache: Product) {
     }
     cart["products"][product]["data"] = cache
     cart["quantity"] += quantity
-    sessionStorage.setItem("cart", JSON.stringify(cart))
+    localStorage.setItem("cart", JSON.stringify(cart))
     refreshCart()
 }
 export function setCartItem(product: string, quantity: number, cache: Product) {
@@ -87,6 +87,6 @@ export function setCartItem(product: string, quantity: number, cache: Product) {
     }
     
     cart["quantity"] += quantity
-    sessionStorage.setItem("cart", JSON.stringify(cart))
+    localStorage.setItem("cart", JSON.stringify(cart))
     refreshCart()
 }

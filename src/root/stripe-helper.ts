@@ -16,7 +16,7 @@ export function calculateTotalCost(cart: Record<string, number>, products: Recor
 }
 
 export function cartToDictionary(): Record<string, number> {
-    const cart = sessionStorage.getItem("cart");
+    const cart = localStorage.getItem("cart");
     if (!cart) return {};
     const parsedCart = JSON.parse(cart);
     if (!parsedCart || !parsedCart.products) return {};

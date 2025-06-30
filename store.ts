@@ -33,7 +33,7 @@ paymentRouter.post("/create", async (req: Request<{}, {}, PaymentIntentCreationB
 
     try {
         const paymentIntent = await stripeAPI.paymentIntents.create({
-            amount: verifiedServerCost,
+            amount: verifiedServerCost * 100,
             currency: 'aud',
             automatic_payment_methods: {
                 enabled: true,
