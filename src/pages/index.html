@@ -176,45 +176,51 @@
             </div>
         </section>
     </article>
-    <!-- <article>
-        <section class="centred videoSection">
+    <article>
+        <!-- <section class="centred videoSection">
             <h1>See the Kit in Action</h1>
 
             <iframe src="https://www.youtube-nocookie.com/embed/lCaun_EiJZQ?autoplay=0&mute=1" frameborder="0" allow="autoplay; encrypted-media;" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </section>
+        </section> -->
 
-        <section>
+        <section class="shop">
             <h1>Check out our Kits</h1>
             
             <p>Lorem ipsum dolor sit amet</p>
 
             <div class="cards">
-                <%~ include('src/templates/partials/card.html', {
-                    class: "productCard",
-                    imageSource: "@images/landing/roboxHubCard3.png", 
-                    descriptions: [
-                        "Lorem ipsum",
-                        "Lorem ipsum",
-                        "Lorem ipsum",
-                        "Lorem ipsum",
-                    ]
-                }) %>
-
-                <%~ include('src/templates/partials/card.html', {
-                    class: "productCard",
-                    imageSource: "@images/landing/roboxHubCard3.png", 
-                    descriptions: [
-                        "Lorem ipsum",
-                        "Lorem ipsum",
-                        "Lorem ipsum",
-                        "Lorem ipsum", 
-                    ]
-                }) %>
+                <%
+                const featuredProducts = Object.values(products)
+                                                .filter((e) => e.internalName === "robox-10-pack" || e.internalName === "robox")
+                                                .sort((a, b) => a.name.length - b.name.length)
+                %>
+                <% featuredProducts.forEach(function(product, index) { %>
+                    <% let isBulkPack = product.internalName === "robox-10-pack"; %>
+                    <%~ include('src/templates/partials/card.html', {
+                        id: product.internalName,
+                        class: "productCard",
+                        title: product.name,
+                        imageSource: `@images/product/${product.internalName}/thumbnail.jpg`,
+                        descriptions: [
+                            `<span class="${product.status}">${product.displayStatus}</span>`,
+                            `$${product.price}`
+                        ],
+                        buttons: [
+                            {
+                                classes: "ctaButton productButton",
+                                link: `/shop/product/${product.internalName}.html`,
+                                content: "View Product"
+                            }
+                        ],
+                        topRowButton: false,
+                        absoluteContent: isBulkPack ? "<h2 class='valuePack'>Value Pack</h2>" : undefined
+                    }) %>
+                <% }) %>
             </div>
 
-            <a class="ctaButton" href="/store">Visit our store</a>
+            <a class="ctaButton" href="/shop">Visit our shop</a>
         </section>
-    </article> -->
+    </article>
     
     <%~ include('src/templates/partials/footer.html') %>
 </body>

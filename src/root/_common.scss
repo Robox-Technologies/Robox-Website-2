@@ -85,6 +85,18 @@ article {
     border: none;
 }
 
+.available {
+    color: #4aa21e;
+}
+
+.not-available {
+    color: #df1b41;
+}
+
+.preorder {
+    color: variables.$themeBlue;
+}
+
 @media screen and (max-width: 1000px) {
     .articleSection {
         align-items: center;

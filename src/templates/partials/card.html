@@ -1,9 +1,13 @@
-<div class="card <%= it.class %>">
+<div class="card <%= it.class %>" id="<%= it.id ?? "" %>">
     <% if (it.goober) { %>
         <div class="goober <%= it.gooberClass %>">
             <img src="<%= it.goober %>" class="shape">
             <img src="@images/eyes.svg?raw" class="eyes">
         </div>
+    <% } %>
+    
+    <% if (it.absoluteContent) { %>
+        <%~ it.absoluteContent %>
     <% } %>
 
     <img class="card-image" src="<%= it.imageSource %>">
