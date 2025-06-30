@@ -37,3 +37,4 @@ function updateBoxToBot() {
 }
 
 document.addEventListener("scroll", updateBoxToBot);
+updateBoxToBot();
