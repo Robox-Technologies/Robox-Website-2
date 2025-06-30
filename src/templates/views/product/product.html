@@ -73,10 +73,10 @@
 
         <%~ include('src/templates/partials/modal.html', {
             id: "cart-modal",
-            title: '<i class="fa-solid fa-cart-plus"></i>',
-            content: `
-                <h2>Added to cart</h2>
-            `,
+            title: '<i class="fa-solid fa-cart-plus"></i> Added to Cart',
+            content: [
+                `<h2>Added to cart</h2>`
+            ],
             buttons: [
                 {
                     id: "cancel-confirm-button",
