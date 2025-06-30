@@ -1,6 +1,6 @@
 import { addCartItem, refreshCart } from "@root/cart.ts"
 
-
+document.getElementById("cart-modal").showModal();
 const productId = currentProduct["item_id"]
 
 
