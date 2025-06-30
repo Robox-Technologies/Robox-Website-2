@@ -89,7 +89,7 @@ $downloadButtonSize: 60px;
 .customIcon {
     color: white;
 }
-.blocklyToolboxDiv {
+.blocklyToolbox {
     background-color: white;
     padding: 0;
     width: $toolboxWidth;
@@ -97,8 +97,7 @@ $downloadButtonSize: 60px;
 }
 
 .injectionDiv > .blocklyFlyout { 
-    transform: translate(calc($toolboxWidth - $seperatorStrokeSize * 2), -$seperatorStrokeSize) !important;
-    border: $seperatorStrokeSize solid $navEdges;
+    border-right: $seperatorStrokeSize solid $navEdges;
     background-color: rgb(245, 245, 245);;
 }
 .blocklyMutatorBackground {
@@ -114,7 +113,7 @@ $downloadButtonSize: 60px;
 .blocklyTreeRowContentContainer >svg >path {
     fill: white;
 }
-.blocklyTreeRow {
+.blocklyToolboxCategory {
     height: initial;
 }
 .side-arch {
@@ -177,6 +176,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     gap: $topBarButtonGap;
 }
 #project-name-input {
@@ -285,17 +285,11 @@ $zoomButtonsGap: 10px;
     display: flex;
     gap: $zoomButtonsGap;
 }
-#blocklyCustomZoom {
-    flex-direction: column;
-}
 #blocklyCustomTimeControls {
     flex-direction: row;
     gap: 0;
 }
 $blocklyUIButtonsDropShadowMult: 2;
-#blocklyCustomZoom > .uiButtons{
-    border-radius: 50%;
-}
 
 #blocklyCustomTimeControls > .uiButtons:first-child {
     border-radius: 7px 0 0 7px;
@@ -303,6 +297,33 @@ $blocklyUIButtonsDropShadowMult: 2;
 }
 #blocklyCustomTimeControls > .uiButtons:last-child {
     border-radius: 0 7px 7px 0;
+}
+
+#calibrate-button, #calibrate-outcome-button {
+    svg {
+        display: none;
+    }
+}
+.calibrate-button{
+    width: 100px;
+    height: 37px;
+    min-height: 37px;
+    svg {
+        display: none;
+    }
+}
+
+#calibrate-outcome-button[calibrating], #calibrate-button[calibrating] {
+    font-size: 0;
+    width: 76px;
+    max-height: 37px !important;
+    svg {
+        font-size: 20px;
+        display: inline;
+    }
+}
+button[calibrating]:hover {
+    cursor: not-allowed;
 }
 .uiButtons {
     background-color: white;
@@ -356,9 +377,8 @@ $blocklyUIButtonsDropShadowMult: 2;
     background-color: variables.$themeBlue;
     #connect-robox-button {
         display: block;
-    }
-    #download {
-        display: block;
+        width: 100%;
+        border-right: unset;
     }
 }
 
@@ -382,9 +402,21 @@ $blocklyUIButtonsDropShadowMult: 2;
         display: block;
     }
 }
-
+$settingsToolbarWidth: 200px;
+#settings-toolbar {
+    width: $settingsToolbarWidth;
+    position: absolute;
+    bottom: 0;
+    left: calc(10px - $settingsToolbarWidth );
+    top: 35px;
+}
+#robox-settings-calibrate > svg {
+    color: variables.$themeBlue;
+}
 #connection-managment[status="no-serial"] {
     background-color: variables.$themeYellow;
+    width: 100%;
+    border-right: unset;
     #code-download-robox-button {
         display: block;
     }
@@ -423,7 +455,28 @@ $blocklyUIButtonsDropShadowMult: 2;
     #loading {
         display: block;
         width: 100%;
+        font-size: 20px;
         border-right: unset;
     }
 
+}
+#connection-managment[status="no-serial"] {
+    background-color: variables.$themeYellow;
+    #code-download-robox-button {
+        display: block;
+    }
+
+
+}
+#robox-settings-button {
+    font-size: 20px;
+}
+.bootsel[loading] {
+    button.calibrate-button {
+        font-size: 0;
+    }
+    .fa-spinner {
+        display: inline;
+        font-size: 20px;
+    }
 }

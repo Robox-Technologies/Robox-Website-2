@@ -19,6 +19,7 @@ motor_speed = 60
 `
 
 let alreadyDownloaded = false
+let downloadingToPico = false
 
 
 export function postBlocklyWSInjection() {
@@ -30,6 +31,8 @@ export function postBlocklyWSInjection() {
     const downloadConnectionButton = document.getElementById("download")
     const stopButton = document.getElementById("stop-robox-button")
     const runButton = document.getElementById("run-robox-button")
+
+    const settingsButton = document.getElementById("robox-settings-button")
 
     if (!connectionManagment) return
     
@@ -46,14 +49,19 @@ export function postBlocklyWSInjection() {
         connectionManagment.setAttribute("loading",  "false")
     })
     pico.addEventListener("download", (event) => {
-        pico.runCode()
-        connectionManagment.setAttribute("status",  "downloaded")
         connectionManagment.setAttribute("loading",  "false")
 
+        if (downloadingToPico) {
+            connectionManagment.setAttribute("status",  "downloaded")
+        }
+        
+
+    })
+    pico.addEventListener("error", (event) => {
+        connectionManagment.setAttribute("loading",  "false")
     })
     ws.addChangeListener((event) => {
         if (event.isUiEvent ) return; //Checking if this update changed the blocks
-        if (connectionManagment.getAttribute("status") === "downloaded") connectionManagment.setAttribute("status",  "connected") //If they are waiting to run the program then go back to download
         alreadyDownloaded = false //Saying that this workspace has changed
     });
     connectButton?.addEventListener("click", () => {
@@ -69,6 +77,9 @@ export function postBlocklyWSInjection() {
 
     })
     downloadConnectionButton?.addEventListener("click", () => {
+        if (connectionManagment.getAttribute("loading") === "true") return
+        downloadingToPico = true
+        connectionManagment.setAttribute("loading",  "true")
         sendCode(ws)
     })
     stopButton?.addEventListener("click", () => {
@@ -80,6 +91,19 @@ export function postBlocklyWSInjection() {
         if (connectionManagment.getAttribute("loading") === "true") return
         connectionManagment.setAttribute("status",  "running")
         connectionManagment.setAttribute("loading",  "false")
+        sendCode(ws)
+        pico.runCode()
+
+    })
+    settingsButton?.addEventListener("click", (event) => {
+        //Rotate the cog as an animation
+        const cog = document.querySelector('#robox-settings-button svg') as HTMLElement | null;
+        if (!cog) return
+        rotateOneTooth(cog);
+        let dialog = document.getElementById("settings-toolbar") as HTMLDialogElement | null
+        if (!dialog || dialog.open ) return
+        dialog.show()
+        event.stopPropagation()
     })
     pico.startupConnect()
 
@@ -88,4 +112,11 @@ function sendCode(ws: Blockly.Workspace) {
     let code = pythonGenerator.workspaceToCode(ws);
     let finalCode = `${scriptDependency}\n${code}\nevent_begin()`
     pico.sendCode(finalCode)
+}
+let rotation = 0;
+const degreesPerTooth = 60; // Adjust this value to match one gear tooth visually
+function rotateOneTooth(cog: HTMLElement) {
+    rotation += degreesPerTooth;
+    cog.style.transition = 'transform 0.5s ease-out';
+    cog.style.transform = `rotate(${rotation}deg)`;
 }

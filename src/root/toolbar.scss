@@ -1,0 +1,47 @@
+@use 'variables';
+$toolbarBorderRadius: 0.5em;
+$toolbarBorderColor: variables.$tone3;
+$toolbarBorderStroke: 3px;
+$toolbarWidth: 130px;
+$toolbarPadding: 5px 20px 5px 5px;
+
+.toolbar[open] {
+    z-index: 10000;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    padding: $toolbarPadding;
+    align-items: flex-start;
+    justify-content: space-between;
+    left: -30px;
+    top: 15px;
+    border-radius: $toolbarBorderRadius;
+    margin: 0;
+    // border: $toolbarBorderStroke solid $toolbarBorderColor;
+    width: $toolbarWidth;
+}
+.toolbar > .card-button > svg {
+    margin-right: 5px;
+}
+.toolbar > .button:hover{
+    cursor: pointer;
+}
+.toolbar button {
+    padding: 5%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: "Nunito", sans-serif;
+    font-weight: bold;
+    color: variables.$themeBlack;
+}
+.toolbar > button:nth-child(2n) {
+    margin-top: 5px;
+}
+$iconSpacing: 5px;
+.toolbar button svg, .toolbar button i {
+    margin-right: $iconSpacing;
+    width: 20px;
+    box-sizing: border-box;
+}

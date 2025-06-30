@@ -1,8 +1,7 @@
 
 import * as Blockly from 'blockly';
 
-
-import { ContinuousToolbox, ContinuousMetrics, ContinuousFlyout } from '@blockly/continuous-toolbox';
+import { ContinuousToolbox, ContinuousMetrics, registerContinuousToolbox } from '@blockly/continuous-toolbox';
 
 
 import theme from "./blockly/theme"
@@ -10,7 +9,10 @@ import theme from "./blockly/theme"
 import {toolbox} from "./blockly/toolbox"
 import "./blockly/toolboxStyling"
 
-import { CustomUndoControls, CustomZoomControls } from './blockly/customUI';
+
+
+
+import { CustomUndoControls } from './blockly/customUI';
 import { MyWorkspace } from 'types/blockly';
 
 
@@ -22,7 +24,8 @@ import {registerFieldColour} from '@blockly/field-colour';
 import { postBlocklyWSInjection } from './usb';
 import { registerControls } from './controls';
 registerFieldColour();
-
+import "./instructions/UF2Flash"
+import "./instructions/colourCalibration"
 const blocks = require.context("./blockly/blocks", false, /\.ts$/);
 const generators = require.context("./blockly/generators", false, /\.ts$/);
 
@@ -35,15 +38,14 @@ generators.keys().forEach(modulePath => {
     // use generator
 });
 
-
 document.addEventListener("DOMContentLoaded", () => {
     const workspace = Blockly.inject('blocklyDiv', {
         toolbox: toolbox,
         theme: theme,
         plugins: {
-            toolbox: ContinuousToolbox,
-            flyoutsVerticalToolbox: "RoboxFlyout",
-            metricsManager: ContinuousMetrics,
+            'flyoutsVerticalToolbox': "RoboxFlyout",
+            'toolbox': ContinuousToolbox,
+            "MetricsManager": ContinuousMetrics
         },
         zoom: {
             controls: false,
@@ -76,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Scroll for vertical movement,
 // Shift + scroll for horizontal movement
     registerControls(workspace)
-    if (navigator.serial) {
+    if ("serial" in navigator) {
         postBlocklyWSInjection()
     }
     else {
@@ -90,14 +92,10 @@ document.addEventListener("DOMContentLoaded", () => {
             downloadBlocklyProject(workspaceId)
         })
     }
-    workspace.customZoomControls = new CustomZoomControls(workspace);
-    workspace.customZoomControls.init();
-    
     workspace.undoControls = new CustomUndoControls(workspace)
     workspace.undoControls.init()
     
     Blockly.browserEvents.conditionalBind(window, 'resize', null, () => { //On workspace resize, resize our custom UI
-            if (workspace.customZoomControls) workspace.customZoomControls.position()
             if (workspace.undoControls) workspace.undoControls.position()
         }
     );
@@ -141,6 +139,26 @@ document.addEventListener("DOMContentLoaded", () => {
         if (event.isUiEvent) return;
         saveBlockly(workspaceId, workspace);
     });
+    
 
-})
+    
+    //Prevents the flyout from closing (the category being deselected)
+    workspace.addChangeListener(function (event) {
+        if (event.type === Blockly.Events.TOOLBOX_ITEM_SELECT) {
+            const toolboxEvent = event as Blockly.Events.ToolboxItemSelect;
+
+            if (!toolboxEvent.newItem && toolboxEvent.oldItem) {
+                const toolbox = workspace.getToolbox() as Blockly.Toolbox;
+                const allItems = toolbox.getToolboxItems();
+                const item = allItems.find(i => (i as any).name_ === toolboxEvent.oldItem);
+                if (item) {
+                    toolbox.setSelectedItem(item);
+                }
+            }
+        }
+    });
+    workspace.addChangeListener(Blockly.Events.disableOrphans);
+
+}) 
+
 

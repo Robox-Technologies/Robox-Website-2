@@ -37,7 +37,7 @@ export async function loadBlockly(uuid: string, workspace: Workspace) {
     let workspaceData = project.workspace
     if (!workspaceData) return;
     blockly.Events.disable();
-    blockly.serialization.workspaces.load(workspaceData, workspace, undefined);
+    blockly.serialization.workspaces.load(workspaceData, workspace, {recordUndo: true});
     blockly.Events.enable();
 }
 export function downloadBlocklyProject(uuid: string) {
@@ -54,6 +54,7 @@ export function downloadBlocklyProject(uuid: string) {
     document.body.removeChild(downloadEl);
 }
 export async function saveBlockly(uuid: string, workspace: WorkspaceSvg, callback: ((project: string) => void) | null = null) {
+    
     const blockly = await import('blockly/core');
     workspaceToSvg_(workspace, (thumburi: string) => {
         const data = blockly.serialization.workspaces.save(workspace)

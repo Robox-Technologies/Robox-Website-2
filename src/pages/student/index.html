@@ -1,9 +1,9 @@
 
 <head>
+    <%~ include('src/partials/metadata.html') %>
     <script src="./index.ts"></script>
     <link href="./index.scss" rel="stylesheet" />
     <link href="@root/root.scss" rel="stylesheet" />
-    <%~ include('src/templates/partials/metadata.html') %>
 </head>
 
 <body>
@@ -46,21 +46,20 @@
             topRowButton: false,
         }) %>
     </template>
-    <%~ include('src/templates/partials/header-workshop.html') %>
-    <dialog id="toolbar">
-        <button class="button" id="project-edit">
-            <i class="fa-solid fa-pen-to-square"></i> Edit
-        </button>
-        <button class="button" id="project-delete">
-            <i class="fa-solid fa-trash"></i> Delete
-        </button>
-    </dialog>
-    <%~ include('src/templates/partials/modal.html', {
+    <%~ include('src/partials/header-workshop.html') %>
+    <%~ include('src/partials/toolbar.html', {
+        id: "toolbar",
+        content: [
+            ' <button class="button" id="project-edit"><i class="fa-solid fa-pen-to-square"></i>Edit</button>',
+            '<button class="button" id="project-delete"><i class="fa-solid fa-trash"></i>Delete</button>',
+        ],
+    }) %>
+    <%~ include('src/partials/modal.html', {
         id: "delete-modal",
-        title: '<i class="fa-solid fa-trash-can"></i>', 
-        descriptions: [
-            "<span>Are you sure you want to delete `` </span>",
-            "it will be deleted forever (a very long time)"
+        title: 'Delete Project <i class="fa-solid fa-trash-can"></i>', 
+        content: [
+            "<p><span>Are you sure you want to delete <span class='wave-text'><span>p</span><span>r</span><span>o</span><span>j</span><span>e</span><span>c</span><span>t</span></span> </span></p>",
+            "<p>it will be deleted forever (a very long time)</p>"
         ],
         buttons: [
             {
@@ -69,7 +68,25 @@
             },
             {
                 id: "delete-confirm-button",
-                content: "delete",
+                content: "Delete",
+            },
+        ],
+    }) %>
+    <%~ include('src/partials/modal.html', {
+        id: "rename-modal",
+        title: 'Rename Project <i class="fa-solid fa-pencil"></i>', 
+        content: [
+            "<p>Enter a new name for your project</p>",
+            "<input id='new-project-name' type='text'>"
+        ],
+        buttons: [
+            {
+                id: "cancel-confirm-button",
+                content: "Cancel",
+            },
+            {
+                id: "rename-confirm-button",
+                content: "Rename",
             },
         ],
     }) %>

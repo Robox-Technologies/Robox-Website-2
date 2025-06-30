@@ -18,7 +18,7 @@ export const toolbox = {
         'kind': 'category',
         'name': 'Events',
         "cssConfig": {
-            "icon": "categoryIcon fa fa-flag"
+            "icon": "categoryIcon fa fa-flag",
         },
         'categorystyle': 'events_category',
         'contents': [
