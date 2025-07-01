@@ -89,7 +89,7 @@ $downloadButtonSize: 60px;
 .customIcon {
     color: white;
 }
-.blocklyToolboxDiv {
+.blocklyToolbox {
     background-color: white;
     padding: 0;
     width: $toolboxWidth;
@@ -97,8 +97,7 @@ $downloadButtonSize: 60px;
 }
 
 .injectionDiv > .blocklyFlyout { 
-    transform: translate(calc($toolboxWidth - $seperatorStrokeSize * 2), -$seperatorStrokeSize) !important;
-    border: $seperatorStrokeSize solid $navEdges;
+    border-right: $seperatorStrokeSize solid $navEdges;
     background-color: rgb(245, 245, 245);;
 }
 .blocklyMutatorBackground {
@@ -114,7 +113,7 @@ $downloadButtonSize: 60px;
 .blocklyTreeRowContentContainer >svg >path {
     fill: white;
 }
-.blocklyTreeRow {
+.blocklyToolboxCategory {
     height: initial;
 }
 .side-arch {
@@ -286,17 +285,11 @@ $zoomButtonsGap: 10px;
     display: flex;
     gap: $zoomButtonsGap;
 }
-#blocklyCustomZoom {
-    flex-direction: column;
-}
 #blocklyCustomTimeControls {
     flex-direction: row;
     gap: 0;
 }
 $blocklyUIButtonsDropShadowMult: 2;
-#blocklyCustomZoom > .uiButtons{
-    border-radius: 50%;
-}
 
 #blocklyCustomTimeControls > .uiButtons:first-child {
     border-radius: 7px 0 0 7px;
@@ -311,6 +304,15 @@ $blocklyUIButtonsDropShadowMult: 2;
         display: none;
     }
 }
+.calibrate-button{
+    width: 100px;
+    height: 37px;
+    min-height: 37px;
+    svg {
+        display: none;
+    }
+}
+
 #calibrate-outcome-button[calibrating], #calibrate-button[calibrating] {
     font-size: 0;
     width: 76px;
@@ -375,9 +377,8 @@ button[calibrating]:hover {
     background-color: variables.$themeBlue;
     #connect-robox-button {
         display: block;
-    }
-    #download {
-        display: block;
+        width: 100%;
+        border-right: unset;
     }
 }
 
@@ -405,7 +406,6 @@ $settingsToolbarWidth: 200px;
 #settings-toolbar {
     width: $settingsToolbarWidth;
     position: absolute;
-    top: 0;
     bottom: 0;
     left: calc(10px - $settingsToolbarWidth );
     top: 35px;
@@ -415,6 +415,8 @@ $settingsToolbarWidth: 200px;
 }
 #connection-managment[status="no-serial"] {
     background-color: variables.$themeYellow;
+    width: 100%;
+    border-right: unset;
     #code-download-robox-button {
         display: block;
     }
@@ -453,6 +455,7 @@ $settingsToolbarWidth: 200px;
     #loading {
         display: block;
         width: 100%;
+        font-size: 20px;
         border-right: unset;
     }
 
@@ -464,4 +467,16 @@ $settingsToolbarWidth: 200px;
     }
 
 
+}
+#robox-settings-button {
+    font-size: 20px;
+}
+.bootsel[loading] {
+    button.calibrate-button {
+        font-size: 0;
+    }
+    .fa-spinner {
+        display: inline;
+        font-size: 20px;
+    }
 }

@@ -1,7 +1,7 @@
 /// <reference types="node" />
 import * as Blockly from 'blockly';
-import { CustomUndoControls, CustomZoomControls } from '../pages/editor/blockly/customUI';
+import { CustomUndoControls } from '../pages/editor/blockly/customUI';
 interface MyWorkspace extends Blockly.WorkspaceSvg {
-    customZoomControls?: CustomZoomControls;
     undoControls?: CustomUndoControls;
 }
+declare module '@mit-app-inventor/blockly-plugin-workspace-multiselect'

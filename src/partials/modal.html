@@ -1,4 +1,4 @@
-<dialog class="modal" id="<%= it.id %>">
+<dialog class="modal <%= it.class ? it.class : '' %>" id="<%= it.id %>">
     <div class="modal-top-bar">
         <h1 class="modal-title">
             <%~ it.title ? it.title : ""%>

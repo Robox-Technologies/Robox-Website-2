@@ -4,80 +4,216 @@
 // 2. Choosing the UF2 (gonna be latest for now)
 // 3. Actually flashing the pico
 import { pico } from "../communication/communicate";
-document.addEventListener("DOMContentLoaded", () => {
-    let stage1 = document.querySelector("dialog#bootsel-boot-modal") as HTMLDialogElement | null
-    if (!stage1) return
-    let autoBootselButton = document.querySelector("button#bootsel-boot-confirm") as HTMLButtonElement | null
-    if (!autoBootselButton) return
-   
-    
-    autoBootselButton.addEventListener("click", () => {
-        let bootselSpin = document.querySelector("#bootsel-loading") as HTMLElement | null
-        if (!bootselSpin) return
-        autoBootselButton.style.display = "none"
-        bootselSpin.style.display = "block"
-        pico.bootsel()
-        setTimeout(async () => { //Set out a 1s delay to firmware check
-            let outcomeText = document.getElementById("bootsel-outcom-text")
-            if (!outcomeText) return
-            bootselSpin.style.display = "none"        
-            if (await detectBOOTSEL()) { //we are in bootsel mode
-                outcomeText.textContent = "Success! Your RO\\BOX is in BOOTSEL mode! Click the 'next' button to move to the next step"
-            }
-            else { //The pico is not flashed with any firmware and is not responding to stuff
-                outcomeText.textContent = "Unfortunately that did not work! Please follow the following instructions to manually boot your RO\\BOX into BOOTSEL mode"
-                autoBootselButton.textContent = "Recheck"
-                autoBootselButton.style.display = "inline-block"
-                manualBootsel(autoBootselButton, outcomeText)
-            }
-        }, 1000)
-    })
-})
-async function manualBootsel(retryButton: HTMLButtonElement, outcomeText: HTMLElement) {
-    retryButton.addEventListener("click", async () => {
-        if (await detectBOOTSEL() || true) {
-            outcomeText.textContent = "Success! Your RO\\BOX is in BOOTSEL mode! Click the 'next' button to move to the next step"
-        }
-        else {
-            //Gotta display something for when we cannot detect the manual BOOTSEL
-        }
-    })
-    
+
+type failures = "no-device" | "uf2-web" | "file-failure" | "write-failure" | "success";
+
+const failureText = {
+    "no-device": {
+        "title": "RO\\BOX not in BOOTSEL mode",
+        "text": `Unfortunately that did not work! Please follow the following instructions to manually boot your RO\\BOX into BOOTSEL mode<br>
+                1. Disconnect the USB cable from your RO\\BOX<br>
+                2. Hold down the BOOTSEL button on your RO\\BOX<br> 
+                3. While holding the BOOTSEL button, connect the USB cable to your RO\\BOX<br>
+                4. Release the BOOTSEL button<br>
+                5. Click the 'Retry' button below to check if your RO\\BOX is now in BOOTSEL mode
+        `,
+        "button": "Retry",
+    },
+    "uf2-web": {
+        "title": "Could not flash UF2",
+        "text": "Unfortunately we could not fetch the UF2 file from our servers, please report this!.",
+        "button": "Close",
+    },
+    "file-failure": {
+        "title": "Failed to write UF2 file",
+        "text": "Unfortunately we could not write the UF2 file to your RO\\BOX. Please ensure you selected the RPI-RP2 drive and try again.",
+        "button": "Retry",
+    },
+    "write-failure": {
+        "title": "Failed to write UF2 file",
+        "text": "Unfortunately we could not write the UF2 file to your RO\\BOX. Please try again.",
+        "button": "Retry",
+    },
+    "success": {
+        "title": "RO\\BOX successfully flashed!",
+        "text": "Your RO\\BOX has been successfully flashed with the latest firmware! You can now close this dialog and start using your RO\\BOX.",
+        "button": "Close",
+    },
+    "default": {
+        "title": "RO\\BOX Flashing Error",
+        "text": "An unknown error occurred while flashing your RO\\BOX. Please try again or contact support.",
+        "button": "Close",
+    },
+
 }
 
 
-async function flashUF2(UF2: ArrayBuffer) {
-    let nextButton = document.getElementById("#next-bootsel-button")
-    nextButton?.addEventListener("click", async () => {
-        const dirHandle = await window.showDirectoryPicker();
+document.addEventListener("DOMContentLoaded", () => {
+    const outcomeModal = document.querySelector("dialog#bootsel-outcome") as HTMLDialogElement | null;
+    const outcomeText = outcomeModal?.querySelector("#bootsel-outcome-text") as HTMLElement | null;
+    const outcomeButton = outcomeModal?.querySelector("button#outcome-button") as HTMLButtonElement | null;
+    const outcomeTitle = outcomeModal?.querySelector(".modal-title") as HTMLElement | null;
+    if (!outcomeModal || !outcomeText || !outcomeButton || !outcomeTitle) return;
 
-        if (!dirHandle.name.includes("RPI-RP2")) {
-            alert("Please select the RPI-RP2 drive!");
+
+    const stage1Modal = document.querySelector("dialog#bootsel-boot") as HTMLDialogElement | null;
+    if (!stage1Modal) return;
+    const autoBootselButton = document.querySelector("button#boot-try") as HTMLButtonElement | null;
+    if (!autoBootselButton) return;
+    const bootselFlashButton = document.querySelector("button#robox-settings-flash") as HTMLButtonElement | null;
+    if (!bootselFlashButton) return;
+
+    const stage2Modal = document.querySelector("dialog#bootsel-flash") as HTMLDialogElement | null;
+    const fileOpenButton = stage2Modal?.querySelector("button#open-file") as HTMLButtonElement | null;
+    if (!stage2Modal || !fileOpenButton) return;
+    fileOpenButton.addEventListener("click", async () => {
+        // Get the UF2 file from /public/uf2/latest.uf2
+        const response = await fetch("/public/latest.uf2");
+        if (!response.ok) {
+            console.error("Failed to fetch the UF2 file.");
             return;
+        }
+        const uf2Buffer = await response.arrayBuffer();
+        stage2Modal.setAttribute("loading", "");
+        // Open the file picker dialog
+        let dirHandle: FileSystemDirectoryHandle | null = null;
+        try {
+            dirHandle = await window.showDirectoryPicker();
+        }
+        catch (error) {
+
+            flashFailure("file-failure");
+            return stage2Modal.close();
+        }
+        
+        if (!await detectPicoFolder(dirHandle)) {
+            flashFailure("file-failure");
+            return stage2Modal.close();
         }
         const fileHandle = await dirHandle.getFileHandle("robox.uf2", { create: true });
         const writable = await fileHandle.createWritable();
+        if (!writable) {
+            flashFailure("file-failure");
+            return stage2Modal.close();
+        }
+        try {
+            await writable.write(uf2Buffer);
+            await writable.close();
+            // Successfully written the UF2 file
+            stage2Modal.removeAttribute("loading");
+            flashFailure("success");
+            return stage2Modal.close();
+        } catch (error) {
+            console.error("Failed to write the UF2 file:", error);
+            flashFailure("write-failure");
+            return stage2Modal.close();
+        }
+    });
 
-        await writable.write(UF2);
-        await writable.close();
-        alert("UF2 file successfully written! The Pico should reboot now.");
-    })
-    
-}
+    autoBootselButton.addEventListener("click", async () => {
+        //Request the access to the USB device
+        try {
+            await navigator.usb.requestDevice({ filters: [{ vendorId: 0x2e8a }] });
+        } catch (error) {
+            stage1Modal.removeAttribute("loading");
 
-//Show a dropdown for choose the UF2
-async function chooseUF2() {
-    
-}
+            flashFailure("no-device");
+            return stage1Modal.close();
+        }
+        const bootselSpin = autoBootselButton.querySelector(".fa-spinner") as HTMLElement | null;
+        if (!bootselSpin) return;
+        stage1Modal.setAttribute("loading", "");
+        pico.bootsel();
+        setTimeout(async () => { // Set out a 1s delay to firmware check
+            if (await detectBOOTSEL()) { // We are in bootsel mode
+                stage1Modal.removeAttribute("loading");
+                // Move to stage 2
+                stage1Modal.close();
+                stage2Modal.showModal();
+            }
+            else { // The pico is not flashed with any firmware and is not responding to stuff
+                stage1Modal.removeAttribute("loading");
+                stage1Modal.close();
+                flashFailure("no-device");
+            }
+        }, 1000);
+    });
 
+    outcomeButton.addEventListener("click", async () => {
+        let failure = outcomeModal.getAttribute("failure") as failures | null;
+        if (!failure) {
+            console.error("No failure attribute set on outcome modal.");
+            return;
+        }
+        if (failure === "no-device") { // When they cannot automatically boot into BOOTSEL mode
+            // Try and request the USB device again
+            try {
+                await navigator.usb.requestDevice({ filters: [{ vendorId: 0x2e8a }] });
+            } catch (error) {
+                flashFailure("no-device");
+                return;
+            }
+            //Recheck if the device is in BOOTSEL mode
+            let checkBOOTSEL = await detectBOOTSEL();
+            if (checkBOOTSEL) {
+                outcomeModal.close();
+                stage2Modal.showModal(); // If it is then we can move to the next stage
+            }
+            else {
+                flashFailure("no-device");
+            }
+        }
+        else if (failure === "uf2-web") { // When they cannot fetch the UF2 file
+            outcomeModal.close();
+        }
+        else if (failure === "file-failure" || failure === "write-failure") { // When they cannot write the UF2 file
+            outcomeModal.setAttribute("loading", ""); // Set the loading attribute to show the spinner
+            outcomeButton.disabled = true; // Disable the button to prevent multiple clicks
+            fileOpenButton.click(); // Trigger the file open button to try again
+
+        }
+        else if (failure === "success") { // When they successfully flashed the RO\\BOX
+            outcomeModal.close();
+        }
+    });
+    function flashFailure(failure: failures) {
+        if (!outcomeModal || !outcomeText || !outcomeButton || !outcomeTitle || !stage1Modal || !stage2Modal) return;
+        outcomeModal.removeAttribute("loading");
+        outcomeButton.disabled = false; // Enable the button again
+        stage1Modal.removeAttribute("loading");
+        stage2Modal.removeAttribute("loading");
+        outcomeModal.setAttribute("failure", failure);
+        
+        const failureData = failureText[failure] || failureText["default"];
+        outcomeTitle.textContent = failureData.title;
+        outcomeText.innerHTML = failureData.text;
+        outcomeButton.innerHTML = `${failureData.button}<i class="fa-solid fa-spinner fa-spin"></i>`;
+        outcomeModal.showModal();
+    }
+
+    bootselFlashButton.addEventListener("click", async () => {
+        if (stage1Modal.hasAttribute("open")) {
+            stage1Modal.close();
+        } else {
+            if (await detectBOOTSEL()) { // If the pico is already in BOOTSEL mode
+                stage2Modal.showModal(); // Show the stage 2 modal
+            } else {
+                stage1Modal.showModal();
+            }   
+        }
+    });
+})
 
 async function detectBOOTSEL() {
     let devices = await navigator.usb.getDevices()
-    if (devices.length === 0) return false
-    for (const device of devices) {
-        if (device.productName === "RP2 Boot") { //Pico is in bootsel mode
-            return true
+    return devices.some(device => device.productName === "RP2 Boot");
+}
+async function detectPicoFolder(dirHandle: FileSystemDirectoryHandle): Promise<boolean> {
+    for await (const [name] of dirHandle.entries()) {
+        if (name === "INFO_UF2.TXT") {
+            // This file is always present on RPI-RP2
+            return true;
         }
     }
-    return false;
+    return false
 }

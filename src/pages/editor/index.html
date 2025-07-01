@@ -1,49 +1,45 @@
 <!doctype html>
 <html>
   <head>
+    <%~ include('src/partials/metadata.html') %>
     <meta charset="utf-8" />
     <title>Toolbox Customization Codelab</title>
     <script src="index.ts"></script>
-    <%~ include('src/partials/metadata.html') %>
     <link href="./index.scss" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     </head>
     <%~ include('src/partials/modal.html', {
-        id: "bootsel-boot-modal",
+        id: "bootsel-boot",
+        class: "bootsel",
         title: '1. Boot the RO/BOX into BOOTSEL mode', 
         content: [
-            "<p id='bootsel-outcom-text'>The RO/BOX is not currently in Bootsel mode, would you like us to try and enter it into BOOTSEL mode? </p>",
-            "<button id='bootsel-boot-confirm' class='standard-button button'>Yes!</button>",
-            "<i id='bootsel-loading' class='fa-solid fa-spinner fa-spin'></i>",
+            "<p>The RO/BOX is not currently in Bootsel mode, would you like us to try and enter it into BOOTSEL mode?</p>",
         ],
         buttons: [
-            {
-                id: "cancel-confirm-button",
-                content: "Cancel",
-            },
-            {
-                id: "next-bootsel-button",
-                content: "Next",
-            },
+            '<button id="boot-try" class="button calibrate-button standard-button">Yes<i class="fa-solid fa-spinner fa-spin"></i></button>',
         ],
     }) %>
     <%~ include('src/partials/modal.html', {
-        id: "bootsel-flash-modal",
-        title: '2. Flash the Ro\\Box', 
+        id: "bootsel-outcome",
+        class: "bootsel",
+        title: '', 
         content: [
-            "<p>When you are ready, press the 'open' button below, this will open a file browser, please select the 'RPI' drive</p>",
-            "<button id='bootsel-boot-confirm' class='standard-button button'>Open!</button>",
+            "<p id='bootsel-outcome-text'></p>",
         ],
         buttons: [
-            {
-                id: "cancel-confirm-button",
-                content: "Back",
-            },
-            {
-                id: "next-bootsel-button",
-                content: "Next",
-            },
+            '<button id="outcome-button" class="button calibrate-button standard-button"><i class="fa-solid fa-spinner fa-spin"></i></button>',
+        ],
+    }) %>
+    <%~ include('src/partials/modal.html', {
+        id: "bootsel-flash",
+        title: '2. Flash the Ro\\Box', 
+        class: "bootsel",
+        content: [
+            "<p>When you are ready, press the 'open' button below, this will open a file browser, please select the 'RPI' drive</p>",
+        ],
+        buttons: [
+            '<button id="open-file" class="button calibrate-button standard-button">Open<i class="fa-solid fa-spinner fa-spin"></i></button>',
         ],
     }) %>
     <%~ include('src/partials/modal.html', {
@@ -54,7 +50,7 @@
             "<p>Press the 'Calibrate' button when you are ready!'</p>",
         ],
         buttons: [
-            '<button id="calibrate-button" class="button standard-button">Calibrate<i class="fa-solid fa-spinner fa-spin"></i></button>',
+            '<button id="calibrate-button" class="button calibrate-button standard-button">Calibrate<i class="fa-solid fa-spinner fa-spin"></i></button>',
         ],
     }) %>
     <%~ include('src/partials/modal.html', {
@@ -92,8 +88,8 @@
                 <%~ include('src/partials/toolbar.html', {
                     id: "settings-toolbar",
                     content: [
-                        "<button class='button' id='robox-settings-calibrate'><i class='fa-solid fa-eye-dropper'></i>Calibrate Ro/Box</button>",
-                        "<button class='button' id='robox-settings-flash'><i class='fa-solid fa-screwdriver-wrench'></i>Update Ro/Box</button>",
+                        "<button class='button' id='robox-settings-calibrate'><i class='fa-solid fa-eye-dropper'></i>Calibrate Colour</button>",
+                        "<button class='button' id='robox-settings-flash'><i class='fa-solid fa-screwdriver-wrench'></i>Update Firmware</button>",
                     ],
                 }) %>
             </div>

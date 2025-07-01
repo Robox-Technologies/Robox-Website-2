@@ -28,7 +28,14 @@ type firmwareOptions = {
 type picoOptions = {
     message: string
 }
-type EventPayload = { event: 'calibrated'; options: picoOptions } | { event: 'console'; options: picoOptions } | { event: 'downloaded'; options: {} } | { event: 'firmware'; options: firmwareOptions } | { event: 'confirmation'; options: picoOptions } | { event: 'error'; options: picoOptions } | { event: 'connect'; options: connectOptions } | { event: 'disconnect'; options: disconnectOptions }
+type EventPayload = { event: 'calibrated'; options: picoOptions } | 
+                    { event: 'console'; options: picoOptions } | 
+                    { event: 'downloaded'; options: {} } | 
+                    { event: 'firmware'; options: firmwareOptions } | 
+                    { event: 'confirmation'; options: picoOptions } | 
+                    { event: 'error'; options: picoOptions } | 
+                    { event: 'connect'; options: connectOptions } | 
+                    { event: 'disconnect'; options: disconnectOptions }
 
 export class Pico extends EventTarget {
     communication: USBCommunication
@@ -303,9 +310,7 @@ class USBCommunication {
             this.parent.connect(port)
         })
         .catch((error) => { //User did not select a port (or error connecting) show toolbar?
-            if (error.name === "NotFoundError") return
             this.parent.emit({event: "error", options: {message: "Could not connect to the pico! Try resetting it?"}})
-            console.warn("Could not connect to the port")
             return
         })
     }
