@@ -68,6 +68,12 @@ function applyProjects() {
                     if (!deleteModal) return
                     deleteModal.showModal()
                 })
+                toolbaClone.querySelector("#project-edit")?.addEventListener("click", (event) => {
+                    let editModal = document.getElementById("edit-modal") as HTMLDialogElement | null
+                    if (!editModal) return
+                    editModal.showModal()
+                    editModal.querySelector("#edit-project-name")?.setAttribute("value", project["name"])
+                })
                     
                 toolbar.remove()
                 toolbaClone.show()
@@ -96,12 +102,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
     applyProjects()
 
     afterProjectsSetup();
-
+    //TODO: This is janky and should be replaced with a better solution
     let deleteModal = document.getElementById("delete-modal") as HTMLDialogElement | null
     if (!deleteModal) return
     let deleteConfirmButton = deleteModal.querySelector("#delete-confirm-button") as HTMLButtonElement | null
     if (!deleteConfirmButton) return
     deleteConfirmButton.addEventListener("click", (event) => {
+        // Move the toolbar out of the project card
+        let toolbar = document.getElementById("toolbar") as HTMLDialogElement | null
+        if (toolbar) {
+            document.querySelector("body")?.appendChild(toolbar);
+            toolbar.removeAttribute("open");
+            toolbar.style.left = "0px";
+            toolbar.style.top = "0px";
+            toolbar.remove()
+        }
         let projectCard = document.querySelector(".card-wrapper[toolbar]") as HTMLElement | null
         if (!projectCard) return
         let projectId = projectCard.querySelector(".card")?.id
@@ -112,5 +127,36 @@ document.addEventListener("DOMContentLoaded", (event) => {
         projectCard.remove()
         deleteModal.close()
         applyProjects()
+    })
+    const editModal = document.getElementById("edit-modal") as HTMLDialogElement | null
+    if (!editModal) return
+    const editConfirmButton = document.querySelector("#edit-confirm-button") as HTMLButtonElement | null
+    if (!editConfirmButton) return
+    editConfirmButton.addEventListener("click", (event) => {
+        let projectCard = document.querySelector(".card-wrapper[toolbar]") as HTMLElement | null
+        if (!projectCard) return
+        let projectId = projectCard.querySelector(".card")?.id
+        if (!projectId) return
+        let projects = getProjects()
+        if (!projects[projectId]) return
+        let project = projects[projectId]
+        let nameInput = document.getElementById("edit-project-name") as HTMLInputElement | null
+        if (!nameInput) return
+        project["name"] = nameInput.value
+        localStorage.setItem("roboxProjects", JSON.stringify(projects))
+        let toolbar = document.getElementById("toolbar") as HTMLDialogElement | null
+        if (toolbar) {
+            let clone = document.querySelector("body")?.appendChild(toolbar);
+            clone?.removeAttribute("open");
+        }
+        editModal.close()
+        applyProjects()
+        // move the toolbar out of the project card
+        
+    })
+    const editCancelButton = document.querySelector("#edit-cancel-button") as HTMLButtonElement | null
+    if (!editCancelButton) return
+    editCancelButton.addEventListener("click", (event) => {
+        editModal.close()
     })
 })

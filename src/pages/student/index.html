@@ -65,6 +65,18 @@
             '<button id="delete-confirm-button" class="button standard-button">Delete</button>',
         ],
     }) %>
+    <%~ include('src/partials/modal.html', {
+        id: "edit-modal",
+        title: 'Edit Project <i class="fa-solid fa-pen-to-square"></i>', 
+        content: [
+            "<p>Change the name of your project</p>",
+            '<input type="text" id="edit-project-name" placeholder="Project Name">',
+        ],
+        buttons: [
+            '<button id="edit-confirm-button" class="button standard-button">Save</button>',
+            '<button id="edit-cancel-button" class="button standard-button">Cancel</button>',
+        ],
+    }) %>
     <!-- Hero title -->
     <%~ include('src/partials/title-hero.html', {
         text: "Robox Hub",
