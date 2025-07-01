@@ -111,11 +111,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
         // Move the toolbar out of the project card
         let toolbar = document.getElementById("toolbar") as HTMLDialogElement | null
         if (toolbar) {
-            document.querySelector("body")?.appendChild(toolbar);
-            toolbar.removeAttribute("open");
-            toolbar.style.left = "0px";
-            toolbar.style.top = "0px";
-            toolbar.remove()
+            toolbar.remove();
         }
         let projectCard = document.querySelector(".card-wrapper[toolbar]") as HTMLElement | null
         if (!projectCard) return
