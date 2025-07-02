@@ -4,7 +4,7 @@ import 'dotenv/config'
 import { Product, ProductStatus } from 'types/api';
 
 
-export const stripeAPI = new stripe(process.env.STRIPE_KEY)
+export const stripeAPI = new stripe(process.env.STRIPE_SECRET_KEY)
 export const displayStatusMap: { [K in ProductStatus]: string } = {
     "available": "Available for Purchase",
     "not-available": "Out of Stock",

@@ -1,9 +1,9 @@
 declare global {
     namespace NodeJS {
         interface ProcessEnv {
-            STRIPE_KEY: string;
+            STRIPE_PUBLISHABLE_KEY: string;
+            STRIPE_SECRET_KEY: string;
             CACHE_MODE: boolean;
-            STORE_TESTING: boolean;
         }
     }
 }

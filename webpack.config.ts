@@ -1,6 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import HtmlBundlerPlugin from 'html-bundler-webpack-plugin';
+import Dotenv from 'dotenv-webpack';
 import { getProductList } from './stripe-helper.js';
 
 import { TemplateData, TemplatePage } from './types/webpack.js';
@@ -197,7 +198,8 @@ export default (async () => {
                                     
                     ]
                 },
-            })
+            }),
+            new Dotenv()
         ],
         
         module: {

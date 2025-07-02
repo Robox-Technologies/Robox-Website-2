@@ -7,7 +7,7 @@ interface Cart {
     products: Record<string, { quantity: number; data: Product }>;
 }
 
-export const stripePublishableKey = "pk_test_51PhrZEKQ7f0SWVUxH1XgKKNh9FCSnLZpAre95yUs2ip95ktaarscGhTfiw4JQVTyCLrsCaW0xTeXIwcVbOUHFDba00b6ZWj5AT";
+export const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
 
 export async function getProducts(): Promise<Record<string, Product>> {
     return await (await fetch("/api/store/products")).json()
