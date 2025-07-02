@@ -20,8 +20,7 @@ function transform(tree: Root): void {
             i += 1;
             continue;
         }
-
-        const startDepth = (start as any).depth;
+        
         let endIndex = children.length - 1;
         let endIsImage = false;
 

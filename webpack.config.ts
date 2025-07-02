@@ -3,7 +3,6 @@ import fs from 'fs';
 import HtmlBundlerPlugin from 'html-bundler-webpack-plugin';
 import { getProductList } from './stripe-helper.js';
 
-import { getAllStripe, isValidStatus, displayStatusMap } from './stripe-helper.js';
 import { TemplateData, TemplatePage } from './types/webpack.js';
 
 
@@ -55,10 +54,34 @@ const eta = new RoboxProcessor({
 const pagesDir = path.resolve(__dirname, 'src/pages');
 const pages = findHtmlPages(pagesDir).map((file) => {
     const relative = path.relative(pagesDir, file);
-    return { import: file, filename: relative, data: {} };
+    return { import: file, filename: relative, data: fetchPageData(file) };
 });
 
 let dynamicPages: TemplatePage[] = [...pages];
+
+function fetchPageData(file: string): TemplateData {
+    // Add markdown to the page data for tos and privacy pages
+    if (file.endsWith('/tos/index.html') || file.endsWith('/privacy/index.html')) {
+        let fileComponents = file.split("/");
+        let markdownFilename = fileComponents[fileComponents.length - 2];
+
+        const bodyPath = `src/templates/views/legal/${markdownFilename}.md`;
+        console.log(`Searching for markdown in: ${bodyPath}`);
+        if (fs.existsSync(bodyPath)) {
+            try {
+                return {
+                    body: bodyPath
+                }
+            } catch (err) {
+                console.warn(`Markdown import failed for ${markdownFilename}:`, err);
+            }
+        } else {
+            console.warn(`No markdown file found for ${markdownFilename} page`);
+        }
+    }
+
+    return {};
+}
 
 async function cacheProducts(): Promise<Record<string, Product>> {
     const cache = process.env.CACHE_MODE === 'true';
