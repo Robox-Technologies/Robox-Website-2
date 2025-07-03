@@ -29,8 +29,8 @@ export function renderCart() {
         }
     }
     if (totalValue && orderValue && shippingValue) {
-        orderValue.textContent = `$${cost}`
-        totalValue.textContent = `$${cost+shippingCost}`
+        orderValue.textContent = `$${cost-shippingCost}`
+        totalValue.textContent = `$${cost}`
         shippingValue.textContent = `$${shippingCost}`
     }
 }
