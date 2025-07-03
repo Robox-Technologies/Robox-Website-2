@@ -46,6 +46,18 @@
     }
 }
 
+.section1 {
+    .text {
+        max-width: 700px;
+    }
+
+    @media screen and (min-width: 1000px) {
+        .media {
+            width: 30%;
+        }
+    }
+}
+
 .section2 {
     position: relative;
 
@@ -361,6 +373,14 @@ article.hubs {
 
         .scroll-prompt {
             background-color: transparent;
+        }
+    }
+
+    .articleSection.LTR.section1 {
+        flex-direction: column-reverse;
+
+        .media {
+            width: 50%;
         }
     }
 

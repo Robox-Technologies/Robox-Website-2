@@ -5,7 +5,7 @@
     "dev": "npx webpack --mode=development --config webpack.config.js && node ./build/server.js",
     "prod": "npx webpack --mode=production --config webpack.config.js && node ./build/server.js",
     "dist-build": "npx webpack --mode=production --config webpack.prod.js",
-    "start": "npx tsc && nodemon --ignore ./dist/ -e html,css,ts,js,ejs,md,scss --exec npm run dev",
+    "start": "npx tsc && nodemon --ignore ./dist/ -e html,css,ts,js,ejs,md,scss,jpg,png --exec npm run dev",
     "deploy": "npx tsc && nodemon --ignore ./dist/ -e html,css,js,ts,ejs,md,scss --exec npm run prod"
   },
   "dependencies": {
