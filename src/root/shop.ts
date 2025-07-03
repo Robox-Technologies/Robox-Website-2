@@ -22,16 +22,16 @@ export function renderCart() {
     // Hide checkout button if cost is 0
     let checkoutButton = document.getElementById("checkout");
     if (checkoutButton) {
-        if (cost <= 0) {
+        if (cost.total <= 0) {
             checkoutButton.style.display = "none";
         } else {
             checkoutButton.style.display = "block";
         }
     }
     if (totalValue && orderValue && shippingValue) {
-        orderValue.textContent = `$${cost-shippingCost}`
-        totalValue.textContent = `$${cost}`
-        shippingValue.textContent = `$${shippingCost}`
+        orderValue.textContent = `$${cost.products}`;
+        totalValue.textContent = `$${cost.total}`;
+        shippingValue.textContent = `$${cost.total > 0 ? shippingCost : 0}`;
     }
 }
 

@@ -14,7 +14,7 @@ let products = Object.keys(cart["products"]).reduce((acc: Record<string, Product
     return acc;
 }, {});
 
-let totalCost = calculateTotalCost(cartToDictionary(), products);
+let totalCost = calculateTotalCost(cartToDictionary(), products).total;
 
 const appearance: Appearance = {
     theme: "flat",

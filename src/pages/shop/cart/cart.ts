@@ -1,5 +1,6 @@
 import { getCart, refreshCart, setCartItem, getItem, removeCartItem} from "@root/cart"
 import { renderCart } from "@root/shop"
+import { register } from "module"
 
 const availableHolder = document.querySelector("#available-section")
 const preorderHolder = document.querySelector("#preorder-section")
@@ -71,38 +72,44 @@ function renderPreview() {
     if (cartEmpty) {
         document.getElementById("empty-cart").style.display = "flex";
         document.getElementById("main-content").style.display = "none";
+    } else {
+        registerQtyButtons();
     }
 }
 renderPreview()
 
-const quantityButtons = document.querySelectorAll(".cart-quantity-button")
-for (const quantityButton of quantityButtons) {
-    let increaseButton = quantityButton.querySelector(".increase-cart-button") as HTMLButtonElement
-    let decreaseButton = quantityButton.querySelector(".decrease-cart-button") as HTMLButtonElement
-    let productId = quantityButton.closest(".cart-item").id
-    let quantityElement = quantityButton.querySelector(".cart-quantity") as HTMLInputElement
-    quantityElement.addEventListener("input", (e) => {
-        quantityElement.value = quantityElement.value.slice(0, 2);
-        let numberValue = Number(quantityElement.value) ?? 0;
-        updateCart(productId, numberValue);
-    })
-    increaseButton.addEventListener("click", (e) => {
-        updateCart(productId, Number(quantityElement.value)+1)
-    })
-    decreaseButton.addEventListener("click", (e) => {
-        if (Number(quantityElement.value)-1 < 0) return
-        updateCart(productId, Number(quantityElement.value)-1)
-    })
+function registerQtyButtons() {
+    const quantityButtons = document.querySelectorAll(".cart-quantity-button")
+    for (const quantityButton of quantityButtons) {
+        let increaseButton = quantityButton.querySelector(".increase-cart-button") as HTMLButtonElement
+        let decreaseButton = quantityButton.querySelector(".decrease-cart-button") as HTMLButtonElement
+        let productId = quantityButton.closest(".cart-item").id
+        let quantityElement = quantityButton.querySelector(".cart-quantity") as HTMLInputElement
+        quantityElement.addEventListener("input", (e) => {
+            quantityElement.value = quantityElement.value.slice(0, 2);
+            let numberValue = Number(quantityElement.value) ?? 0;
+            updateCart(productId, numberValue);
+        })
+        increaseButton.addEventListener("click", (e) => {
+            updateCart(productId, Number(quantityElement.value)+1)
+        })
+        decreaseButton.addEventListener("click", (e) => {
+            if (Number(quantityElement.value)-1 < 0) return
+            updateCart(productId, Number(quantityElement.value)-1)
+        })
+    }
+    
+    const deleteButtons = document.querySelectorAll(".cart-item-delete")
+    for (const deleteButton of deleteButtons) {
+        let productId = deleteButton.closest(".cart-item").id
+        deleteButton.addEventListener("click", () => {
+            removeCartItem(productId)
+            renderCart()
+            renderPreview()
+        })
+    }
 }
-const deleteButtons = document.querySelectorAll(".cart-item-delete")
-for (const deleteButton of deleteButtons) {
-    let productId = deleteButton.closest(".cart-item").id
-    deleteButton.addEventListener("click", (event) => {
-        removeCartItem(productId)
-        renderCart()
-        renderPreview()
-    })
-}
+
 function updateCart(productId: string, quantity: number) {
     quantity = Math.min(Math.max(quantity, 0), 99);
     let productElement = document.getElementById(productId)

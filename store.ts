@@ -25,7 +25,7 @@ paymentRouter.post("/create", async (req: Request<{}, {}, PaymentIntentCreationB
         res.status(400).send({ error: "Products is not defined" });
         return 
     }
-    let verifiedServerCost = calculateTotalCost(products, verifiedProducts)
+    let verifiedServerCost = calculateTotalCost(products, verifiedProducts).total;
     if (expected_price !== verifiedServerCost) {
         res.status(400).send({error: "Server prices do not match the client prices"})
         return 
