@@ -36,7 +36,7 @@ async function recursiveItemGrab(API: Stripe.PricesResource | Stripe.ProductsRes
         let moreItems: Stripe.ApiList<Stripe.Price> | Stripe.ApiList<Stripe.Product>;
         // Typescript is very dumb and does not recognise they both have starting_after,
         // trust me remove this if statement and it will not work
-        if (API instanceof Stripe.PricesResource) {
+        if (isPricesResource(API)) {
             moreItems = await API.list({
                 starting_after: item.data[item.data.length - 1].id,
             });
