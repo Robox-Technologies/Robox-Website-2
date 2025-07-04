@@ -1,5 +1,5 @@
-import { createProject, getProjects } from "../../root/serialization";
-import { Project } from "../../@types/projects";
+import { createProject, getProject, getProjects } from "../../root/serialization";
+import { Project, Projects } from "types/projects";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js";
 import { toggleToolbar, moveToolbar } from "../../root/toolbar";

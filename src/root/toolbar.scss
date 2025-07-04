@@ -15,7 +15,7 @@ $toolbarPadding: 5px 20px 5px 5px;
     justify-content: space-between;
     border-radius: $toolbarBorderRadius;
     margin: 0;
-    border: $toolbarBorderStroke solid $toolbarBorderColor;
+    // border: $toolbarBorderStroke solid $toolbarBorderColor;
     width: $toolbarWidth;
 }
 .toolbar > .card-button > svg {
@@ -30,6 +30,9 @@ $toolbarPadding: 5px 20px 5px 5px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    font-family: "Nunito", sans-serif;
+    font-weight: bold;
+    color: variables.$themeBlack;
 }
 .toolbar > button:nth-child(2n) {
     margin-top: 5px;
