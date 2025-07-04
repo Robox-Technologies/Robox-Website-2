@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm install && npx webpack --mode=production --config webpack.config.js
+      - run: npm install && tsc -p tsconfig.server.json && webpack --config build/server/webpack.config.js
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
