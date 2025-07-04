@@ -5,19 +5,9 @@ import Dotenv from 'dotenv-webpack';
 import { getProductList } from './stripe-helper.js';
 
 import { TemplateData, TemplatePage } from './types/webpack.js';
+import { Product } from 'types/api.js';
 
-
-interface Product {
-    internalName: string;
-    name: string;
-    description: string;
-    images: string[];
-    price_id: string;
-    price: number;
-    item_id: string;
-    status: string;
-    displayStatus: string;
-}
+const RECACHE_DURATION = 24 * 60 * 60 * 1000; // 10 minutes
 
 interface ProductData {
     product: Product | false;
@@ -86,11 +76,24 @@ function fetchPageData(file: string): TemplateData {
 
 async function cacheProducts(): Promise<Record<string, Product>> {
     const cache = process.env.CACHE_MODE === 'true';
-    if (cache || !fs.existsSync('products.json')) {
+    if (!fs.existsSync('products.json')) {
         let newProducts = await getProductList();
-        fs.writeFileSync('products.json', JSON.stringify(newProducts), 'utf8');
+        let cache = JSON.stringify({ timestamp: Date.now(), products: newProducts });
+        fs.writeFileSync('products.json', cache, 'utf8');
+        return newProducts;
     }
-    return JSON.parse(fs.readFileSync('products.json', 'utf8'));
+    let data = fs.readFileSync('products.json', 'utf8');
+    //Check if the cache is older than 10 minutes
+    const cacheData = JSON.parse(data);
+    if (cacheData.timestamp && Date.now() - cacheData.timestamp > RECACHE_DURATION) {
+        console.log("Recaching products...");
+        let newProducts = await getProductList();
+        let cache = JSON.stringify({ timestamp: Date.now(), products: newProducts });
+        fs.writeFileSync('products.json', cache, 'utf8');
+        return newProducts;
+    }
+
+    return data['products'] || {};
 }
 async function processProducts() {
     let products = await cacheProducts();
