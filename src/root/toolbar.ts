@@ -1,4 +1,3 @@
-let anchorAmount = 0;
 
 const offsetX = 5;
 const offsetY = 10;
