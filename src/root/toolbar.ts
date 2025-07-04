@@ -21,7 +21,6 @@ window.addEventListener("resize", () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             toolbar.style.left = `${rect.left + scrollLeft + offsetX}px`;
             toolbar.style.top = `${rect.top + scrollTop + offsetY}px`;
-            toolbar.style.position = 'absolute';
 
         }
     }
