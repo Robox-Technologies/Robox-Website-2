@@ -1,153 +1,77 @@
 import { createProject, getProject, getProjects } from "../../root/serialization";
 import { Project, Projects } from "types/projects";
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime.js"
-dayjs.extend(relativeTime)
-
-const offsetLeftToolbar = 10
-const offsetTopToolbar = 10
+import relativeTime from "dayjs/plugin/relativeTime.js";
+import { toggleToolbar, moveToolbar } from "../../root/toolbar";
 
 
-let createButtonHTML: string | undefined = undefined
-function applyProjects() {
-    const projectContainer = document.getElementById("project-holder")
-    if (!projectContainer) return
-    if (!createButtonHTML) {
-        createButtonHTML = `<div class="card-wrapper">${document.getElementById("create-project")?.outerHTML}</div>`
-    }
-    if (!createButtonHTML) return
-    projectContainer.innerHTML = createButtonHTML
-    const projectTemplate = document.getElementById("projectCardTemplate") as HTMLTemplateElement
-    if (!projectTemplate) return
-    const projects = getProjects()
-    let projectIds = Object.keys(projects)
-    let sortedByTime = projectIds.sort((key1, key2) => dayjs(projects[key2]["time"]).diff(dayjs(projects[key1]["time"])))
+dayjs.extend(relativeTime);
+
+async function applyProjects() {
+    const projectCards = document.querySelectorAll(".project-card");
+    projectCards.forEach((card) => {
+        card.remove();
+    });
+
+    const projectContainer = document.getElementById("project-holder");
+    const projectTemplate = document.getElementById("projectCardTemplate") as HTMLTemplateElement;
+    const toolbarModal = document.getElementById("project-toolbar") as HTMLDialogElement;
+    if (!projectContainer || !projectTemplate || !toolbarModal) return;
+
+    const projects = getProjects();
+    const projectIds = Object.keys(projects);
+    let sortedByTime = projectIds.sort((a, b) =>
+        dayjs(projects[b].time).diff(dayjs(projects[a].time))
+    );
     for (const uuid of sortedByTime) {
-        let project = projects[uuid] as Project
-        if (!project) continue
-        const fragment = projectTemplate.content.cloneNode(true) as DocumentFragment;
-        const clone = fragment.querySelector(".card") as HTMLElement
-
-        const title = clone.querySelector(".card-title-text")
-        const time = clone.querySelector(".card-description")
-        const image = clone.querySelector(".card-image") as HTMLImageElement
-        const wrapper = document.createElement("div")
-        wrapper.classList.add("card-wrapper")
-
-        clone.id = uuid
-        let projectTime = dayjs(project["time"])
-
-        if (!title || !time || !image) return
-        image.src = project["thumbnail"]
-        title.textContent = project["name"];
-        time.textContent = projectTime.fromNow()
-        clone.addEventListener("click", (event: MouseEvent) => {
-            // if (toolbarModal.hasAttribute("open") || e.target.closest("#toolbar")) return
-            let item = event.target as HTMLElement | null
-            if (!item) return
-            if (item.closest("#toolbar")) return
-            let dots = item.closest(".options") //checking if there is the dots object near or above the item
-            if (dots === null) { //If the dialog is clicked it will not have dots (as dots is its child)
-                window.location.href = `/editor?id=${clone.id}`
-            }
-            else { //if it is the edit menu dots clicked
-                let toolbar = document.getElementById("toolbar") as HTMLDialogElement
-                if (!toolbar) return
-                let toolbaClone = toolbar.cloneNode(true) as HTMLDialogElement
-                
-                let options = clone.querySelector(".options") as HTMLButtonElement
-                if (!options) return
-                toolbaClone.style.left = (options.offsetLeft+offsetLeftToolbar).toString()
-                toolbaClone.style.top = (options.offsetTop+offsetTopToolbar).toString()
-
-                wrapper.setAttribute("toolbar", "")
-                toolbar.closest(".card-wrapper")?.removeAttribute("toolbar")
-                clone.appendChild(toolbaClone)
-                toolbaClone.querySelector("#project-delete")?.addEventListener("click", (event) => {
-                    let deleteModal = document.getElementById("delete-modal") as HTMLDialogElement | null
-                    if (!deleteModal) return
-                    deleteModal.showModal()
-                })
-                toolbaClone.querySelector("#project-edit")?.addEventListener("click", (event) => {
-                    let editModal = document.getElementById("edit-modal") as HTMLDialogElement | null
-                    if (!editModal) return
-                    editModal.showModal()
-                    editModal.querySelector("#edit-project-name")?.setAttribute("value", project["name"])
-                })
-                    
-                toolbar.remove()
-                toolbaClone.show()
-                hoverElement(clone, false)
-            }
-            event.stopPropagation()
-        })
-        wrapper.appendChild(clone)
-        projectContainer.appendChild(wrapper)
+        let project = projects[uuid];
+        let card = createProjectCard(uuid, project);
+        card.addEventListener("click", (event: MouseEvent) => {
+            let item = event.target as HTMLElement | null;
+            if (!item) return;
+            window.location.href = `/editor?id=${uuid}`;
+            event.stopPropagation();
+        });
+        let options = card.querySelector(".options") as HTMLButtonElement | null;
+        if (!options) continue;
+        options.addEventListener("click", (event: MouseEvent) => {
+            event.stopImmediatePropagation();
+            moveToolbar(toolbarModal, options);
+            toggleToolbar(toolbarModal, true);
+        });
+        projectContainer.appendChild(card);
     }
 }
-function afterProjectsSetup() {
-    const createProjectButton = document.getElementById("create-project")
-    createProjectButton?.addEventListener("click", (event) => {
-        createProject("unnamed project")
-        applyProjects()
-        afterProjectsSetup()
-    })
-}
-function hoverElement(element: HTMLElement, up: boolean, rotateX: number = 0, rotateY: number = 0) {
-    element.style.transform = `scale(${up ? 1.05 : 1})`;//`translateY(${up ? -10 : 0}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-}
 
-document.addEventListener("DOMContentLoaded", (event) => {
-    //Populate the projects
-    applyProjects()
+document.addEventListener("DOMContentLoaded", () => {
+    applyProjects();
+    const createProjectButton = document.getElementById("create-project");
+    createProjectButton?.addEventListener("click", () => {
+        createProject("unnamed project");
+        applyProjects();
+    });
+});
 
-    afterProjectsSetup();
-    //TODO: This is janky and should be replaced with a better solution
-    let deleteModal = document.getElementById("delete-modal") as HTMLDialogElement | null
-    if (!deleteModal) return
-    let deleteConfirmButton = deleteModal.querySelector("#delete-confirm-button") as HTMLButtonElement | null
-    if (!deleteConfirmButton) return
-    deleteConfirmButton.addEventListener("click", (event) => {
-        // Move the toolbar out of the project card
-        let toolbar = document.getElementById("toolbar") as HTMLDialogElement | null
-        if (toolbar) {
-            toolbar.remove();
-        }
-        let projectCard = document.querySelector(".card-wrapper[toolbar]") as HTMLElement | null
-        if (!projectCard) return
-        let projectId = projectCard.querySelector(".card")?.id
-        if (!projectId) return
-        let projects = getProjects()
-        if (!projects[projectId]) return
-        deleteProject(projectId)
-        projectCard.remove()
-        deleteModal.close()
-        applyProjects()
-    })
-    const editModal = document.getElementById("edit-modal") as HTMLDialogElement | null
-    if (!editModal) return
-    const editConfirmButton = document.querySelector("#edit-confirm-button") as HTMLButtonElement | null
-    if (!editConfirmButton) return
-    editConfirmButton.addEventListener("click", (event) => {
-        let projectCard = document.querySelector(".card-wrapper[toolbar]") as HTMLElement | null
-        if (!projectCard) return
-        let projectId = projectCard.querySelector(".card")?.id
-        if (!projectId) return
-        let projects = getProjects()
-        if (!projects[projectId]) return
-        let project = projects[projectId]
-        let nameInput = document.getElementById("edit-project-name") as HTMLInputElement | null
-        if (!nameInput) return
-        project["name"] = nameInput.value
-        localStorage.setItem("roboxProjects", JSON.stringify(projects))
-        let toolbar = document.getElementById("toolbar") as HTMLDialogElement | null
-        if (toolbar) {
-            let clone = document.querySelector("body")?.appendChild(toolbar);
-            clone?.removeAttribute("open");
-        }
-        editModal.close()
-        applyProjects()
-        // move the toolbar out of the project card
-        
-    })
-})
+function createProjectCard(uuid: string, project: Project): HTMLElement {
+    const projectTemplate = document.getElementById("projectCardTemplate") as HTMLTemplateElement;
+    if (!projectTemplate) return document.createElement("div");
+
+    const fragment = projectTemplate.content.cloneNode(true) as DocumentFragment;
+    const clone = fragment.querySelector(".card") as HTMLElement;
+    if (!clone) return document.createElement("div");
+
+    const title = clone.querySelector(".card-title-text");
+    const time = clone.querySelector(".card-description");
+    const image = clone.querySelector(".card-image") as HTMLImageElement | null;
+    const options = clone.querySelector(".options") as HTMLButtonElement | null;
+    if (!title || !time || !image || !options) return document.createElement("div");
+
+    let projectTime = dayjs(project.time);
+
+    image.src = project.thumbnail;
+    title.textContent = project.name;
+    time.textContent = projectTime.fromNow();
+    clone.id = uuid;
+
+    return clone;
+}
