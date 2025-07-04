@@ -47,13 +47,6 @@
         }) %>
     </template>
     <%~ include('src/templates/partials/header-workshop.html') %>
-    <%~ include('src/templates/partials/toolbar.html', {
-        id: "toolbar",
-        content: [
-            ' <button class="button" id="project-edit"><i class="fa-solid fa-pen-to-square"></i>Edit</button>',
-            '<button class="button" id="project-delete"><i class="fa-solid fa-trash"></i>Delete</button>',
-        ],
-    }) %>
     <%~ include('src/templates/partials/modal.html', {
         id: "delete-modal",
         title: 'Delete Project <i class="fa-solid fa-trash-can"></i>', 
@@ -115,15 +108,20 @@
                 My Projects
             </h1>
             <div class="card-holder" id="project-holder">
-                <div class="card-wrapper">
-                    <button id="create-project" class="button">
-                        <i class="fa-solid fa-plus"></i>
-                        <p>
-                            New Project
-                        </p>
-                    </button>
-                </div>
-                
+                <button id="create-project" class="button">
+                    <i class="fa-solid fa-plus"></i>
+                    <p>
+                        New Project
+                    </p>
+                </button>
+                <%~ include('src/templates/partials/toolbar.html', {
+                    id: "project-toolbar",
+                    content: [
+                        '<button class="button" id="project-edit"><i class="fa-solid fa-pen-to-square"></i>Edit</button>',
+                        '<button class="button" id="project-delete"><i class="fa-solid fa-trash"></i>Delete</button>',
+                    ],
+                }) %>
+            
                 
             </div>
             
