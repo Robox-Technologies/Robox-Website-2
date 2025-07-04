@@ -2,9 +2,16 @@
 const offsetX = 5;
 const offsetY = 10;
 document.addEventListener("click", (event: MouseEvent) => {
-    const item = event.target as HTMLElement | null;
-    const toolbar = document.querySelector(".toolbar") as HTMLDialogElement | null;
-    if (item && toolbar && toolbar.hasAttribute("open")) {
+    let item = event.target as HTMLElement | null
+    let toolbar = document.querySelector(".toolbar") as HTMLDialogElement | null
+    if (!toolbar) return
+    if (!item) return
+    let rect = toolbar.getBoundingClientRect();
+    if (rect.left > event.clientX ||
+        rect.right < event.clientX ||
+        rect.top > event.clientY ||
+        rect.bottom < event.clientY
+    ) {
         toolbar.close();
     }
 });
