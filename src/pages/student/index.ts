@@ -150,9 +150,4 @@ document.addEventListener("DOMContentLoaded", (event) => {
         // move the toolbar out of the project card
         
     })
-    const editCancelButton = document.querySelector("#edit-cancel-button") as HTMLButtonElement | null
-    if (!editCancelButton) return
-    editCancelButton.addEventListener("click", (event) => {
-        editModal.close()
-    })
 })
