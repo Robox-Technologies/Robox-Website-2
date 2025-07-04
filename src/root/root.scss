@@ -31,6 +31,10 @@ a {
     -webkit-text-decoration: none;
 }
 
+label > a {
+    text-decoration: underline;
+}
+
 * {
     box-sizing: border-box;
 }

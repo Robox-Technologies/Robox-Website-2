@@ -20,6 +20,9 @@ $modalTitleTextGap: 15px;
 .modal::backdrop {
     background-color: rgba(0,0,0,$modalOpacity)
 }
+.modal {
+    border-color: variables.$dropShadow;
+}
 .modal[open] {
     display: flex;
     flex-direction: column;
