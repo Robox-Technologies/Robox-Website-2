@@ -1,7 +1,7 @@
-import img1 from './images/boxToBot/step1.svg';
-import img2 from './images/boxToBot/step2.svg';
-import img3 from './images/boxToBot/step3.svg';
-import img4 from './images/boxToBot/step4.svg';
+import img1 from '@images/landing/boxToBot/step1.svg';
+import img2 from '@images/landing/boxToBot/step2.svg';
+import img3 from '@images/landing/boxToBot/step3.svg';
+import img4 from '@images/landing/boxToBot/step4.svg';
 
 const images = [img1, img2, img3, img4];
 

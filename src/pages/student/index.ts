@@ -1,5 +1,5 @@
 import { createProject, getProject, getProjects } from "../../root/serialization";
-import { Project, Projects } from "../../@types/projects";
+import { Project, Projects } from "types/projects";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime.js"
 dayjs.extend(relativeTime)

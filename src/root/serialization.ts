@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import type { Workspace, WorkspaceSvg } from 'blockly/core';
-import { Projects, Project } from '../@types/projects';
+import { Projects, Project } from "types/projects";
 
 import { workspaceToSvg_ } from './screenshot';
 
