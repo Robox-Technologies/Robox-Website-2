@@ -54,6 +54,7 @@ $hoverCardBorderColor: variables.$themeBlue;
     will-change: transform;
     position: relative;
     cursor: pointer;
+    position-area: auto;
 }
 $toolbarBorderRadius: 0.5em;
 $toolbarBorderColor: variables.$primary;
@@ -194,10 +195,14 @@ $renameContentPadding: 5%;
     
 } 
 
-
-.card-wrapper:hover:not([toolbar]) {
-    transform: translateY(-2px);
+.card-wrapper {
+    position:relative;
 }
-.card-wrapper:hover > .project-card, .card-wrapper:hover > .lesson-card:hover {
+.project-card:hover {
+    transform: translateY(-2px);
     border: $hoverCardBorderSize solid variables.$themeBlue;
+}
+.project-card:has(.toolbar-target) {
+    border: $hoverCardBorderSize solid variables.$themeGreen;
+    transform: translateY(-2px);
 }
