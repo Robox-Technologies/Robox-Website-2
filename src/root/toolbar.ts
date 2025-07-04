@@ -1,23 +1,41 @@
+let anchorAmount = 0;
 
-let anchorAmount: number = 0;
-
+const offsetX = 5;
+const offsetY = 10;
 document.addEventListener("click", (event: MouseEvent) => {
-    let item = event.target as HTMLElement | null
-    let toolbar = document.querySelector(".toolbar") as HTMLDialogElement | null
+    const item = event.target as HTMLElement | null;
+    const toolbar = document.querySelector(".toolbar") as HTMLDialogElement | null;
     if (item && toolbar && toolbar.hasAttribute("open")) {
-        toolbar.close()
+        toolbar.close();
     }
-})
-document.addEventListener("DOMContentLoaded", (event) => {
-    const toolbarModal = document.querySelector(".toolbar") as HTMLDialogElement | null
+});
+window.addEventListener("resize", () => {
+    const toolbar = document.querySelector(".toolbar") as HTMLDialogElement | null;
+    if (toolbar && toolbar.hasAttribute("open")) {
+        const target = document.querySelector(".toolbar-target") as HTMLElement | null;
+        if (target) {
+            //Update the position of the toolbar
+            const rect = target.getBoundingClientRect();
+            toolbar.style.position = 'absolute';
+            const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            toolbar.style.left = `${rect.left + scrollLeft + offsetX}px`;
+            toolbar.style.top = `${rect.top + scrollTop + offsetY}px`;
+            toolbar.style.position = 'absolute';
+
+        }
+    }
+});
+document.addEventListener("DOMContentLoaded", () => {
+    const toolbarModal = document.querySelector(".toolbar") as HTMLDialogElement | null;
     if (!toolbarModal) return;
-    toolbarModal.addEventListener("close", (event) => {
+    toolbarModal.addEventListener("close", () => {
         let oldTarget = document.querySelector(".toolbar-target") as HTMLElement | null;
         if (oldTarget) {
             oldTarget.classList.remove("toolbar-target");
         }
     });
-})
+});
 
 export function toggleToolbar(toolbar: HTMLDialogElement, open: boolean): void {
     if (open) {
@@ -26,18 +44,18 @@ export function toggleToolbar(toolbar: HTMLDialogElement, open: boolean): void {
         toolbar.close();
     }
 }
+
 export function moveToolbar(toolbar: HTMLDialogElement, target: HTMLElement): void {
-    let oldTarget = document.querySelector(".toolbar-target") as HTMLElement | null;
+    const oldTarget = document.querySelector(".toolbar-target") as HTMLElement | null;
     if (oldTarget) {
         oldTarget.classList.remove("toolbar-target");
     }
     target.classList.add("toolbar-target");
-    //check if the target has an anchor-name property, if not generate a new one
-    if (!target.style.getPropertyValue("anchor-name")) {
-        target.style.setProperty("anchor-name", `anchor-${anchorAmount}`);
-        anchorAmount++;
-    }
-    toolbar.style.setProperty("position-anchor", target.style.getPropertyValue("anchor-name"));
-    toolbar.style.setProperty("left", "calc(anchor(left) + 5px)");
-    toolbar.style.setProperty("top", "calc(anchor(top) + 10px)");
+
+    const rect = target.getBoundingClientRect();
+    toolbar.style.position = 'absolute';
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    toolbar.style.left = `${rect.left + scrollLeft + offsetX}px`;
+    toolbar.style.top = `${rect.top + scrollTop + offsetY}px`;
 }
